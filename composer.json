@@ -1,0 +1,25 @@
+{
+    "name": "administrador/tele-urban",
+    "description": "Sistema que automatiza entrevistas laborales",
+    "autoload": {
+        "psr-4": {
+            "Administrador\\TeleUrban\\": "src/",
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Classes\\" : "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Salvador",
+            "email": "salvador.ar614@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "vlucas/phpdotenv": "^5.4",
+        "intervention/image": "^2.7"
+    }
+   
+}
