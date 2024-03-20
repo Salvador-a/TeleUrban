@@ -1,10 +1,13 @@
+// Importa las variables y los mixins
 @use 'variables' as v;
 @use 'mixins' as m;
 
+// Aplica el mixin heading a los encabezados h1, h2 y h3
 h1, h2, h3 {
     @include m.heading;
 }
 
+// Establece el tamaño de la fuente para los encabezados h1, h2 y h3
 h1 {
     font-size: 4rem;
 }
@@ -14,15 +17,18 @@ h2 {
 h3 {
     font-size: 3rem;
 }
+
+// Centra el texto de los elementos con la clase .text-center
 .text-center {
     text-align: center;
 }
-// $= es un selector que termina con el string que le pasamos que en este caso es __heading
+
+// Aplica el mixin nombre-pagina a los elementos cuya clase termina en "__heading"
 [class$="__heading"] {
     @include m.nombre-pagina;
 }
 
+// Aplica el mixin descripcion-pagina a los elementos cuya clase termina en "__descripcion"
 [class$="__descripcion"] {
     @include m.descripcion-pagina;
-
 }

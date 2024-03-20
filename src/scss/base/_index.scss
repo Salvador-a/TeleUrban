@@ -1,5 +1,14 @@
+// Importa el archivo normalize para resetear los estilos por defecto del navegador
 @forward 'normalize';
+
+// Importa el archivo variables donde se definen las variables SCSS
 @forward 'variables';
+
+// Importa el archivo mixins donde se definen los mixins SCSS
 @forward 'mixins';
+
+// Importa el archivo globales donde se definen los estilos globales
 @forward 'globales';
+
+// Importa el archivo tipografia donde se definen los estilos de tipografía
 @forward 'tipografia';

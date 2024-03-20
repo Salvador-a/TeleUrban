@@ -1,208 +1,233 @@
 @use 'variables' as v;
 
-/** Media Queries **/
+// Mixin para Media Queries de teléfono
 @mixin telefono {
-    @media (min-width: v.$telefono) {
-        @content;
+    @media (min-width: v.$telefono) { // Aplica los estilos si el ancho de la ventana es mayor o igual al tamaño de un teléfono
+        @content; // Inserta el contenido del mixin
     }
 }
+
+// Mixin para Media Queries de tablet
 @mixin tablet {
-    @media (min-width: v.$tablet) {
-        @content;
+    @media (min-width: v.$tablet) { // Aplica los estilos si el ancho de la ventana es mayor o igual al tamaño de una tablet
+        @content; // Inserta el contenido del mixin
     }
 }
+
+// Mixin para Media Queries de desktop
 @mixin desktop {
-    @media (min-width: v.$desktop) {
-        @content;
+    @media (min-width: v.$desktop) { // Aplica los estilos si el ancho de la ventana es mayor o igual al tamaño de un desktop
+        @content; // Inserta el contenido del mixin
     }
 }
+
+// Mixin para Media Queries de xl_desktop
 @mixin xl_desktop {
-    @media (min-width: v.$xl_desktop) {
-        @content;
+    @media (min-width: v.$xl_desktop) { // Aplica los estilos si el ancho de la ventana es mayor o igual al tamaño de un xl_desktop
+        @content; // Inserta el contenido del mixin
     }
 }
 
+// Mixin para botones
 @mixin boton($bgColor, $colorTexto) {
-    background-color: $bgColor;
-    padding: 1.5rem 4rem;
-    color: $colorTexto;
-    font-size: 1.8rem;
-    font-weight: 700;
-    border: none;
-    transition-property: background-color;
-    transition-duration: .3s;
-    text-align: center;
-    width: 100%;
-    display: inline-block;
+    background-color: $bgColor; // Establece el color de fondo del botón
+    padding: 1.5rem 4rem; // Establece el padding del botón
+    color: $colorTexto; // Establece el color del texto del botón
+    font-size: 1.8rem; // Establece el tamaño de la fuente del botón
+    font-weight: 700; // Establece el peso de la fuente del botón
+    border: none; // Elimina el borde del botón
+    transition-property: background-color; // Establece la propiedad de transición a background-color
+    transition-duration: .3s; // Establece la duración de la transición
+    text-align: center; // Centra el texto del botón
+    width: 100%; // Establece el ancho del botón al 100%
+    display: inline-block; // Establece el display del botón a inline-block
 
-    &:hover {
-        background-color: darken( $bgColor, 10% );
-        cursor: pointer;
+    &:hover { // Establece los estilos para el estado hover del botón
+        background-color: darken( $bgColor, 10% ); // Oscurece el color de fondo del botón
+        cursor: pointer; // Cambia el cursor a pointer
     }
 }
 
+// Mixin para crear una cuadrícula
 @mixin grid($columnas, $espaciado ) {
-    display: grid;
-    gap: $espaciado;
-    grid-template-columns: repeat($columnas, 1fr);
+    display: grid; // Establece el display a grid
+    gap: $espaciado; // Establece el espacio entre los elementos de la cuadrícula
+    grid-template-columns: repeat($columnas, 1fr); // Crea tantas columnas como se especifique, cada una ocupando una fracción igual del espacio disponible
 }
 
+// Mixin para crear un contenedor de tamaño grande
 @mixin contenedor {
-    width: min(95%, 140rem);
-    margin: 0 auto;
+    width: min(95%, 140rem); // Establece el ancho al mínimo entre 95% y 140rem
+    margin: 0 auto; // Centra el contenedor horizontalmente
 }
 
+// Mixin para crear un contenedor de tamaño medio
 @mixin contenedor-md {
-    width: min(95%, 80rem);
-    margin: 0 auto;
+    width: min(95%, 80rem); // Establece el ancho al mínimo entre 95% y 80rem
+    margin: 0 auto; // Centra el contenedor horizontalmente
 }
 
+// Mixin para crear un contenedor de tamaño pequeño
 @mixin contenedor-sm {
-    width: min(95%, 60rem);
-    margin: 0 auto;
+    width: min(95%, 60rem); // Establece el ancho al mínimo entre 95% y 60rem
+    margin: 0 auto; // Centra el contenedor horizontalmente
 }
 
+// Mixin para estilizar encabezados
 @mixin heading {
-    font-family: v.$fuente_principal;
-    font-weight: v.$black;
-    margin: 2rem 0;
+    font-family: v.$fuente_principal; // Establece la fuente principal
+    font-weight: v.$black; // Establece el peso de la fuente a black
+    margin: 2rem 0; // Establece el margen superior e inferior a 2rem
 }
 
+// Mixin para estilizar el nombre de la página
 @mixin nombre-pagina {
-    @include heading;
-    margin: 6rem 0 3rem 0;
-    text-align: center;
-
+    @include heading; // Incluye los estilos del mixin heading
+    margin: 6rem 0 3rem 0; // Establece el margen superior a 6rem, el inferior a 3rem
+    text-align: center; // Centra el texto horizontalmente
 }
 
+// Mixin para estilizar la descripción de la página
 @mixin descripcion-pagina {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: v.$delgada;
-    color: v.$gris-oscuro;
-    margin-bottom: 5rem;
+    text-align: center; // Centra el texto horizontalmente
+    font-size: 1.8rem; // Establece el tamaño de la fuente
+    font-weight: v.$delgada; // Establece el peso de la fuente a delgada
+    color: v.$gris-oscuro; // Establece el color del texto a gris oscuro
+    margin-bottom: 5rem; // Establece el margen inferior a 5rem
 }
 
+// Mixin para crear texto fluido
 @mixin texto-fluido($min, $max) {
-    font-size: clamp($min, -0.8rem + 10vw ,$max);
+    font-size: clamp($min, -0.8rem + 10vw ,$max); // Establece el tamaño de la fuente a un valor entre $min y $max, ajustándose en función del ancho de la ventana
 }
 
+// Mixin para crear texto con degradado
 @mixin texto-degradado($inicio , $final) {
-    background-image: linear-gradient(to right, $inicio, $final);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    background-image: linear-gradient(to right, $inicio, $final); // Crea un degradado lineal de izquierda a derecha desde $inicio hasta $final
+    background-clip: text; // Aplica el degradado al texto
+    -webkit-text-fill-color: transparent; // Hace que el color del texto sea transparente en navegadores WebKit
+    color: transparent; // Hace que el color del texto sea transparente
 }
 
+// Mixin para estilizar el logo
 @mixin logo {
-    color: v.$blanco;
-    text-align: center;
-    margin-bottom: 2rem;
-    white-space: nowrap;
+    color: v.$blanco; // Establece el color del texto a blanco
+    text-align: center; // Centra el texto horizontalmente
+    margin-bottom: 2rem; // Establece el margen inferior a 2rem
+    white-space: nowrap; // Evita que el texto se ajuste a la línea siguiente
     @include desktop {
-        text-align: left;
-        margin: 0;
+        text-align: left; // Alinea el texto a la izquierda en pantallas de escritorio
+        margin: 0; // Elimina el margen en pantallas de escritorio
     }
 }
 
+// Mixin para estilizar el menú social
 @mixin menu-social($color, $size) {
 
+    // Estilos para los enlaces del menú social
     &__enlace {
 
+        // Estilos para el pseudo-elemento before de los enlaces
         &::before {
-            color: $color;
-            font-size: $size;
-            display: inline-block;
-            font-style: normal;
-            text-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-            font-family: "Font Awesome 6 Brands";
+            color: $color; // Establece el color del icono
+            font-size: $size; // Establece el tamaño del icono
+            display: inline-block; // Establece el display a inline-block
+            font-style: normal; // Establece el estilo de la fuente a normal
+            text-rendering: auto; // Establece el renderizado del texto a auto
+            -webkit-font-smoothing: antialiased; // Suaviza la fuente en navegadores WebKit
+            font-family: "Font Awesome 6 Brands"; // Establece la familia de la fuente a Font Awesome 6 Brands
         }
 
+        // Estilos específicos para cada red social
         &[href*="facebook.com"]::before {
-            content: "\f39e";
+            content: "\f39e"; // Establece el icono de Facebook
         }
         &[href*="github.com"]::before {
-            content: "\f09b";
+            content: "\f09b"; // Establece el icono de GitHub
         }
-        
         &[href*="tiktok.com"]::before {
-            content: "\e07b";
+            content: "\e07b"; // Establece el icono de TikTok
         }
         &[href*="instagram.com"]::before {
-            content: "\f16d";
+            content: "\f16d"; // Establece el icono de Instagram
         }
         &[href*="youtube.com"]::before {
-            content: "\f167";
+            content: "\f167"; // Establece el icono de YouTube
         }
         &[href*="twitter.com"]::before {
-            content: "\f099";
+            content: "\f099"; // Establece el icono de Twitter
         }
     }
 
+    // Estilos para ocultar elementos del menú social
     &__ocultar {
-        display: none;
+        display: none; // Oculta el elemento
     }
 }
 
+// Mixin para estilizar enlaces
 @mixin enlace {
-    all: unset;
-    color: v.$blanco;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    font-weight: v.$bold;
-    
-    
+    all: unset; // Resetea todas las propiedades del enlace
+    color: v.$blanco; // Establece el color del texto a blanco
+    font-size: 1.4rem; // Establece el tamaño de la fuente
+    text-transform: uppercase; // Transforma el texto a mayúsculas
+    font-weight: v.$bold; // Establece el peso de la fuente a bold
 
+    // Estilos para el estado hover del enlace
     &:hover {
-        color: v.$azul;
-        cursor: pointer;
+        color: v.$azul; // Cambia el color del texto a azul
+        cursor: pointer; // Cambia el cursor a pointer
     }
 }
 
+// Mixin para aplicar sombra a un elemento
 @mixin shadow {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px; // Aplica una sombra al elemento
 }
 
+// Mixin para resetear las propiedades de una lista
 @mixin reset-lista {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    margin: 0; // Resetea el margen
+    padding: 0; // Resetea el padding
+    list-style: none; // Elimina el estilo de lista
 }
 
+// Mixin para estilizar tags
 @mixin tags {
-    @include reset-lista;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+    @include reset-lista; // Resetea las propiedades de la lista
+    display: flex; // Establece el display a flex
+    flex-wrap: wrap; // Permite que los elementos de la lista se ajusten a la línea siguiente
+    gap: 1.5rem; // Establece el espacio entre los elementos de la lista
+    margin-top: 1.5rem; // Establece el margen superior
 
+    // Estilos para los elementos de la lista
     > li {
-        background-color: v.$azul;
-        padding: 1rem;
-        border-radius: .5rem;
-        font-size: 1.4rem;
-        color: v.$blanco;
-        font-weight: v.$bold;
+        background-color: v.$azul; // Establece el color de fondo a azul
+        padding: 1rem; // Establece el padding
+        border-radius: .5rem; // Establece el radio del borde
+        font-size: 1.4rem; // Establece el tamaño de la fuente
+        color: v.$blanco; // Establece el color del texto a blanco
+        font-weight: v.$bold; // Establece el peso de la fuente a bold
     }
-
 }
 
+// Mixin para estilizar una tarjeta
 @mixin card {
-    border: 1px solid lighten(v.$gris, 10);
-    padding: 3rem;
+    border: 1px solid lighten(v.$gris, 10); // Establece el borde y lo aclara un 10%
+    padding: 3rem; // Establece el padding
 
+    // Estilos para el nombre de la tarjeta
     &__nombre {
-        font-weight: v.$black;
-        font-size: 2.6rem;
-        margin: 2rem 0;
+        font-weight: v.$black; // Establece el peso de la fuente a black
+        font-size: 2.6rem; // Establece el tamaño de la fuente
+        margin: 2rem 0; // Establece el margen superior e inferior
     }
-
 }
 
+// Mixin para crear un fondo con degradado
 @mixin bg-gradient($bg_color) {
+    // Establece una imagen de fondo con un degradado lineal
+    // El degradado va de izquierda a derecha y de arriba a abajo
+    // Comienza con el color proporcionado ($bg_color) y termina con una versión más clara de ese color (se aclara un 15%)
     background-image: linear-gradient(to left top, $bg_color, lighten($bg_color, 15%) );
-    
-    
 }
