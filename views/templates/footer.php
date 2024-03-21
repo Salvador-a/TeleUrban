@@ -6,7 +6,7 @@
             </h3>
 
             <p class="footer__texto">
-            s un canal de comunicación en transporte público con información y entretenimiento en monitores y bocinas en diversas estados de la República Mexicana.
+            Es un canal de comunicación en transporte público con información y entretenimiento en monitores y bocinas en diversas estados de la República Mexicana.
             </p>
         </div>
         <nav class="menu-redes"> 
