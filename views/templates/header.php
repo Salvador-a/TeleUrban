@@ -16,14 +16,14 @@
         <div class="header__contenido">
             <a href="/">
                 <h1 class="header__logo">
-                    &#60;DevWebCamp />
+                    TeleUrban
                 </h1>
             </a>
 
             <p class="header__texto">Octubre 5-6 - 2023</p>
             <p class="header__texto header__texto--modalidad">En Línea - Presencial</p>
 
-            <a href="/registro" class="header__boton">Comprar Pase</a>
+            
         </div>
 
     </div>
@@ -32,7 +32,7 @@
     <div class="barra__contenido">
         <a href="/">
             <h2 class="barra__logo">
-                &#60;DevWebCamp />
+                TeleUrban
             </h2>
         </a>
         <nav class="navegacion">
