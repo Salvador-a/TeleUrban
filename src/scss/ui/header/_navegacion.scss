@@ -2,12 +2,18 @@
 @use 'base/mixins' as m;
 
 .navegacion {
+    // Establece el diseño a flex y la dirección a columna
     display: flex;
     flex-direction: column;
+    // Para dispositivos de escritorio
     @include m.desktop {
+        // Cambia la dirección a fila
         flex-direction: row;
     }
+
+    // Define el estilo para los enlaces de la navegación
     &__enlace {
+        // Establece el color del texto a blanco, el tamaño de fuente a 2rem, el padding a 2rem, el peso de fuente a black, transforma el texto a mayúsculas y centra el texto
         color: v.$blanco;
         font-size: 2rem;
         padding: 2rem;
@@ -15,8 +21,10 @@
         text-transform: uppercase;
         text-align: center;
 
+        // Define el estilo para el enlace actual y el enlace al pasar el mouse
         &--actual,
         &:hover {
+            // Oscurece el color de fondo en un 20% y establece el color del texto a blanco
             background-color: darken(v.$verde, 20%);
             color: v.$blanco;
         }	

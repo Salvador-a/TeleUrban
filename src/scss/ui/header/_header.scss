@@ -2,84 +2,117 @@
 @use 'base/mixins' as m;
 
 .header {
+    // Establece la altura mínima del encabezado a 60rem
     min-height: 60rem;
+    // Establece múltiples imágenes de fondo para el encabezado, incluyendo dos gráficos y una imagen con un gradiente
     background-image: url(../img/grafico.svg), url(../img/grafico.svg), linear-gradient(to right, rgba(v.$negro ,1), rgba(v.$negro ,.5) ), image-set( url(../img/header.avif) 1x, url(../img/header.webp) 1x, url(../img/header.jpg) 1x);
+    // Evita que las imágenes de fondo se repitan
     background-repeat: no-repeat;
+    // Establece el tamaño de las imágenes de fondo
     background-size: 40rem, 40rem, cover, cover;
+    // Establece la posición de las imágenes de fondo
     background-position: top left, bottom right, center, center, center, center;
 
+    // Define el estilo para el contenedor del encabezado
     &__contenedor {
+        // Incluye el mixin contenedor
         @include m.contenedor;
-
     }
     
+    // Define el estilo para la navegación del encabezado
     &__navegacion {
+        // Establece el padding alrededor de la navegación
         padding: 5rem 0;
+        // Establece el diseño a flex y centra los elementos
         display: flex;
         justify-content: center;
+        // Establece un espacio de 1rem entre los elementos
         gap: 1rem;
+        // Para dispositivos tablet
         @include m.tablet {
+            // Alinea los elementos a la derecha
             justify-content: flex-end;
         };
-
-
     }
+
 
     &__enlace {
         @include m.enlace;
-
     }
 
+    // Define el estilo para el formulario del encabezado
     &__form {
+        // Establece el diseño a flex
         display: flex;
-        
-
     }
 
+    // Define el estilo para el botón de envío del formulario
     &__submit {
+        // Extiende el estilo del enlace del encabezado
         @extend .header__enlace;
     }
 
+    // Define el estilo para el contenido del encabezado
     &__contenido {
+        // Establece el padding superior a 10rem
         padding-top: 10rem;
+        // Para dispositivos tablet
         @include m.tablet {
+            // Reduce el padding superior a 5rem
             padding-top: 5rem;
         };
-
     }
 
+    // Define el estilo para el logo del encabezado
     &__logo {
+        // Incluye los mixins texto-fluido y texto-degradado
         @include m.texto-fluido(2rem, 8rem);
         @include m.texto-degradado(v.$verde, v.$verde-oscuro);
+        // Centra el texto
         text-align: center;
+        // Para dispositivos tablet
         @include m.tablet {
+            // Alinea el texto a la izquierda
             text-align: left;
+            // Establece el diseño a inline-block
             display: inline-block;
         };     
     }
 
     &__texto {
+        // Establece el tamaño de fuente a 3rem, el peso de fuente a bold y el color de fuente a blanco
         font-size: 3rem;
         font-weight: v.$bold;
         color: v.$blanco;
+        // Establece el margen alrededor del texto a 2rem
         margin: 2rem 0;
+        // Centra el texto
         text-align: center;
+        // Transforma el texto a mayúsculas
         text-transform: uppercase;
+        // Para dispositivos tablet
         @include m.tablet {
+            // Alinea el texto a la izquierda
             text-align: left;
         };
+        // Define el estilo para el texto de la modalidad
         &--modalidad {
-           font-size: 2rem; 
+            // Reduce el tamaño de fuente a 2rem
+            font-size: 2rem; 
         }
     }
-    
+
     &__boton {
+        // Incluye el mixin boton con los colores secundario y blanco
         @include m.boton(v.$secundario, v.$blanco);
+        // Transforma el texto a mayúsculas
         text-transform: uppercase;
+        // Establece el margen alrededor del botón a 2rem
         margin: 2rem 0;
+        // Para dispositivos tablet
         @include m.tablet {
+            // Establece el ancho del botón a auto
             width: auto;
         };
-       
     }
 }
