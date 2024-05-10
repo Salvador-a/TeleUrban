@@ -20,8 +20,12 @@
                 </h1>
             </a>
 
-            <p class="header__texto">Octubre 5-6 - 2023</p>
-            <p class="header__texto header__texto--modalidad">En Línea - Presencial</p>
+            <p class="header__texto">SOBRE NOSOTROS</p>
+            <p class="header__texto header__texto--modalidad">
+                Es un sistema en el transporte público que <br>
+                ofrece información y entretenimiento a través de <br>
+                pantallas y altavoces en diferentes partes de México.
+            </p>
 
             
         </div>
@@ -36,10 +40,10 @@
             </h2>
         </a>
         <nav class="navegacion">
-            <a href="/devwebcamp" class="navegacion__enlace <?php echo pagina_actual('/devwebcamp') ? 'navegacion__enlace--actual' : ''; ?>">Evento</a>
-            <a href="/paquetes" class="navegacion__enlace <?php echo pagina_actual('/paquetes') ? 'navegacion__enlace--actual' : ''; ?>">Paquetes</a>
-            <a href="/workshops-coferencias" class="navegacion__enlace <?php echo pagina_actual('/workshops-coferencias') ? 'navegacion__enlace--actual' : ''; ?>">Workshops / Conferencias</a>
-            <a href="/registro" class="navegacion__enlace <?php echo pagina_actual('/registro') ? 'navegacion__enlace--actual' : ''; ?>">Comprar Pase</a>
+            <a href="/devwebcamp" class="navegacion__enlace <?php echo pagina_actual('/devwebcamp') ? 'navegacion__enlace--actual' : ''; ?>">Nosotros</a>
+            <a href="/paquetes" class="navegacion__enlace <?php echo pagina_actual('/paquetes') ? 'navegacion__enlace--actual' : ''; ?>">Áreas de trabajo</a>
+            <a href="/workshops-coferencias" class="navegacion__enlace <?php echo pagina_actual('/workshops-coferencias') ? 'navegacion__enlace--actual' : ''; ?>">Requisitos</a>
+            <a href="/registro" class="navegacion__enlace <?php echo pagina_actual('/registro') ? 'navegacion__enlace--actual' : ''; ?>">Agenda cita</a>
 
         </nav>
     </div>

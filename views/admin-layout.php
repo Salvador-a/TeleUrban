@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"> <!-- Define la codificación de caracteres para la página -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace que la página sea responsive -->
-    <title>DevWebCamp - <?php echo $titulo; ?></title> <!-- Establece el título de la página -->
+    <title>TeleUrban - <?php echo $titulo; ?></title> <!-- Establece el título de la página -->
     <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Preconecta a Google Fonts para una carga más rápida de las fuentes -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconecta a Google Static Fonts para una carga más rápida de las fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet"> <!-- Importa la fuente Outfit de Google Fonts -->

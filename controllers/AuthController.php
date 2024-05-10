@@ -110,7 +110,7 @@ class AuthController {
 
         // Render a la vista
         $router->render('auth/registro', [
-            'titulo' => 'Crea tu cuenta en DevWebcamp',
+            'titulo' => 'Crea tu cuenta en TeleUrban',
             'usuario' => $usuario, 
             'alertas' => $alertas
         ]);
@@ -249,7 +249,7 @@ class AuthController {
      
 
         $router->render('auth/confirmar', [
-            'titulo' => 'Confirma tu cuenta DevWebcamp',
+            'titulo' => 'Confirma tu cuenta TeleUrban',
             'alertas' => Usuario::getAlertas()
         ]);
     }
