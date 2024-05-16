@@ -34,7 +34,7 @@
     }
 
     &__icono {
-        background-color: v.$gris-oscuro;
+        background-color: darken(v.$azul-verdoso, 20%);
         width: 4rem;
         display: flex;
         align-items: center;
@@ -90,7 +90,7 @@
     }
 
     &__submit {
-       @include m.boton(v.$azul, v.$blanco);
+       @include m.boton(v.$azul-verdoso, v.$blanco);
        width: auto; 
        align-self: flex-start;
 

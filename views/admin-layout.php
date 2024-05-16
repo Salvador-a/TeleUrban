@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Preconecta a Google Fonts para una carga más rápida de las fuentes -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconecta a Google Static Fonts para una carga más rápida de las fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet"> <!-- Importa la fuente Outfit de Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <!-- Importa Font Awesome para usar iconos -->
+   
     <link rel="stylesheet" href="/build/css/app.css"> <!-- Importa el archivo CSS principal de la aplicación -->
 </head>
 <body class="dashboard">
@@ -28,6 +28,9 @@
             ?> 
         </main>
     </div>
+
+    <!-- Importa Font Awesome para usar iconos -->
+    <script src="https://kit.fontawesome.com/df17273963.js" crossorigin="anonymous"></script> 
 
     <!-- Importa la biblioteca Chart.js desde un CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -5,8 +5,11 @@ require_once __DIR__ . '/../includes/app.php';
 use MVC\Router;
 use Controllers\AuthController;
 
+use Controllers\EventosController;
+use Controllers\RegalosController;
 use Controllers\DashboardController;
 use Controllers\EmpleadosController;
+use Controllers\RegistradosController;
 
 $router = new Router();
 
@@ -35,7 +38,18 @@ $router->get('/confirmar-cuenta', [AuthController::class, 'confirmar']);
 // Area de Administración
 $router->get('/admin/dashboard', [DashboardController::class, 'index']);
 
+// Area de Empleados
 $router->get('/admin/empleados', [EmpleadosController::class, 'index']);
+$router->get('/admin/empleados/crear', [EmpleadosController::class, 'crear']);
+
+// Area de Eventos
+$router->get('/admin/eventos', [EventosController::class, 'index']);
+
+// Area de Registrados
+$router->get('/admin/registrados', [RegistradosController::class, 'index']);
+
+// Area de Regalos
+$router->get('/admin/regalos', [RegalosController::class, 'index']);
 
 
 

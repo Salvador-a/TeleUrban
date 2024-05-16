@@ -3,7 +3,7 @@
 <div class="dashboard__contenedor-boton">
     <a class="dashboard__boton" href="/admin/empleados/crear">
         <i class="fa-solid fa-circle-plus"></i>
-        Añadir Ponente
+        Añadir Empleados
     </a>
 </div>
 

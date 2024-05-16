@@ -7,8 +7,8 @@
             </span>
         </a>
 
-        <a href="/admin/empleados" class="dashboard__enlace <?php echo pagina_actual('/ponentes') ? 'dashboard__enlace--actual' : ''; ?> ">
-            <i class="fa-solid fa-microphone dashboard__icono"></i>
+        <a href="/admin/empleados" class="dashboard__enlace <?php echo pagina_actual('/empleados') ? 'dashboard__enlace--actual' : ''; ?> ">
+            <i class="fa-solid fa-user-tie"></i>
 
             <span class="dashboard__menu-texto">
                 Ponentes

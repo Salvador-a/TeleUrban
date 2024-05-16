@@ -37,20 +37,20 @@ class EmpleadosController {
         ]);
     }
 
-    // public static function crear(Router $router) {
-    //     if(!is_admin()) {
-    //         header('Location: /login');
-    //     }
+     public static function crear(Router $router) {
+        if(!is_admin()) {
+              header('Location: /login');
+         }
 
-    //     $alertas = [];
-    //     $ponente = new Ponente;
+          $alertas = [];
+        //  $ponente = new Ponente;
 
     //     if($_SERVER['REQUEST_METHOD'] === 'POST') {
     //         if(!is_admin()) {
     //             header('Location: /login');
     //         }
 
-    //         // Leer imagen
+             // Leer imagen
     //         if(!empty($_FILES['imagen']['tmp_name'])) {
                 
     //             $carpeta_imagenes = '../public/img/speakers';
@@ -90,13 +90,13 @@ class EmpleadosController {
     //         }
     //     }
 
-    //     $router->render('admin/ponentes/crear', [
-    //         'titulo' => 'Registrar Ponente',
-    //         'alertas' => $alertas,
-    //         'ponente' => $ponente,
-    //         'redes' => json_decode($ponente->redes)
-    //     ]);
-    // }
+         $router->render('admin/empleados/crear', [
+             'titulo' => 'Registrar Empleados',
+              'alertas' => $alertas,
+            //  'ponente' => $ponente,
+            //  'redes' => json_decode($ponente->redes)
+         ]);
+     }
 
 
     // public static function editar(Router $router) {

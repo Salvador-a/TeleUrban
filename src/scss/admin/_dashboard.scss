@@ -8,7 +8,7 @@
     background-color: v.$gris-claro;
 
     &__header {
-        background-color: lighten(v.$verde-oscuro, 15%);
+        background-color: lighten(v.$verde-oscuro, 8%);
         padding: 2rem;
     }
 
@@ -48,7 +48,7 @@
     }
 
     &__sidebar {
-        background-color: lighten(v.$verde-oscuro, 18%);
+        background-color: lighten(v.$verde-oscuro, 2%);
         width: 12rem;
 
     }
@@ -71,7 +71,7 @@
         &:hover,
         &--actual {
             
-            background-color: lighten(v.$verde-oscuro, 35%);
+            background-color: lighten(v.$verde-oscuro, 15%);
             color:v.$blanco;
             border-radius: 1rem;
         }
@@ -110,7 +110,7 @@
     }
 
     &__boton {
-        @include m.boton(v.$azul, v.$blanco);
+        @include m.boton(v.$azul-verdoso, v.$blanco-ahumado);
         text-transform: uppercase;
         font-size: 1.4rem;
         @include m.tablet {
@@ -120,7 +120,7 @@
 
     &__contenedor {
         @include m.shadow;
-        background-color: v.$blanco;
+        background-color: v.$blanco-ahumado;
         padding: 2rem;
         border-radius: 1rem;
         margin-top: 5rem;
