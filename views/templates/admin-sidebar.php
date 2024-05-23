@@ -11,7 +11,7 @@
             <i class="fa-solid fa-user-tie"></i>
 
             <span class="dashboard__menu-texto">
-                Ponentes
+                Empleados
             </span>
         </a>
 

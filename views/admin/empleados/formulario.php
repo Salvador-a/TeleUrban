@@ -55,6 +55,7 @@
             class="formulario__input formulario__input--file"
             id="imagen"
             name="imagen"
+            value="<?php echo $_POST['imagen'] ?? ''; ?>"
         >
     </div>
 
@@ -62,9 +63,9 @@
         <p class="formulario__texto">Imagen Actual:</p>
         <div class="formulario__imagen">
             <picture>
-                <source srcset="<?php echo $_ENV['HOST'] . '/img/speakers/' . $empleado->imagen; ?>.webp" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'] . '/img/speakers/' . $empleado->imagen; ?>.png" type="image/png">
-                <img src="<?php echo $_ENV['HOST'] . '/img/speakers/' . $empleado->imagen; ?>.png" alt="Imagen empleado">
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $empleado->imagen; ?>.webp" type="image/webp">
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $empleado->imagen; ?>.png" type="image/png">
+                <img src="<?php echo $_ENV['HOST'] . '/img/galeria/' . $empleado->imagen; ?>.png" alt="Imagen empleado">
             </picture>
         </div>
 
@@ -80,10 +81,10 @@
         <input
             type="text"
             class="formulario__input"
-            id="job_title"
-            name="job_title"
+            id="puesto_trabajo"
+            name="puesto_trabajo"
             placeholder="Ej. Desarrollador Full Stack"
-            value="<?php echo $empleado->job_title ?? ''; ?>"
+            value="<?php echo $_POST['puesto_trabajo'] ?? ''; ?>"
         >
     </div>
 
@@ -97,7 +98,10 @@
         >
 
         <div id="tags" class="formulario__listado"></div>
-        <input type="hidden" name="tags" value="<?php echo $empleado->tags ?? ''; ?>"> 
+        <input 
+            type="hidden" 
+            name="tags" 
+            value="<?php echo $empleado->tags ?? ''; ?>"> 
     </div>
 
     <div class="formulario__campo">
@@ -105,9 +109,9 @@
         <textarea
             class="formulario__input"
             id="descripcion"
-            name="descripcion"
+            name="descripcion_area_trabajo"
             placeholder="Escribe aquí la descripción del área de trabajo..."
-        ><?php echo $empleado->descripcion ?? ''; ?></textarea>
+        ><?php echo $empleado->descripcion_area_trabajo ?? ''; ?></textarea>
     </div>
 
 

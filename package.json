@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Sistema automatizado para programación de entrevistas laborales",
   "main": "index.js",
-  
   "scripts": {
     "dev": "gulp dev"
   },
@@ -13,7 +12,6 @@
     "url": "https://github.com/Salvador-a/TeleUrban/issues"
   },
   "homepage": "https://github.com/Salvador-a/TeleUrban#readme",
-
   "devDependencies": {
     "css-loader": "^6.10.0",
     "cssnano": "^5.1.10",
@@ -42,5 +40,3 @@
     "webpack-stream": "^7.0.0"
   }
 }
-
-

@@ -1,1 +1,1 @@
-import './mapa.js'
+import './tags.js'

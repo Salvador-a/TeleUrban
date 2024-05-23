@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace Model;
 
-class Ponente extends ActiveRecord {
-    protected static $tabla = 'ponentes';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'ciudad', 'pais', 'imagen', 'tags', 'redes'];
+class Empleado extends ActiveRecord {
+    protected static $tabla = 'empleados';
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'ciudad', 'pais', 'imagen', 'puesto_trabajo', 'tags', 'descripcion_area_trabajo', 'redes_sociales'];
 
     public $id;
     public $nombre;
@@ -12,8 +12,10 @@ class Ponente extends ActiveRecord {
     public $ciudad;
     public $pais;
     public $imagen;
+    public $puesto_trabajo;
     public $tags;
-    public $redes;
+    public $descripcion_area_trabajo;
+    public $redes_sociales;
 
     
     public function __construct($args = [])
@@ -24,8 +26,10 @@ class Ponente extends ActiveRecord {
         $this->ciudad = $args['ciudad'] ?? '';
         $this->pais = $args['pais'] ?? '';
         $this->imagen = $args['imagen'] ?? '';
+        $this->puesto_trabajo = $args['puesto_trabajo'] ?? '';
         $this->tags = $args['tags'] ?? '';
-        $this->redes = $args['redes'] ?? '';
+        $this->descripcion_area_trabajo = $args['descripcion_area_trabajo'] ?? '';
+        $this->redes_sociales = $args['redes_sociales'] ?? '';
     }
 
     
@@ -45,9 +49,18 @@ class Ponente extends ActiveRecord {
         if(!$this->imagen) {
             self::$alertas['error'][] = 'La imagen es obligatoria';
         }
-        if(!$this->tags) {
-            self::$alertas['error'][] = 'El Campo áreas es obligatorio';
-        }
+         if(!$this->puesto_trabajo) {
+            self::$alertas['error'][] = 'El Campo Puesto de Trabajo es Obligatorio';
+         }
+         if(!$this->tags) {
+             self::$alertas['error'][] = 'El Campo Áreas de Experiencia es obligatorio';
+         }
+         if(!$this->descripcion_area_trabajo) {
+             self::$alertas['error'][] = 'El Campo Descripción de Área de Trabajo es obligatorio';
+         }
+        // if(!$this->redes_sociales) {
+        //     self::$alertas['error'][] = 'El Campo Redes Sociales es obligatorio';
+         //}
     
         return self::$alertas;
     }

@@ -202,7 +202,7 @@
 
     // Estilos para los elementos de la lista
     > li {
-        background-color: v.$azul; // Establece el color de fondo a azul
+        background-color: lighten(v.$verde-oscuro, 8%);; // Establece el color de fondo a azul
         padding: 1rem; // Establece el padding
         border-radius: .5rem; // Establece el radio del borde
         font-size: 1.4rem; // Establece el tamaño de la fuente

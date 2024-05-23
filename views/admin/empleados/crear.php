@@ -15,7 +15,7 @@
 
     ?>
 
-    <form method="POST" action="/admin/ponentes/crear" enctype="multipart/form-data" class="formulario">
+    <form method="POST" action="/admin/empleados/crear" enctype="multipart/form-data" class="formulario">
         <?php include_once __DIR__ . '/formulario.php'; ?>
 
         <input class="formulario__submit formulario__submit--registrar" type="submit" value="Registrar Empleado">
