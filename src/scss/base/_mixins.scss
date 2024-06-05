@@ -231,3 +231,5 @@
     // Comienza con el color proporcionado ($bg_color) y termina con una versión más clara de ese color (se aclara un 15%)
     background-image: linear-gradient(to left top, $bg_color, lighten($bg_color, 15%) );
 }
+
+

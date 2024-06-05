@@ -42,6 +42,10 @@ $router->get('/admin/dashboard', [DashboardController::class, 'index']);
 $router->get('/admin/empleados', [EmpleadosController::class, 'index']);
 $router->get('/admin/empleados/crear', [EmpleadosController::class, 'crear']);
 $router->post('/admin/empleados/crear', [EmpleadosController::class, 'crear']);
+$router->get('/admin/empleados/editar', [EmpleadosController::class, 'editar']);
+$router->post('/admin/empleados/editar', [EmpleadosController::class, 'editar']);
+$router->post('/admin/empleados/eliminar', [EmpleadosController::class, 'eliminar']);
+
 
 // Area de Eventos
 $router->get('/admin/eventos', [EventosController::class, 'index']);

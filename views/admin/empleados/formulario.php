@@ -84,7 +84,7 @@
             id="puesto_trabajo"
             name="puesto_trabajo"
             placeholder="Ej. Desarrollador Full Stack"
-            value="<?php echo $_POST['puesto_trabajo'] ?? ''; ?>"
+            value="<?php echo $empleado->puesto_trabajo ?? ''; ?>"
         >
     </div>
 

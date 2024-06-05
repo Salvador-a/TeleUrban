@@ -4,47 +4,205 @@
 .table {
     width: 100%;
     border-collapse: collapse;
+    font-family: v.$fuente-principal;
+    margin-bottom: 2rem;
 
     &__thead {
-        background-color: v.$gris-oscuro;
-        color: v.$blanco;
+        background-color: v.$verde;
+        color: v.$blanco-ahumado;
     }
+
     &__th {
         padding: 1rem;
         text-align: left;
+        font-size: 1.6rem;
+        vertical-align: middle;
+
+        @include m.telefono {
+            font-size: 1.4rem;
+        }
+
+        @include m.tablet {
+            font-size: 1.8rem;
+        }
+
+        @include m.desktop {
+            font-size: 2rem;
+        }
+
+        @include m.xl_desktop {
+            font-size: 1.8rem;
+        }
     }
 
     &__tr {
         &:nth-of-type(even) {
             background-color: v.$gris-claro;
         }
+        &:nth-of-type(odd) {
+            background-color: v.$blanco-ahumado;
+        }
+        height: 4rem;
     }
 
     &__td {
         padding: 1.5rem 1rem;
+        font-size: 1.4rem;
+        vertical-align: middle;
+        text-align: left;
+
+        @include m.telefono {
+            font-size: 1.2rem;
+            padding: 1rem 0.8rem;
+        }
+
+        @include m.tablet {
+            font-size: 1.6rem;
+            padding: 1.2rem 1rem;
+        }
+
+        @include m.desktop {
+            font-size: 1.8rem;
+            padding: 1.5rem 1.2rem;
+        }
+
+        @include m.xl_desktop {
+            font-size: 1.5rem;
+            padding: 2rem 1.5rem;
+        }
 
         &--acciones {
-            @extend .table__td;
-            display: flex;
-            justify-content: flex-end;
-            gap: 2rem;
-            align-items: center;
+            text-align: right; // Alinea los botones a la derecha
+        }
+
+        &--descripcion {
+            max-width: 23rem;
+            position: relative;
+
+            .table__descripcion {
+                max-height: 18rem;
+                overflow-y: auto;
+                white-space: normal;
+                padding-right: 0.5rem;
+                background-color: transparent;
+                padding: 0;
+                font-family: v.$fuente-principal;
+                font-size: 1rem;
+                color: v.$gris-oscuro-2;
+                text-align: left;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+
+                @include m.telefono {
+                    font-size: 1.2rem;
+                }
+
+                @include m.tablet {
+                    font-size: 1.6rem;
+                }
+
+                @include m.desktop {
+                    font-size: 1.8rem;
+                }
+
+                @include m.xl_desktop {
+                    font-size: 2rem;
+                }
+            }
+
+            .table__descripcion::-webkit-scrollbar {
+                width: .5rem; // Tamaño del scrollbar
+            }
+
+            .table__descripcion::-webkit-scrollbar-thumb {
+                background-color: transparent; // Color del scrollbar
+                border-radius: .2rem;
+            }
+
+            .table__descripcion::-webkit-scrollbar-thumb:hover {
+                background-color: lighten(v.$gris, 40%); // Cambiamos el color del scrollbar al pasar el mouse sobre él
+            }
+
+            .table__descripcion::-webkit-scrollbar-track {
+                background-color: transparent; // Fondo del scrollbar transparente
+            }
         }
     }
 
     &__accion {
         all: unset;
         text-transform: uppercase;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: v.$bold;
+        display: inline-flex; // Cambia de flex a inline-flex
+        align-items: center;
+        margin-left: 0.5rem; // Asegura un pequeño espacio entre los botones
+
         &--editar {
             color: v.$azul;
         }
+
         &--eliminar {
-           color: v.$rojo;
+            color: v.$rojo;
         }
+
         &:hover {
             cursor: pointer;
+        }
+
+        @include m.telefono {
+            font-size: 1rem;
+        }
+
+        @include m.tablet {
+            font-size: 1.4rem;
+        }
+
+        @include m.desktop {
+            font-size: 1.6rem;
+        }
+
+        @include m.xl_desktop {
+            font-size: 1.7rem;
+        }
+    }
+}
+
+@media (max-width: v.$telefono) {
+    .table {
+        display: block;
+        width: 100%;
+
+        &__thead {
+            display: none;
+        }
+
+        &__tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: none;
+        }
+
+        &__td {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid lighten(v.$gris, 40%);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:before {
+                content: attr(data-label);
+                font-weight: v.$bold;
+                flex-basis: 40%;
+                text-align: left;
+                padding-right: 1rem;
+            }
         }
     }
 }

@@ -1,30 +1,43 @@
 <?php
 
+// Define el espacio de nombres para este controlador
 namespace Controllers;
 
+// Importa la clase Email del espacio de nombres Classes
 use Classes\Email;
+
+// Importa la clase Usuario del espacio de nombres Model
 use Model\Usuario;
+
+// Importa la clase Router del espacio de nombres MVC
 use MVC\Router;
 
 class AuthController {
+    // Define un método estático llamado login que toma un objeto Router como argumento
     public static function login(Router $router) {
 
+        // Inicializa un array vacío para almacenar las alertas
         $alertas = [];
 
-
+        // Verifica si la solicitud HTTP es de tipo POST
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
     
+            // Crea un nuevo objeto Usuario con los datos enviados en el POST
             $usuario = new Usuario($_POST);
 
+            // Valida los datos de inicio de sesión y almacena las alertas, si las hay
             $alertas = $usuario->validarLogin();
             
+            // Si no hay alertas, es decir, si los datos de inicio de sesión son válidos
             if(empty($alertas)) {
-                // Verificar quel el usuario exista
+                // Busca un usuario en la base de datos que tenga el mismo correo electrónico
                 $usuario = Usuario::where('email', $usuario->email);
+                // Si el usuario no existe o no está confirmado
                 if(!$usuario || !$usuario->confirmado ) {
+                        // Establece una alerta de error
                     Usuario::setAlerta('error', 'El Usuario No Existe o no esta confirmado');
                 } else {
-                    // El Usuario existe
+                    // Si el usuario existe y su contraseña coincide
                     if( password_verify($_POST['password'], $usuario->password) ) {
                         
                         // Iniciar la sesión
@@ -35,7 +48,8 @@ class AuthController {
                         $_SESSION['email'] = $usuario->email;
                         $_SESSION['admin'] = $usuario->admin ?? null;
 
-                        // Redirección 
+                        // Redirige al usuario a la página de administración si es administrador, 
+                        // de lo contrario, a la página de finalización de registro
                         if($usuario->admin) {
                             header('Location: /admin/dashboard');
                         } else {
@@ -43,15 +57,16 @@ class AuthController {
                         }
                         
                     } else {
+                         // Si la contraseña no coincide, establece una alerta de error
                         Usuario::setAlerta('error', 'Password Incorrecto');
                     }
                 }
             }
         }
-
+        // Obtiene las alertas
         $alertas = Usuario::getAlertas();
         
-        // Render a la vista 
+        // Renderiza la vista de inicio de sesión con el título y las alertas
         $router->render('auth/login', [
             'titulo' => 'Iniciar Sesión',
             'alertas' => $alertas
@@ -68,50 +83,57 @@ class AuthController {
     }
 
     public static function registro(Router $router) {
+        // Inicializa un array vacío para almacenar las alertas
         $alertas = [];
+        // Crea un nuevo objeto Usuario
         $usuario = new Usuario;
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+            // Sincroniza los datos del usuario con los datos enviados en el POST
             $usuario->sincronizar($_POST);
-            
+            // Valida los datos de la cuenta del usuario y almacena las alertas, si las hay
             $alertas = $usuario->validar_cuenta();
 
+            // Si no hay alertas, es decir, si los datos de la cuenta son válidos
             if(empty($alertas)) {
+                // Busca un usuario en la base de datos que tenga el mismo correo electrónico
                 $existeUsuario = Usuario::where('email', $usuario->email);
 
+                // Si el usuario ya existe
                 if($existeUsuario) {
+                    // Establece una alerta de error
                     Usuario::setAlerta('error', 'El Usuario ya esta registrado');
+                    // Obtiene las alertas
                     $alertas = Usuario::getAlertas();
                 } else {
-                    // Hashear el password
+                    // Hashea la contraseña del usuario
                     $usuario->hashPassword();
-
-                    // Eliminar password2
+                    // Elimina la confirmación de la contraseña
                     unset($usuario->password2);
-
-                    // Generar el Token
+                    // Genera un token para el usuario
                     $usuario->crearToken();
-
-                    // Crear un nuevo usuario
+                    // Crea un nuevo usuario en la base de datos
                     $resultado =  $usuario->guardar();
-
-                    // Enviar email
+                    // Envía un correo electrónico de confirmación al usuario
                     $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
                     $email->enviarConfirmacion();
-                    
 
+                    // Si el usuario se creó con éxito
                     if($resultado) {
+                        // Redirige al usuario a la página de mensajes
                         header('Location: /mensaje');
                     }
                 }
             }
         }
 
-        // Render a la vista
+        // Renderiza la vista 'auth/registro' utilizando el objeto $router
         $router->render('auth/registro', [
+            // Establece el título de la página a 'Crea tu cuenta en TeleUrban'
             'titulo' => 'Crea tu cuenta en TeleUrban',
+            // Pasa el objeto $usuario a la vista. Este objeto contiene los datos del usuario que se está registrando
             'usuario' => $usuario, 
+            // Pasa el array $alertas a la vista. Este array contiene cualquier alerta que se haya generado durante el proceso de registro
             'alertas' => $alertas
         ]);
     }
