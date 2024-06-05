@@ -70,7 +70,7 @@ class Paginacion {
             $html .= $this->enlace_anterior();
             $html .= $this->numeros_paginas();
             $html .= $this->enlace_siguiente();
-            $html .= '</div>';
+            $html .= '</div>'; 
         }
 
         return $html;
