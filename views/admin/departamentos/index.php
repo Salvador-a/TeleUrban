@@ -1,9 +1,9 @@
 <h2 class="dashboard__heading"><?php echo $titulo; ?></h2>
 
 <div class="dashboard__contenedor-boton">
-    <a class="dashboard__boton" href="/admin/eventos/crear">
+    <a class="dashboard__boton" href="/admin/departamentos/crear">
         <i class="fa-solid fa-circle-plus"></i>
-        Añadir Evento
+        Añadir Departamentos
     </a>
 </div>
 
@@ -55,7 +55,7 @@
             </tbody>
         </table>
     <?php } else { ?>
-        <p class="text-center">No Hay Eventos Aún</p>
+        <p class="text-center">No Hay Departamentos Aún</p>
     <?php } ?>
 </div>
 

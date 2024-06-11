@@ -5,11 +5,11 @@ require_once __DIR__ . '/../includes/app.php';
 use MVC\Router;
 use Controllers\AuthController;
 
-use Controllers\EventosController;
 use Controllers\RegalosController;
 use Controllers\DashboardController;
 use Controllers\EmpleadosController;
 use Controllers\RegistradosController;
+use Controllers\DepartamentosController;
 
 $router = new Router();
 
@@ -48,7 +48,8 @@ $router->post('/admin/empleados/eliminar', [EmpleadosController::class, 'elimina
 
 
 // Area de Eventos
-$router->get('/admin/eventos', [EventosController::class, 'index']);
+$router->get('/admin/departamentos', [DepartamentosController::class, 'index']);
+$router->get('/admin/departamentos/crear', [DepartamentosController::class, 'crear']);
 
 // Area de Registrados
 $router->get('/admin/registrados', [RegistradosController::class, 'index']);

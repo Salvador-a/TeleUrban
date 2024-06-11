@@ -15,11 +15,11 @@
             </span>
         </a>
 
-        <a href="/admin/eventos" class="dashboard__enlace  <?php echo pagina_actual('/eventos') ? 'dashboard__enlace--actual' : ''; ?> ">
-        <i class="fa-solid fa-calendar dashboard__icono"></i>
+        <a href="/admin/departamentos" class="dashboard__enlace  <?php echo pagina_actual('/departamentos') ? 'dashboard__enlace--actual' : ''; ?> ">
+        <i class="fa-solid fa-building"></i>
 
             <span class="dashboard__menu-texto">
-                Eventos
+                Departamento 
             </span>
         </a>
 

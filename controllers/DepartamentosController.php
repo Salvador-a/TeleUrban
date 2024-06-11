@@ -2,15 +2,9 @@
 
 namespace Controllers;
 
-use Classes\Paginacion;
-use Model\Categoria;
-use Model\Dia;
-use Model\Evento;
-use Model\Hora;
-use Model\Ponente;
 use MVC\Router;
 
-class EventosController {
+class DepartamentosController {
 
     public static function index(Router $router) {
         if(!is_admin()) {
@@ -37,20 +31,20 @@ class EventosController {
         //     $evento->ponente = Ponente::find($evento->ponente_id);
         // }
 
-        $router->render('admin/eventos/index', [
-            'titulo' => 'Conferencias y Workshops',
+        $router->render('admin/departamentos/index', [
+            'titulo' => 'Departamento',
             // 'eventos' => $eventos,
             // 'paginacion' => $paginacion->paginacion()
         ]);
     }
 
-    // public static function crear(Router $router) {
-    //     if(!is_admin()) {
-    //         header('Location: /login');
-    //         return;
-    //     }
+     public static function crear(Router $router) {
+         if(!is_admin()) {
+             header('Location: /login');
+             return;
+         }
 
-    //     $alertas = [];
+         $alertas = [];
 
     //     $categorias = Categoria::all('ASC');
     //     $dias = Dia::all('ASC');
@@ -77,15 +71,15 @@ class EventosController {
     //         }
     //     }
 
-    //     $router->render('admin/eventos/crear', [
-    //         'titulo' => 'Registrar Evento',
-    //         'alertas' => $alertas,
+         $router->render('admin/departamentos/crear', [
+             'titulo' => 'Registrar Departamentos',
+             'alertas' => $alertas,
     //         'categorias' => $categorias,
     //         'dias' => $dias,
     //         'horas' => $horas,
     //         'evento' => $evento
-    //     ]);
-    // }
+         ]);
+     }
 
     // public static function editar(Router $router) {
 

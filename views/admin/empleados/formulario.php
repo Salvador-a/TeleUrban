@@ -104,15 +104,15 @@
             value="<?php echo $empleado->tags ?? ''; ?>"> 
     </div>
 
-    <div class="formulario__campo">
+    <!-- <div class="formulario__campo">
         <label for="descripcion" class="formulario__label">Descripción del área de trabajo</label>
         <textarea
             class="formulario__input"
             id="descripcion"
             name="descripcion_area_trabajo"
             placeholder="Escribe aquí la descripción del área de trabajo..."
-        ><?php echo $empleado->descripcion_area_trabajo ?? ''; ?></textarea>
-    </div>
+      ><?php echo $empleado->descripcion_area_trabajo ?? ''; ?></textarea>
+    </div> -->
 
 
 </fieldset>
@@ -130,7 +130,7 @@
                 class="formulario__input--sociales"
                 name="redes[facebook]"
                 placeholder="Facebook"
-                value="<?php echo $redes->facebook ?? ''; ?>"
+                value="<?php echo $redes_sociales->facebook ?? ''; ?>"
             >
         </div>
     </div>
@@ -145,7 +145,7 @@
                 class="formulario__input--sociales"
                 name="redes[twitter]"
                 placeholder="Twitter (𝕏)"
-                value="<?php echo $redes->twitter ?? ''; ?>"
+                value="<?php echo $redes_sociales->twitter ?? ''; ?>"
             >
         </div>
     </div>
@@ -162,7 +162,7 @@
                 class="formulario__input--sociales"
                 name="redes[instagram]"
                 placeholder="Instagram"
-                value="<?php echo $redes->instagram ?? ''; ?>"
+                value="<?php echo $redes_sociales->instagram ?? ''; ?>"
             >
         </div>
     </div>
@@ -179,7 +179,7 @@
                 class="formulario__input--sociales"
                 name="redes[github]"
                 placeholder="GitHub"
-                value="<?php echo $redes->github ?? ''; ?>"
+                value="<?php echo $redes_sociales->github ?? ''; ?>"
             >
         </div>
     </div>
@@ -194,7 +194,7 @@
                 class="formulario__input--sociales"
                 name="redes[linkedin]"
                 placeholder="LinkedIn"
-                value="<?php echo $redes->linkedin ?? ''; ?>"
+                value="<?php echo $redes_sociales->linkedin ?? ''; ?>"
             >
         </div>
     </div>

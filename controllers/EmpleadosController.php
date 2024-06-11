@@ -5,6 +5,7 @@ namespace Controllers;
 
 use MVC\Router;
 use Model\Empleado;
+use Classes\Paginacion;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
@@ -15,30 +16,29 @@ class EmpleadosController {
              header('Location: /login');
          }
 
-        // $pagina_actual = $_GET['page'];
-        // $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
+         $pagina_actual = $_GET['page'];
+         $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
 
-        // if(!$pagina_actual || $pagina_actual < 1) {
-        //     header('Location: /admin/ponentes?page=1');
-        // }
-        // $registros_por_pagina = 5;
-        // $total = Ponente::total();
-        // $paginacion = new Paginacion($pagina_actual, $registros_por_pagina, $total);
+         if(!$pagina_actual || $pagina_actual < 1) {
+             header('Location: /admin/empleados?page=1');
+         }
+         $registros_por_pagina = 4;
+         $total = Empleado::total();
+         $paginacion = new Paginacion($pagina_actual, $registros_por_pagina, $total);
 
-        // if($paginacion->total_paginas() < $pagina_actual) {
-        //     header('Location: /admin/ponentes?page=1');
-        // }
+         if($paginacion->total_paginas() < $pagina_actual) {
+             header('Location: /admin/empleados?page=1');
+         }
 
-        // $ponentes = Ponente::paginar($registros_por_pagina, $paginacion->offset());
+         $empleados = Empleado::paginar($registros_por_pagina, $paginacion->offset());
 
 
-        $empleados = Empleado::all();
+        // $empleados = Empleado::all();
         
         $router->render('admin/empleados/index', [
             'titulo' => 'Empleados ',
-            'empleados' => $empleados
-            
-            // 'paginacion' => $paginacion->paginacion()
+            'empleados' => $empleados,            
+            'paginacion' => $paginacion->paginacion()
         ]);
     }
 
@@ -74,7 +74,7 @@ class EmpleadosController {
                 $_POST['imagen'] = $nombre_imagen;
             } 
 
-            $_POST['redes'] = json_encode( $_POST['redes'], JSON_UNESCAPED_SLASHES );        
+            $_POST['redes_sociales'] = json_encode( $_POST['redes_sociales'], JSON_UNESCAPED_SLASHES );        
             $empleado->sincronizar($_POST);
 
             // validar
@@ -102,7 +102,7 @@ class EmpleadosController {
             'titulo' => 'Registrar Empleado',
             'alertas' => $alertas,
             'empleado' => $empleado,
-            'redes' => json_decode($empleado->redes)
+            'redes_sociales' => json_decode($empleado->redes_sociales)
         ]);
     }
 
@@ -153,7 +153,7 @@ class EmpleadosController {
                 $_POST['imagen'] = $empleado->imagen_actual;
             }
 
-            $_POST['redes'] = json_encode( $_POST['redes'], JSON_UNESCAPED_SLASHES );     
+            $_POST['redes_sociales'] = json_encode( $_POST['redes_sociales'], JSON_UNESCAPED_SLASHES );     
             $empleado->sincronizar($_POST);
 
             $alertas = $empleado->validar();
@@ -175,7 +175,7 @@ class EmpleadosController {
             'titulo' => 'Actualizar Empleado',
             'alertas' => $alertas,
             'empleado' => $empleado,
-            // 'redes' => json_decode($empleado->redes)
+            'redes_sociales' => json_decode($empleado->redes_sociales)
         ]);
 
     }

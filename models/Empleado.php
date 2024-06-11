@@ -4,7 +4,7 @@ namespace Model;
 
 class Empleado extends ActiveRecord {
     protected static $tabla = 'empleados';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'ciudad', 'pais', 'imagen', 'puesto_trabajo', 'tags', 'descripcion_area_trabajo', 'redes_sociales'];
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'ciudad', 'pais', 'imagen', 'puesto_trabajo', 'tags', 'redes_sociales'];
 
     public $id;
     public $nombre;
@@ -14,7 +14,7 @@ class Empleado extends ActiveRecord {
     public $imagen;
     public $puesto_trabajo;
     public $tags;
-    public $descripcion_area_trabajo;
+    // public $descripcion_area_trabajo;
     public $redes_sociales;
 
     
@@ -28,7 +28,7 @@ class Empleado extends ActiveRecord {
         $this->imagen = $args['imagen'] ?? '';
         $this->puesto_trabajo = $args['puesto_trabajo'] ?? '';
         $this->tags = $args['tags'] ?? '';
-        $this->descripcion_area_trabajo = $args['descripcion_area_trabajo'] ?? '';
+        // $this->descripcion_area_trabajo = $args['descripcion_area_trabajo'] ?? '';
         $this->redes_sociales = $args['redes_sociales'] ?? '';
     }
 
@@ -55,12 +55,12 @@ class Empleado extends ActiveRecord {
          if(!$this->tags) {
              self::$alertas['error'][] = 'El Campo Áreas de Experiencia es obligatorio';
          }
-         if(!$this->descripcion_area_trabajo) {
-             self::$alertas['error'][] = 'El Campo Descripción de Área de Trabajo es obligatorio';
-         }
-        // if(!$this->redes_sociales) {
-        //     self::$alertas['error'][] = 'El Campo Redes Sociales es obligatorio';
-         //}
+        //  if(!$this->descripcion_area_trabajo) {
+        //      self::$alertas['error'][] = 'El Campo Descripción de Área de Trabajo es obligatorio';
+        //  }
+         if(!$this->redes_sociales) {
+            self::$alertas['error'][] = 'El Campo Redes Sociales es obligatorio';
+            }
     
         return self::$alertas;
     }

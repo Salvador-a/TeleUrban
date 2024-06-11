@@ -1,17 +1,28 @@
 <fieldset class="formulario__fieldset">
-    <legend class="formulario__legend">Infornación Evento</legend>
+    <legend class="formulario__legend">Infornación Departamento</legend>
 
     <div class="formulario__campo">
-        <label for="nombre" class="formulario__label">Nombre Evento</label>
+        <label for="nombre" class="formulario__label">Nombre Departamento</label>
         <input
             type="text"
             class="formulario__input"
             id="nombre"
             name="nombre"
             placeholder="Nombre Evento"
-            value="<?php echo $evento->nombre; ?>"
+            value="<?php echo $evento->nombre_departamento; ?>"
             
         >
+    </div>
+
+    <div class="formulario__campo">
+    <label for="encargado" class="formulario__label">Jefe del Departamento</label>
+    <select id="encargado" name="encargado" class="formulario__input">
+        <?php foreach($empleados as $empleado) { ?>
+            <option value="<?php echo $empleado->id; ?>">
+                <?php echo $empleado->nombre . ' ' . $empleado->apellido; ?>
+            </option>
+        <?php } ?>
+    </select>
     </div>
 
     <div class="formulario__campo">

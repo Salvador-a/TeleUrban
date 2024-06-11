@@ -16,33 +16,29 @@
                     <th scope="col" class="table__th">Nombre</th>
                     <th scope="col" class="table__th">Puesto de Trabajo</th>
                     <th scope="col" class="table__th">Áreas de Experiencia</th>
-                    <th scope="col" class="table__th">Descripción del Área de Trabajo</th>
-                    <th scope="col" class="table__th"></th>
+                    <!-- <th scope="col" class="table__th">Descripción del Área de Trabajo</th> -->
+                    <th scope="col" class="table__th">Acciones</th>
                 </tr>
             </thead>
 
             <tbody class="table__tbody">
                 <?php foreach($empleados as $empleado) { ?>
                     <tr class="table__tr">
-                        <!-- <td class="table__td">
-                            <img src="/public/build/img/galeria/<?php echo $empleado->imagen; ?>" alt="Imagen de empleado">
-                        </td> -->
-
-                        <td class="table__td">
+                        <td class="table__td" data-label="Nombre">
                             <?php echo $empleado->nombre . " " . $empleado->apellido; ?>
                         </td>
-                        <td class="table__td">
+                        <td class="table__td" data-label="Puesto de Trabajo">
                             <?php echo $empleado->puesto_trabajo ; ?>
                         </td>
-                        <td class="table__td">
+                        <td class="table__td" data-label="Áreas de Experiencia">
                             <?php echo $empleado->tags ; ?>
                         </td>
-                        <td class="table__td table__td--descripcion">
+                        <!-- <td class="table__td table__td--descripcion" data-label="Descripción del Área de Trabajo">
                             <div class="table__descripcion">
                                 <?php echo $empleado->descripcion_area_trabajo ; ?>
                             </div>
-                        </td>
-                        <td class="table__td--acciones">
+                        </td> -->
+                        <td class="table__td table__td--acciones" data-label="Acciones">
                             <a class="table__accion table__accion--editar" href="/admin/empleados/editar?id=<?php echo $empleado->id; ?>">
                                 <i class="fa-solid fa-user-pen"></i>
                                 Editar
