@@ -48,6 +48,7 @@
             value="<?php echo $empleado->pais ?? ''; ?>"
         >
     </div>
+    
     <div class="formulario__campo">
         <label for="imagen" class="formulario__label">Imagen</label>
         <input

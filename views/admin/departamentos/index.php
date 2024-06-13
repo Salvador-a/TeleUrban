@@ -7,43 +7,40 @@
     </a>
 </div>
 
-
 <div class="dashboard__contenedor">
-    <?php if(!empty($eventos)) { ?>
+    <?php if(!empty($departamentos)) { ?>
         <table class="table">
             <thead class="table__thead">
                 <tr>
-                    <th scope="col" class="table__th">Evento</th>
-                    <th scope="col" class="table__th">Categoría</th>
-                    <th scope="col" class="table__th">Día y Hora</th>
-                    <th scope="col" class="table__th">Ponente</th>
-                    <th scope="col" class="table__th"></th>
+                    <th scope="col" class="table__th">Departamento</th>
+                    <th scope="col" class="table__th">Encargado</th>
+                    <th scope="col" class="table__th">Descripción</th>
+                    <th scope="col" class="table__th">Acciones</th>
                 </tr>
             </thead>
 
             <tbody class="table__tbody">
-                <?php foreach($eventos as $evento) { ?>
+                <?php foreach($departamentos as $departamento) { ?>
                     <tr class="table__tr">
-                        <td class="table__td">
-                            <?php echo $evento->nombre; ?>
+                        <td class="table__td" data-label="Departamento">
+                            <?php echo $departamento->nombre_departamento; ?>
                         </td>
-                        <td class="table__td">
-                            <?php echo $evento->categoria->nombre; ?>
+                        <td class="table__td" data-label="Encargado">
+                            <?php echo $departamento->encargado->nombre . " " . $departamento->encargado->apellido . ' - ' . $departamento->encargado->puesto_trabajo; ?>
                         </td>
-                        <td class="table__td">
-                            <?php echo $evento->dia->nombre . ", " . $evento->hora->hora; ?>
+                        <td class="table__td table__td--descripcion" data-label="Descripción">
+                            <div class="table__descripcion">
+                                <?php echo $departamento->descripcion; ?>
+                            </div>
                         </td>
-                        <td class="table__td">
-                            <?php echo $evento->ponente->nombre . " " . $evento->ponente->apellido; ?>
-                        </td>
-                        <td class="table__td--acciones">
-                            <a class="table__accion table__accion--editar" href="/admin/eventos/editar?id=<?php echo $evento->id; ?>">
-                                <i class="fa-solid fa-pencil"></i>
+                        <td class="table__td table__td--acciones" data-label="Acciones">
+                            <a class="table__accion table__accion--editar" href="/admin/departamentos/editar?id=<?php echo $departamento->id; ?>">
+                                <i class="fa-solid fa-user-pen"></i>
                                 Editar
                             </a>
 
-                            <form method="POST" action="/admin/eventos/eliminar" class="table__formulario">
-                                <input type="hidden" name="id" value="<?php echo $evento->id; ?>">
+                            <form method="POST" action="/admin/departamentos/eliminar" class="table__formulario">
+                                <input type="hidden" name="id" value="<?php echo $departamento->id; ?>">
                                 <button class="table__accion table__accion--eliminar" type="submit">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                     Eliminar
@@ -59,6 +56,4 @@
     <?php } ?>
 </div>
 
-<?php 
-    echo $paginacion;
-?>
+<?php echo $paginacion; ?>

@@ -1,29 +1,55 @@
 <fieldset class="formulario__fieldset">
-    <legend class="formulario__legend">Infornación Departamento</legend>
+    <legend class="formulario__legend">Información Departamento</legend>
 
     <div class="formulario__campo">
-        <label for="nombre" class="formulario__label">Nombre Departamento</label>
+        <label for="nombre_departamento" class="formulario__label">Nombre Departamento</label>
         <input
             type="text"
             class="formulario__input"
-            id="nombre"
-            name="nombre"
-            placeholder="Nombre Evento"
-            value="<?php echo $evento->nombre_departamento; ?>"
-            
+            id="nombre_departamento"
+            name="nombre_departamento"
+            placeholder="Nombre del Departamento"
+            value="<?php echo $departamento->nombre_departamento ?? ''; ?>"
         >
     </div>
 
     <div class="formulario__campo">
-    <label for="encargado" class="formulario__label">Jefe del Departamento</label>
-    <select id="encargado" name="encargado" class="formulario__input">
-        <?php foreach($empleados as $empleado) { ?>
-            <option value="<?php echo $empleado->id; ?>">
-                <?php echo $empleado->nombre . ' ' . $empleado->apellido; ?>
-            </option>
-        <?php } ?>
-    </select>
+        <label for="id_encargado" class="formulario__label">Jefe del Departamento</label>
+        <select 
+            id="id_encargado" 
+            name="id_encargado" 
+            class="formulario__input formulario__input--select"
+        >
+            <option value="">-- Seleccionar --</option>
+            <?php foreach($empleados as $empleado) { ?>
+                <option value="<?php echo $empleado->id; ?>" <?php echo $departamento->id_encargado == $empleado->id ? 'selected' : ''; ?>>
+                    <?php echo $empleado->nombre . " " . $empleado->apellido . ' - ' . $empleado->puesto_trabajo; ?>
+                </option>
+            <?php } ?>
+        </select>
     </div>
+
+    <div class="formulario__campo">
+        <label for="imagen" class="formulario__label">Imagen</label>
+        <input
+            type="file"
+            class="formulario__input formulario__input--file"
+            id="imagen"
+            name="imagen"
+            value="<?php echo $_POST['imagen'] ?? ''; ?>"
+        >
+    </div>
+
+    <?php if(isset($departamento->imagen_actual)) { ?>
+        <p class="formulario__texto">Imagen Actual:</p>
+        <div class="formulario__imagen">
+            <picture>
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $departamento->imagen_actual; ?>.webp" type="image/webp">
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $departamento->imagen_actual; ?>.png" type="image/png">
+                <img src="<?php echo $_ENV['HOST'] . '/img/galeria/' . $departamento->imagen_actual; ?>.png" alt="Imagen departamento">
+            </picture>
+        </div>
+    <?php } ?>
 
     <div class="formulario__campo">
         <label for="descripcion" class="formulario__label">Descripción</label>
@@ -31,95 +57,8 @@
             class="formulario__input"
             id="descripcion"
             name="descripcion"
-            placeholder="Descripción Evento"
+            placeholder="Descripción del Departamento"
             rows="8"
-            
-        ><?php echo $evento->descripcion; ?></textarea>
+        ><?php echo $departamento->descripcion ?? ''; ?></textarea>
     </div>
-
-    <div class="formulario__campo">
-        <label for="categoria" class="formulario__label">Categoría o Tipo de Evento</label>
-        <select
-            class="formulario__select"
-            id="categoria"
-            name="categoria_id"
-        >
-            <option value="">- Seleccionar -</option>
-            <?php foreach($categorias as $categoria) { ?>
-                <option <?php echo ($evento->categoria_id === $categoria->id) ? 'selected' : '' ?> value="<?php echo $categoria->id; ?>"><?php echo $categoria->nombre; ?></option>
-            <?php } ?>
-        </select>
-    </div> 
-
-    <div class="formulario__campo">
-        <label for="categoria" class="formulario__label">Selecciona el Día</label>
-        <div class="formulario__radio">
-            <?php foreach($dias as $dia) { ?>
-                <div class="formulario__radio-grupo">
-                    <label for="<?php echo strtolower($dia->nombre); ?>"><?php echo $dia->nombre; ?></label>
-
-                    <input 
-                        type="radio"
-                        id="<?php echo strtolower($dia->nombre); ?>"
-                        name="dia"
-                        value="<?php echo $dia->id; ?>"
-                        <?php echo ($evento->dia_id === $dia->id) ? 'checked' : ''; ?>
-                        
-                    />
-                </div>
-            <?php } ?>
-        </div>
-
-        <input type="hidden" name="dia_id" value="<?php echo $evento->dia_id; ?> ">
-
-    </div>
-
-   <div id="horas" class="formulario__campo">
-        <label class="formulario__label">Selecciona Hora</label>
-
-        <ul id="horas" class="horas">
-            <?php foreach($horas as $hora) { ?>
-                <li data-hora-id="<?php echo $hora->id; ?>" class="horas__hora horas__hora--deshabilitada"><?php echo $hora->hora; ?></li>
-            <?php } ?>
-        </ul>
-
-        <input type="hidden" name="hora_id" value="<?php echo $evento->hora_id; ?>">
-   </div>
-
-</fieldset>
-
-<fieldset class="formulario__fieldset">
-    <legend class="formulario__legend">Información Extra</legend>
-
-    <div class="formulario__campo">
-        <label for="ponentes" class="formulario__label">Ponente</label>
-        <input
-            type="text"
-            class="formulario__input"
-            id="ponentes"
-            placeholder="Buscar Ponente"
-        >
-        <ul id="listado-ponentes" class="listado-ponentes"></ul>
-        <input type="hidden" name="ponente_id" value="<?php echo $evento->ponente_id;  ?>">
-        
-    </div>
-
-
-    <div class="formulario__campo">
-        <label for="disponibles" class="formulario__label">Lugares Disponibles</label>
-        <input
-            type="number"
-            min="1"
-            class="formulario__input"
-            id="disponibles"
-            name="disponibles"
-            placeholder="Ej. 20"
-            value="<?php echo $evento->disponibles; ?>"
-        >
-    </div>
-
-
-
-    
-    
 </fieldset>

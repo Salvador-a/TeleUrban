@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/app.php';
 use MVC\Router;
 use Controllers\AuthController;
 
-use Controllers\RegalosController;
+use Controllers\PaginasController;
 use Controllers\DashboardController;
 use Controllers\EmpleadosController;
 use Controllers\RegistradosController;
@@ -47,15 +47,24 @@ $router->post('/admin/empleados/editar', [EmpleadosController::class, 'editar'])
 $router->post('/admin/empleados/eliminar', [EmpleadosController::class, 'eliminar']);
 
 
-// Area de Eventos
+// Area de Departamentos
 $router->get('/admin/departamentos', [DepartamentosController::class, 'index']);
 $router->get('/admin/departamentos/crear', [DepartamentosController::class, 'crear']);
+$router->post('/admin/departamentos/crear', [DepartamentosController::class, 'crear']);
+$router->get('/admin/departamentos/editar', [DepartamentosController::class, 'editar']);
+$router->post('/admin/departamentos/editar', [DepartamentosController::class, 'editar']);
+$router->post('/admin/departamentos/eliminar', [DepartamentosController::class, 'eliminar']);
+
+//Area Publica 
+$router->get('/', [PaginasController::class, 'index']);
+$router->get('/nosotros', [PaginasController::class, 'nosotros']);
+$router->get('/departamentos', [PaginasController::class, 'departamentos']);
+$router->post('/citas', [PaginasController::class, 'citas']);
 
 // Area de Registrados
 $router->get('/admin/registrados', [RegistradosController::class, 'index']);
 
-// Area de Regalos
-$router->get('/admin/regalos', [RegalosController::class, 'index']);
+
 
 
 
