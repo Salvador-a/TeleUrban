@@ -8,10 +8,11 @@
 </div>
 
 <div class="dashboard__contenedor">
-    <?php if(!empty($departamentos)) { ?>
+    <?php if (!empty($departamentos)) { ?>
         <table class="table">
             <thead class="table__thead">
                 <tr>
+                    <th scope="col" class="table__th">Imagen</th>
                     <th scope="col" class="table__th">Departamento</th>
                     <th scope="col" class="table__th">Encargado</th>
                     <th scope="col" class="table__th">Descripción</th>
@@ -20,13 +21,22 @@
             </thead>
 
             <tbody class="table__tbody">
-                <?php foreach($departamentos as $departamento) { ?>
+                <?php foreach ($departamentos as $departamento) { ?>
                     <tr class="table__tr">
+                        <td class="table__td" data-label="Imagen">
+                            <img src="/img/galeria/<?php echo $departamento->imagen; ?>.png" alt="Imagen de <?php echo $departamento->nombre_departamento; ?>" class="imagen-tabla">
+                        </td>
                         <td class="table__td" data-label="Departamento">
                             <?php echo $departamento->nombre_departamento; ?>
                         </td>
                         <td class="table__td" data-label="Encargado">
-                            <?php echo $departamento->encargado->nombre . " " . $departamento->encargado->apellido . ' - ' . $departamento->encargado->puesto_trabajo; ?>
+                            <div class="encargado">
+                                <img src="/img/galeria/<?php echo $departamento->encargado->imagen; ?>.png" alt="Imagen de <?php echo $departamento->encargado->nombre; ?>" class="encargado__imagen">
+                                <div class="encargado__info">
+                                    <p class="encargado__nombre"><?php echo $departamento->encargado->nombre . " " . $departamento->encargado->apellido; ?></p>
+                                    <p class="encargado__puesto"><?php echo $departamento->encargado->puesto_trabajo; ?></p>
+                                </div>
+                            </div>
                         </td>
                         <td class="table__td table__td--descripcion" data-label="Descripción">
                             <div class="table__descripcion">
@@ -44,6 +54,14 @@
                                 <button class="table__accion table__accion--eliminar" type="submit">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                     Eliminar
+                                </button>
+                            </form>
+
+                            <form method="POST" action="/admin/departamentos/publicar" class="table__formulario">
+                                <input type="hidden" name="id" value="<?php echo $departamento->id; ?>">
+                                <button class="table__accion table__accion--publicar" type="submit">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Publicar
                                 </button>
                             </form>
                         </td>

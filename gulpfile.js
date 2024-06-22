@@ -1,128 +1,139 @@
-// Importa las funciones necesarias de gulp
-const { src, dest, watch, parallel } = require('gulp');
+// Importación de módulos necesarios para la automatización de tareas
+const { src, dest, watch, parallel, series } = require('gulp');
+const sass = require('gulp-sass')(require('sass')); // Compilar SCSS a CSS
+const autoprefixer = require('autoprefixer'); // Añadir prefijos a CSS para compatibilidad con navegadores
+const postcss = require('gulp-postcss'); // Transformar CSS con plugins de PostCSS
+const sourcemaps = require('gulp-sourcemaps'); // Crear sourcemaps para CSS y JS
+const cssnano = require('cssnano'); // Minificar CSS
+const terser = require('gulp-terser-js'); // Minificar JavaScript
+const rename = require('gulp-rename'); // Renombrar archivos
+const imagemin = require('gulp-imagemin'); // Optimizar y minificar imágenes
+const cache = require('gulp-cache'); // Cache para optimizar rendimiento
+const webp = require('gulp-webp'); // Convertir imágenes a formato WebP
+const avif = require('gulp-avif'); // Convertir imágenes a formato AVIF
+const newer = require('gulp-newer'); // Procesar solo archivos nuevos o modificados
+const fs = require('fs'); // Interactuar con el sistema de archivos
+const path = require('path'); // Utilidades para trabajar con rutas de archivos
+const webpackStream = require('webpack-stream'); // Usar Webpack con Gulp
+const webpack = require('webpack'); // Webpack para la compilación de módulos
+const notify = require('gulp-notify'); // Notificaciones en la terminal
 
-// CSS
-// Importa gulp-sass para compilar archivos SCSS a CSS
-const sass = require('gulp-sass')(require('sass'));
-// Importa gulp-plumber para prevenir la detención del proceso de Gulp cuando ocurren errores
-const plumber = require('gulp-plumber');
-// Importa autoprefixer para añadir prefijos a las propiedades CSS para diferentes navegadores
-const autoprefixer = require('autoprefixer');
-// Importa cssnano para minificar el CSS
-const cssnano = require('cssnano');
-// Importa gulp-postcss para transformar el CSS con plugins de JavaScript
-const postcss = require('gulp-postcss');
-// Importa gulp-sourcemaps para generar sourcemaps para el CSS
-const sourcemaps = require('gulp-sourcemaps');
-
-// Imágenes
-const cache = require('gulp-cache'); // Importa gulp-cache para almacenar en caché y reutilizar los resultados de tareas costosas
-const imagemin = require('gulp-imagemin'); // Importa gulp-imagemin para minificar imágenes
-const webp = require('gulp-webp'); // Importa gulp-webp para convertir imágenes a formato WebP
-const avif = require('gulp-avif'); // Importa gulp-avif para convertir imágenes a formato AVIF
-
-// Javascript
-const terser = require('gulp-terser-js'); // Importa gulp-terser-js para minificar archivos JavaScript
-const concat = require('gulp-concat'); // Importa gulp-concat para concatenar archivos
-const rename = require('gulp-rename') // Importa gulp-rename para renombrar archivos
-
-// Webpack
-const webpack = require('webpack-stream'); // Importa webpack-stream para usar webpack con Gulp
-
-
-
-// Define los paths de los archivos a procesar
+// Definición de rutas de los archivos a procesar
 const paths = {
-    scss: 'src/scss/**/*.scss', // Todos los archivos .scss dentro de la carpeta src/scss
-    js: 'src/js/**/*.js', // Todos los archivos .js dentro de la carpeta src/js
-    imagenes: 'src/img/**/*' // Todos los archivos dentro de la carpeta src/img
+    scss: 'src/scss/**/*.scss', // Todos los archivos SCSS dentro de src/scss
+    js: 'src/js/**/*.js', // Todos los archivos JS dentro de src/js
+    imagenes: 'src/img/**/*.{png,jpg,jpeg,webp}', // Todos los archivos de imagenes PNG, JPG, JPEG y WebP dentro de src/img
+    imgSrc: 'src/img/', // Carpeta de origen de imágenes
+    imgDest: 'public/build/imagenes/' // Carpeta de destino de imágenes procesadas
+};
+
+// Manejo de errores
+function handleError(err) {
+    notify.onError({
+        title: "Gulp Error",
+        message: "Error: <%= error.message %>",
+        sound: "Bottle"
+    })(err);
+    this.emit('end');
 }
 
-// Define la tarea css
+// Tarea para compilar SCSS a CSS
 function css() {
-    return src(paths.scss) // Toma todos los archivos .scss
-        .pipe(sourcemaps.init()) // Inicializa la generación de sourcemaps
-        .pipe(sass()) // Compila los archivos .scss a .css
-        .pipe(postcss([autoprefixer(), cssnano()])) // Aplica autoprefixer y cssnano (minificación)
-        .pipe(sourcemaps.write('.')) // Escribe los sourcemaps en el mismo directorio que el archivo .css
-        .pipe( dest('public/build/css') ); // Coloca los archivos resultantes en la carpeta public/build/css
+    return src(paths.scss) // Fuente de archivos SCSS
+        .pipe(sourcemaps.init()) // Inicializa sourcemaps antes de la transformación
+        .pipe(sass().on('error', handleError)) // Compila SCSS a CSS y maneja errores
+        .pipe(postcss([autoprefixer(), cssnano()])) // Aplica autoprefixer y minifica CSS con cssnano
+        .pipe(sourcemaps.write('.')) // Escribe sourcemaps en la misma carpeta que el archivo CSS
+        .pipe(dest('public/build/css')); // Destino del archivo CSS compilado
 }
-// Define la tarea javascript
+
+// Tarea para procesar y minificar JavaScript usando Webpack
 function javascript() {
-    return src(paths.js) // Toma todos los archivos .js
-    .pipe(webpack({ // Inicia webpack
-        module: {
-            rules: [
-                {
-                    test: /\.css$/i, // Aplica la regla a todos los archivos .css
-                    use: ['style-loader', 'css-loader'], // Usa style-loader y css-loader
-                }
-            ]
-        },
-        mode: 'production', // Establece el modo de webpack a 'production'
-        watch: true, // Habilita la observación de cambios en los archivos
-        entry: './src/js/app.js', // Define el punto de entrada de la aplicación
-    }))
-    .pipe(sourcemaps.init()) // Inicializa la generación de sourcemaps
-    .pipe(terser()) // Minifica el JavaScript
-    .pipe(sourcemaps.write('.')) // Escribe los sourcemaps en el mismo directorio que el archivo .js
-    .pipe(rename({ suffix: '.min' })) // Añade el sufijo '.min' al nombre del archivo
-    .pipe(dest('./public/build/js')) // Coloca los archivos resultantes en la carpeta public/build/js
+    return src(paths.js) // Fuente de archivos JS
+        .pipe(webpackStream({
+            module: {
+                rules: [
+                    {
+                        test: /\.css$/i, // Busca archivos CSS
+                        use: ['style-loader', 'css-loader'], // Usa style-loader y css-loader para manejar CSS
+                    }
+                ]
+            },
+            mode: 'production', // Modo de producción para optimizar la salida
+            watch: false, // No observa cambios en los archivos
+            entry: './src/js/app.js', // Punto de entrada para Webpack
+        }, webpack))
+        .pipe(sourcemaps.init()) // Inicializa sourcemaps antes de la transformación
+        .pipe(terser().on('error', handleError)) // Minifica JavaScript y maneja errores
+        .pipe(sourcemaps.write('.')) // Escribe sourcemaps en la misma carpeta que el archivo JS
+        .pipe(rename({ suffix: '.min' })) // Renombra el archivo minificado para indicar que está minificado
+        .pipe(dest('./public/build/js')); // Destino del archivo JS minificado
 }
 
-// Define la tarea imagenes
+// Tarea para optimizar y minificar imágenes
 function imagenes() {
-    return src(paths.imagenes) // Toma todos los archivos en la carpeta de imágenes
-        .pipe( cache(imagemin({ optimizationLevel: 3}))) // Minifica las imágenes con un nivel de optimización de 3 y las almacena en caché
-        .pipe( dest('public/build/img')) // Coloca las imágenes resultantes en la carpeta public/build/img
+    return src(paths.imagenes) // Fuente de archivos de imágenes
+        .pipe(newer(paths.imgDest)) // Procesa solo archivos nuevos o modificados
+        .pipe(cache(imagemin({ optimizationLevel: 3 }))) // Minifica las imágenes y usa cache para mejorar el rendimiento
+        .pipe(dest(paths.imgDest)); // Destino de las imágenes optimizadas
 }
 
-// Define la función versionWebp
-function versionWebp( done ) {
-    const opciones = {
-        quality: 50 // Establece la calidad de la imagen WebP a 50
-    };
-    src('src/img/**/*.{png,jpg}') // Toma todas las imágenes .png y .jpg en la carpeta de imágenes
-        .pipe( webp(opciones) ) // Convierte las imágenes a formato WebP con las opciones especificadas
-        .pipe( dest('public/build/img') ) // Coloca las imágenes resultantes en la carpeta public/build/img
-    done(); // Indica que la tarea ha terminado
+// Tarea para generar versiones WebP de las imágenes
+function versionWebp() {
+    return src(paths.imagenes) // Fuente de archivos de imágenes
+        .pipe(newer({ dest: paths.imgDest, ext: '.webp' })) // Procesa solo archivos nuevos o modificados con extensión .webp
+        .pipe(webp({ quality: 50 })) // Convierte imágenes a WebP con calidad del 50%
+        .pipe(dest(paths.imgDest)); // Destino de las imágenes en formato WebP
 }
 
-// Define la función versionAvif
-function versionAvif( done ) {
-    const opciones = {
-        quality: 50 // Establece la calidad de la imagen AVIF a 50
-    };
-    src('src/img/**/*.{png,jpg}') // Toma todas las imágenes .png y .jpg en la carpeta de imágenes
-        .pipe( avif(opciones) ) // Convierte las imágenes a formato AVIF con las opciones especificadas
-        .pipe( dest('public/build/img') ) // Coloca las imágenes resultantes en la carpeta public/build/img
-    done(); // Indica que la tarea ha terminado
+// Tarea para generar versiones AVIF de las imágenes
+function versionAvif() {
+    return src(paths.imagenes) // Fuente de archivos de imágenes
+        .pipe(newer({ dest: paths.imgDest, ext: '.avif' })) // Procesa solo archivos nuevos o modificados con extensión .avif
+        .pipe(avif({ quality: 50 })) // Convierte imágenes a AVIF con calidad del 50%
+        .pipe(dest(paths.imgDest)); // Destino de las imágenes en formato AVIF
 }
 
-// Define la función dev
-function dev(done) {
-    watch( paths.scss, css ); // Observa cambios en los archivos .scss y ejecuta la tarea css cuando ocurren cambios
-    watch( paths.js, javascript ); // Observa cambios en los archivos .js y ejecuta la tarea javascript cuando ocurren cambios
-    watch( paths.imagenes, imagenes) // Observa cambios en las imágenes y ejecuta la tarea imagenes cuando ocurren cambios
-    watch( paths.imagenes, versionWebp) // Observa cambios en las imágenes y ejecuta la tarea versionWebp cuando ocurren cambios
-    watch( paths.imagenes, versionAvif) // Observa cambios en las imágenes y ejecuta la tarea versionAvif cuando ocurren cambios
-    done() // Indica que la tarea ha terminado
+// Tarea para limpiar imágenes eliminadas en la carpeta fuente y actualizar nombres
+function cleanDeletedImages(done) {
+    fs.readdir(paths.imgSrc, (err, srcFiles) => {
+        if (err) return done(err); // Maneja errores al leer la carpeta de origen
+
+        fs.readdir(paths.imgDest, (err, destFiles) => {
+            if (err) return done(err); // Maneja errores al leer la carpeta de destino
+
+            const srcBasenames = srcFiles.map(file => path.basename(file, path.extname(file))); // Obtiene los nombres base de los archivos en la carpeta de origen
+            const filesToDelete = destFiles.filter(file => {
+                const baseName = path.basename(file, path.extname(file));
+                return !srcBasenames.includes(baseName); // Filtra archivos que no existen en la carpeta de origen
+            }).map(file => path.join(paths.imgDest, file)); // Obtiene las rutas completas de los archivos a eliminar
+
+            console.log('Deleting the following files:', filesToDelete); // Imprime los archivos a eliminar
+
+            filesToDelete.forEach(file => {
+                fs.unlink(file, err => {
+                    if (err) console.error(`Failed to delete ${file}:`, err); // Maneja errores al eliminar archivos
+                });
+            });
+
+            done();
+        });
+    });
 }
-// Exporta la tarea css para que pueda ser ejecutada desde la línea de comandos con 'gulp css'
+
+// Tarea para observar cambios en los archivos y ejecutar tareas correspondientes
+function watchArchivos() {
+    watch(paths.scss, css); // Observa cambios en archivos SCSS y ejecuta la tarea css
+    watch(paths.js, javascript); // Observa cambios en archivos JS y ejecuta la tarea javascript
+    watch(paths.imagenes, series(cleanDeletedImages, imagenes, versionWebp, versionAvif)); // Observa cambios en imágenes y ejecuta tareas correspondientes
+}
+
+// Exportación de tareas para que puedan ser ejecutadas desde la línea de comandos
 exports.css = css;
-
-// Exporta la tarea javascript para que pueda ser ejecutada desde la línea de comandos con 'gulp js'
 exports.js = javascript;
-
-// Exporta la tarea imagenes para que pueda ser ejecutada desde la línea de comandos con 'gulp imagenes'
 exports.imagenes = imagenes;
-
-// Exporta la tarea versionWebp para que pueda ser ejecutada desde la línea de comandos con 'gulp versionWebp'
 exports.versionWebp = versionWebp;
-
-// Exporta la tarea versionAvif para que pueda ser ejecutada desde la línea de comandos con 'gulp versionAvif'
 exports.versionAvif = versionAvif;
-
-// Exporta la tarea dev para que pueda ser ejecutada desde la línea de comandos con 'gulp dev'
-// La tarea dev se ejecuta en paralelo con las tareas css, imagenes, versionWebp, versionAvif, javascript
-exports.dev = parallel( css, imagenes, versionWebp, versionAvif, javascript, dev);
+exports.cleanDeletedImages = cleanDeletedImages;
+exports.watchArchivos = watchArchivos;
+exports.default = parallel(css, javascript, imagenes, versionWebp, versionAvif, watchArchivos); // Tarea por defecto que ejecuta todas las tareas en paralelo

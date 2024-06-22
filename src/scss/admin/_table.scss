@@ -171,6 +171,40 @@
             font-size: 1.7rem;
         }
     }
+
+    .imagen-tabla {
+        width: 10rem; /* Ajusta el ancho según sea necesario */
+        
+        height: auto; /* Mantiene la proporción de la imagen */
+        
+    }
+
+    .encargado {
+        display: flex;
+        flex-direction: column; // Cambia la dirección del flex a columna
+        align-items: center; // Centra los elementos horizontalmente
+
+        &__imagen {
+            width: 10rem; // Ajusta el ancho según sea necesario
+            height: auto; // Mantiene la proporción de la imagen
+            margin-bottom: 1rem; // Espacio entre la imagen y el texto
+        }
+
+        &__info {
+            text-align: center; // Centra el texto
+        }
+
+        &__nombre {
+            font-size: 1.4rem;
+            font-weight: v.$bold;
+        }
+
+        &__puesto {
+            font-size: 1.2rem;
+            color: v.$gris-oscuro;
+        }
+    }
+    
 }
 
 @media (max-width: v.$telefono) {
@@ -211,6 +245,16 @@
             flex-direction: row; // Asegura que los botones de acción estén en una fila
             justify-content: flex-end; // Alinea los botones a la derecha
             width: 100%; // Asegura que los botones ocupen todo el ancho disponible
+        }
+    }
+
+    .encargado {
+        &__imagen {
+            width: 8rem; // Ajusta el ancho según sea necesario para pantallas pequeñas
+        }
+
+        &__nombre, &__puesto {
+            font-size: 1.2rem; // Ajusta el tamaño de la fuente para pantallas pequeñas
         }
     }
 }

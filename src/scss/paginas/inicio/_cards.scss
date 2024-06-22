@@ -1,0 +1,191 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.categorias {
+    &__card-container {
+        @include m.grid(1, 2rem);
+        @include m.telefono {
+            @include m.grid(1, 2rem);
+        }
+        @include m.tablet {
+            @include m.grid(2, 2rem);
+        }
+        @include m.desktop {
+            @include m.grid(3, 2rem);
+        }
+        @include m.xl_desktop {
+            @include m.grid(3, 2rem);
+        }
+    }
+
+    &__card {
+        background-color: v.$blanco;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        @include m.shadow;
+        transition: transform 0.3s, box-shadow 0.3s;
+
+        &:hover {
+            transform: translateY(-1rem);
+            box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.2), 0 2.4rem 4.8rem rgba(0, 0, 0, 0.3);
+        }
+
+        &-header {
+            position: relative;
+            text-align: center;
+            background: linear-gradient(to bottom right, #2d7cbf, #ff3867);
+        }
+
+        .categorias__background-image {
+            width: 100%;
+            height: 20rem;
+            object-fit: cover;
+            opacity: 0.3;
+            @include m.telefono {
+                height: 15rem;
+            }
+            @include m.tablet {
+                height: 18rem;
+            }
+            @include m.desktop {
+                height: 20rem;
+            }
+            @include m.xl_desktop {
+                height: 20rem;
+            }
+        }
+
+        .categorias__avatar {
+            width: 12.8rem;
+            height: 12.8rem;
+            border-radius: 50%;
+            border: 0.5rem solid v.$blanco;
+            position: absolute;
+            bottom: -6.4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            @include m.telefono {
+                width: 10rem;
+                height: 10rem;
+                bottom: -5rem;
+            }
+            @include m.tablet {
+                width: 11.2rem;
+                height: 11.2rem;
+                bottom: -5.6rem;
+            }
+            @include m.desktop {
+                width: 12.8rem;
+                height: 12.8rem;
+                bottom: -6.4rem;
+            }
+            @include m.xl_desktop {
+                width: 12.8rem;
+                height: 12.8rem;
+                bottom: -6.4rem;
+            }
+        }
+
+        &-body {
+            padding: 8rem 2rem 2rem;
+            text-align: center;
+            @include m.telefono {
+                padding: 6rem 1.5rem 1.5rem;
+            }
+            @include m.tablet {
+                padding: 7rem 1.5rem 1.5rem;
+            }
+            @include m.desktop {
+                padding: 8rem 2rem 2rem;
+            }
+            @include m.xl_desktop {
+                padding: 8rem 2rem 2rem;
+            }
+
+            h2 {
+                font-family: v.$fuente-principal;
+                font-size: 2.4rem;
+                margin: 0;
+                color: #2d7cbf;
+                @include m.telefono {
+                    font-size: 2rem;
+                }
+                @include m.tablet {
+                    font-size: 2.2rem;
+                }
+                @include m.desktop {
+                    font-size: 2.4rem;
+                }
+                @include m.xl_desktop {
+                    font-size: 2.4rem;
+                }
+            }
+
+            .categorias__description {
+                font-size: 1.4rem;
+                color: v.$gris-oscuro;
+                margin: 1rem 0;
+                text-align: justify;
+                text-align-last: left;
+                line-height: 1.6;
+                position: relative;
+                hyphens: auto;
+                word-break: break-word;
+                word-spacing: -0.1em;
+
+                &::after {
+                    content: "";
+                    display: inline-block;
+                    width: 100%;
+                    height: 0;
+                }
+
+                @include m.telefono {
+                    font-size: 1.2rem;
+                }
+                @include m.tablet {
+                    font-size: 1.3rem;
+                }
+                @include m.desktop {
+                    font-size: 1.4rem;
+                }
+                @include m.xl_desktop {
+                    font-size: 1.4rem;
+                }
+            }
+
+            .categorias__icons {
+                margin-top: 2rem;
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+
+                i {
+                    font-size: 2.4rem;
+                    color: #2d7cbf;
+                }
+            }
+        }
+
+        &-footer {
+            padding: 2rem;
+            background-color: v.$gris-claro;
+            border-top: 0.1rem solid lighten(v.$gris, 40%);
+            display: flex;
+            justify-content: center;
+        }
+
+        .categorias__follow-btn {
+            @include m.boton(#ff3867, v.$blanco);
+            display: inline-block;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+            transition: background-color 0.3s, transform 0.3s;
+
+            &:hover {
+                background-color: lighten(#ff3867, 10%);
+                transform: translateY(-0.3rem);
+            }
+        }
+    }
+}

@@ -40,10 +40,11 @@
             </h2>
         </a>
         <nav class="navegacion">
-            <a href="/nosotros" class="navegacion__enlace <?php echo pagina_actual('/nosotros') ? 'navegacion__enlace--actual' : ''; ?>">Nosotros</a>
-            <a href="/teleurban" class="navegacion__enlace <?php echo pagina_actual('/departamento') ? 'navegacion__enlace--actual' : ''; ?>">Áreas de trabajo</a>
-            <a href="/departamento" class="navegacion__enlace <?php echo pagina_actual('/departamento') ? 'navegacion__enlace--actual' : ''; ?>"></a>
-            <a href="/citas" class="navegacion__enlace <?php echo pagina_actual('/citas') ? 'navegacion__enlace--actual' : ''; ?>">Agenda cita</a>
+            <a href="/teleurban" class="navegacion__enlace <?php echo pagina_actual('/teleurban') ? 'navegacion__enlace--actual' : ''; ?>">Nosotros</a>
+            <a href="/departamentos" class="navegacion__enlace <?php echo pagina_actual('/departamentos') ? 'navegacion__enlace--actual' : ''; ?>">Áreas de trabajo</a>
+            <a href="/citas" class="navegacion__enlace <?php echo pagina_actual('/citas') ? 'navegacion__enlace--actual' : ''; ?>">Citas</a>
+            
+            <!-- <a href="/ubicacion" class="navegacion__enlace <?php echo pagina_actual('/ubicacion') ? 'navegacion__enlace--actual' : ''; ?>">Agenda cita</a> -->
 
         </nav>
     </div>

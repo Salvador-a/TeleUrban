@@ -105,17 +105,7 @@
             value="<?php echo $empleado->tags ?? ''; ?>"> 
     </div>
 
-    <!-- <div class="formulario__campo">
-        <label for="descripcion" class="formulario__label">Descripción del área de trabajo</label>
-        <textarea
-            class="formulario__input"
-            id="descripcion"
-            name="descripcion_area_trabajo"
-            placeholder="Escribe aquí la descripción del área de trabajo..."
-      ><?php echo $empleado->descripcion_area_trabajo ?? ''; ?></textarea>
-    </div> -->
-
-
+   
 </fieldset>
 
 <fieldset class="formulario__fieldset">

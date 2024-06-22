@@ -8,16 +8,22 @@ class Email {
 
     public $email;
     public $nombre;
-    public $token;
-    
-    public function __construct($email, $nombre, $token)
+    public $a_paterno;
+    public $a_materno;
+    public $fecha_hora;
+    public $area;
+
+    public function __construct($email, $nombre, $a_paterno, $a_materno, $fecha_hora, $area)
     {
         $this->email = $email;
         $this->nombre = $nombre;
-        $this->token = $token;
+        $this->a_paterno = $a_paterno;
+        $this->a_materno = $a_materno;
+        $this->fecha_hora = $fecha_hora;
+        $this->area = $area;
     }
 
-    public function enviarConfirmacion() {
+    public function enviarConfirmacionEntrevista() {
 
          // create a new object
          $mail = new PHPMailer();
@@ -28,53 +34,27 @@ class Email {
          $mail->Username = $_ENV['EMAIL_USER'];
          $mail->Password = $_ENV['EMAIL_PASS'];
      
-         $mail->setFrom('cuentas@TeleUrban.com');
+         $mail->setFrom('citas@TeleUrban.com');
          $mail->addAddress($this->email, $this->nombre);
-         $mail->Subject = 'Confirma tu Cuenta';
+         $mail->Subject = 'Confirmación de Cita de Entrevista';
 
          // Set HTML
          $mail->isHTML(TRUE);
          $mail->CharSet = 'UTF-8';
 
          $contenido = '<html>';
-         $contenido .= "<p><strong>Hola " . $this->nombre .  "</strong> Has Registrado Correctamente tu cuenta en TeleUrban; pero es necesario confirmarla</p>";
-         $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";       
-         $contenido .= "<p>Si tu no creaste esta cuenta; puedes ignorar el mensaje</p>";
+         $contenido .= "<p><strong>Hola " . $this->nombre . ' ' . $this->a_paterno . ' ' . $this->a_materno . "</strong>,</p>";
+         $contenido .= "<p>Hemos recibido tu solicitud de cita de entrevista. A continuación, te proporcionamos los detalles:</p>";
+         $contenido .= "<p>Fecha y Hora: " . $this->fecha_hora . "</p>";
+         $contenido .= "<p>Área: " . $this->area . "</p>";
+         $contenido .= "<p>Por favor espera la confirmación del encargado del área.</p>";
+         $contenido .= "<p>Si tienes alguna pregunta, no dudes en contactarnos.</p>";
+         $contenido .= "<p>Gracias,</p>";
+         $contenido .= "<p>TeleUrban</p>";
          $contenido .= '</html>';
          $mail->Body = $contenido;
 
-         //Enviar el mail
+         // Enviar el mail
          $mail->send();
-
-    }
-
-    public function enviarInstrucciones() {
-
-        // create a new object
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->Host = $_ENV['EMAIL_HOST'];
-        $mail->SMTPAuth = true;
-        $mail->Port = $_ENV['EMAIL_PORT'];
-        $mail->Username = $_ENV['EMAIL_USER'];
-        $mail->Password = $_ENV['EMAIL_PASS'];
-    
-        $mail->setFrom('cuentas@TeleUrban.com');
-        $mail->addAddress($this->email, $this->nombre);
-        $mail->Subject = 'Reestablece tu password';
-
-        // Set HTML
-        $mail->isHTML(TRUE);
-        $mail->CharSet = 'UTF-8';
-
-        $contenido = '<html>';
-        $contenido .= "<p><strong>Hola " . $this->nombre .  "</strong> Has solicitado reestablecer tu password, sigue el siguiente enlace para hacerlo.</p>";
-        $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/reestablecer?token=" . $this->token . "'>Reestablecer Password</a>";
-        $contenido .= "<p>Si tu no solicitaste este cambio, puedes ignorar el mensaje</p>";
-        $contenido .= '</html>';
-        $mail->Body = $contenido;
-
-        //Enviar el mail
-        $mail->send();
     }
 }

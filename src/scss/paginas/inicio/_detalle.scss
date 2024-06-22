@@ -1,0 +1,195 @@
+// _detalle.scss
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.detalle {
+    &__container {
+        @include m.contenedor;
+        padding: 0 2rem;
+        text-align: center;
+
+        @include m.telefono {
+            padding: 0 1rem;
+        }
+    }
+
+    &__titulo-pagina {
+        font-size: 3rem;
+        text-align: center;
+        margin: 5rem 0;  
+        color: v.$negro;
+        font-weight: v.$bold;
+
+        @include m.tablet {
+            font-size: 2.5rem;
+        }
+
+        @include m.telefono {
+            font-size: 2rem;
+            margin: 2rem 0;
+        }
+    }
+
+    &__tarjeta {
+        display: flex;
+        flex-direction: column; // Por defecto, columna en móviles
+        background-color: v.$blanco;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
+        max-width: 100%;
+        margin: 2rem auto;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transform-style: preserve-3d;
+
+        &:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.2);
+        }
+
+        @include m.tablet {
+            flex-direction: row;
+        }
+        
+        @include m.desktop {
+            flex-direction: row;
+            max-width: 80rem;
+            margin: 3rem auto;
+        }
+    }
+
+    &__perfil {
+        flex: 0 0 24rem;
+        background-color: v.$gris-claro;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 2rem;
+        border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
+
+        @include m.telefono {
+            border-right: none;
+            border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+        }
+
+        @include m.tablet {
+            flex: 0 0 30rem;
+        }
+    }
+
+    &__perfil-imagen {
+        width: 14rem;
+        height: 15.5rem;
+        border-radius: 50%;
+        box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
+
+        @include m.telefono {
+            width: 12rem;
+            height: 13.5rem;
+        }
+
+        @include m.tablet {
+            width: 16rem;
+            height: 18rem;
+        }
+    }
+
+    &__perfil-nombre {
+        margin-top: 1rem;
+        font-size: 1.6rem;
+        font-weight: v.$bold;
+        color: v.$negro;
+        text-align: center;
+
+        @include m.telefono {
+            font-size: 1.4rem;
+        }
+
+        @include m.tablet {
+            font-size: 1.8rem;
+        }
+    }
+
+    &__perfil-cargo {
+        font-size: 1.2rem;
+        color: v.$gris-oscuro;
+        opacity: 0.9;
+        text-align: center;
+
+        @include m.telefono {
+            font-size: 1rem;
+        }
+
+        @include m.tablet {
+            font-size: 1.4rem;
+        }
+    }
+
+    &__contenido {
+        flex: 1;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: v.$blanco;
+
+        @include m.telefono {
+            padding: 1.5rem;
+        }
+
+        @include m.tablet {
+            padding: 2rem;
+        }
+    }
+
+    &__contenido-mascara {
+        padding: 4rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+        border-radius: 1rem;
+
+        @include m.telefono {
+            padding: 2rem;
+        }
+
+        @include m.tablet {
+            padding: 3rem;
+        }
+    }
+
+    &__titulo {
+        font-size: 2.5rem;
+        margin: 0 0 2rem 0; // Aumentar el margen inferior para mayor separación
+        font-weight: v.$bold;
+        color: v.$negro; // Color negro para el título
+
+        @include m.telefono {
+            font-size: 2rem;
+        }
+
+        @include m.tablet {
+            font-size: 2.2rem;
+        }
+    }
+
+    &__subtitulo {
+        font-size: 1.8rem;
+        color: v.$gris-oscuro; // Color gris oscuro para el subtítulo
+        margin-top: 1rem;
+        line-height: 2.5rem;
+
+        @include m.telefono {
+            font-size: 1.6rem;
+            line-height: 2rem;
+        }
+
+        @include m.tablet {
+            font-size: 1.8rem;
+            line-height: 2.2rem;
+        }
+    }
+}
