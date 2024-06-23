@@ -4,7 +4,22 @@ namespace Model;
 
 class Entrevista extends ActiveRecord {
     protected static $tabla = 'entrevistas';
-    protected static $columnasDB = ['id', 'nombre', 'a_paterno', 'a_materno', 'email', 'telefono', 'fecha_hora', 'discapacidad_id', 'genero_id', 'semestre_id', 'universidad_id', 'curriculum', 'area_id', 'modalidad_id'];
+    protected static $columnasDB = [
+        'id', 
+        'nombre', 
+        'a_paterno', 
+        'a_materno', 
+        'email', 
+        'telefono', 
+        'discapacidad_id', 
+        'genero_id', 
+        'semestre_id', 
+        'universidad_id', 
+        'curriculum', 
+        'fecha_hora', 
+        'area_id', 
+        'modalidad_id'
+    ];
 
     public $id;
     public $nombre;
@@ -12,12 +27,12 @@ class Entrevista extends ActiveRecord {
     public $a_materno;
     public $email;
     public $telefono;
-    public $fecha_hora;
     public $discapacidad_id;
     public $genero_id;
     public $semestre_id;
     public $universidad_id;
     public $curriculum;
+    public $fecha_hora;
     public $area_id;
     public $modalidad_id;
 
@@ -28,14 +43,14 @@ class Entrevista extends ActiveRecord {
         $this->a_materno = $args['a_materno'] ?? '';
         $this->email = $args['email'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
+        $this->discapacidad_id = $args['discapacidad_id'] ?? null;
+        $this->genero_id = $args['genero_id'] ?? null;
+        $this->semestre_id = $args['semestre_id'] ?? null;
+        $this->universidad_id = $args['universidad_id'] ?? null;
+        $this->curriculum = $args['curriculum'] ?? null;
         $this->fecha_hora = $args['fecha_hora'] ?? '';
-        $this->discapacidad_id = $args['discapacidad_id'] ?? '';
-        $this->genero_id = $args['genero_id'] ?? '';
-        $this->semestre_id = $args['semestre_id'] ?? '';
-        $this->universidad_id = $args['universidad_id'] ?? '';
-        $this->curriculum = $args['curriculum'] ?? '';
-        $this->area_id = $args['area_id'] ?? '';
-        $this->modalidad_id = $args['modalidad_id'] ?? '';
+        $this->area_id = $args['area_id'] ?? null;
+        $this->modalidad_id = $args['modalidad_id'] ?? null;
     }
 
     public function validar() {
@@ -57,26 +72,7 @@ class Entrevista extends ActiveRecord {
         if (!$this->fecha_hora) {
             self::setAlerta('error', 'La fecha y hora de la entrevista son obligatorias');
         }
-        if (!$this->discapacidad_id) {
-            self::setAlerta('error', 'La discapacidad es obligatoria');
-        }
-        if (!$this->genero_id) {
-            self::setAlerta('error', 'El género es obligatorio');
-        }
-        if (!$this->semestre_id) {
-            self::setAlerta('error', 'El semestre es obligatorio');
-        }
-        if (!$this->universidad_id) {
-            self::setAlerta('error', 'La universidad es obligatoria');
-        }
-        if (!$this->area_id) {
-            self::setAlerta('error', 'El área es obligatoria');
-        }
-        if (!$this->modalidad_id) {
-            self::setAlerta('error', 'La modalidad es obligatoria');
-        }
-    
+
         return self::getAlertas();
-    }    
-    
+    }
 }

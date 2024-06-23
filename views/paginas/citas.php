@@ -162,11 +162,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<script>
-    function mostrarPagina(pagina) {
-        document.querySelectorAll('.formulario__pagina').forEach(function(pagina) {
-            pagina.classList.remove('formulario__pagina--activa');
-        });
-        document.getElementById('pagina' + pagina).classList.add('formulario__pagina--activa');
-    }
-</script>
+
