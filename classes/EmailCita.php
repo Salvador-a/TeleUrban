@@ -5,10 +5,9 @@ namespace Classes;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class EmailCita {
-
     public $email;
     public $nombre;
-    
+
     public function __construct($email, $nombre) {
         $this->email = $email;
         $this->nombre = $nombre;
@@ -40,6 +39,8 @@ class EmailCita {
         $contenido .= "<li><strong>Área:</strong> " . $entrevista->area_id . "</li>";
         $contenido .= "<li><strong>Modalidad:</strong> " . $entrevista->modalidad_id . "</li>";
         $contenido .= "</ul>";
+        $contenido .= "<p>Tu token para editar la cita es: <strong>" . $entrevista->token . "</strong></p>";
+        $contenido .= "<p>Este token es válido por 24 horas.</p>";
         $contenido .= "<p>Nos pondremos en contacto contigo para más detalles.</p>";
         $contenido .= '</html>';
         $mail->Body = $contenido;

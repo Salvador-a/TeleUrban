@@ -11,6 +11,7 @@ use Model\Universidad;
 use Model\Area;
 use Model\Descripcion;
 use Classes\EmailCita;
+use DateTime;
 
 class CitasController {
     public static function crear(Router $router) {
@@ -65,9 +66,16 @@ class CitasController {
                     $entrevista->curriculum = $nombre_archivo;
                 }
 
+                // Generar token único y fecha de expiración
+                $entrevista->token = bin2hex(random_bytes(16));
+                $fechaExpiracion = new DateTime();
+                $fechaExpiracion->modify('+1 day');
+                $entrevista->token_expiracion = $fechaExpiracion->format('Y-m-d H:i:s');
+
+                // Guardar la nueva entrevista en la base de datos
                 $resultado = $entrevista->guardar();
                 if ($resultado) {
-                    $email = new EmailCita($entrevista->email, $entrevista->nombre, null);
+                    $email = new EmailCita($entrevista->email, $entrevista->nombre);
                     $email->enviarConfirmacionEntrevista($entrevista);
 
                     header('Content-Type: application/json');
@@ -88,6 +96,9 @@ class CitasController {
             }
         }
 
+        // Eliminar tokens expirados al cargar la página
+        Entrevista::eliminarTokensExpirados();
+
         $router->render('paginas/citas', [
             'titulo' => 'Nueva Cita de Entrevista',
             'entrevista' => $entrevista,
@@ -99,5 +110,50 @@ class CitasController {
             'areas' => $areas,
             'modalidades' => $modalidades
         ]);
+    }
+
+    public static function editar(Router $router) {
+        $token = $_GET['token'] ?? null;
+
+        if (!$token) {
+            header('Location: /error');
+            return;
+        }
+
+        $entrevista = Entrevista::where('token', $token);
+
+        if (!$entrevista || new DateTime() > new DateTime($entrevista->token_expiracion)) {
+            header('Location: /token-expirado');
+            return;
+        }
+
+        $router->render('paginas/editar-cita', [
+            'entrevista' => $entrevista
+        ]);
+    }
+
+    public static function guardarEdicion(Router $router) {
+        $token = $_POST['token'] ?? null;
+
+        if (!$token) {
+            header('Location: /error');
+            return;
+        }
+
+        $entrevista = Entrevista::where('token', $token);
+
+        if (!$entrevista || new DateTime() > new DateTime($entrevista->token_expiracion)) {
+            header('Location: /token-expirado');
+            return;
+        }
+
+        $entrevista->sincronizar($_POST);
+        $resultado = $entrevista->guardar();
+
+        if ($resultado) {
+            header('Location: /exito');
+        } else {
+            header('Location: /error');
+        }
     }
 }
