@@ -155,7 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <button type="button" class="formulario__boton formulario__boton--anterior" onclick="mostrarPagina(1)">Anterior</button>
-                    <button class="formulario__boton <?php echo $formEnviado ? 'boton-desactivado' : ''; ?>" type="submit" <?php echo $formEnviado ? 'disabled' : ''; ?>>Agendar</button>
+                    <input class="formulario__boton <?php echo $formEnviado ? 'boton-desactivado' : ''; ?>" type="button" <?php echo $formEnviado ? 'disabled' : ''; ?> value="Agendar">
+
                 </fieldset>
             </div>
         </form>
