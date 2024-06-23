@@ -14,7 +14,6 @@ class EmailCita {
     }
 
     public function enviarConfirmacionEntrevista($entrevista) {
-        // create a new object
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
@@ -27,7 +26,6 @@ class EmailCita {
         $mail->addAddress($this->email, $this->nombre);
         $mail->Subject = 'Confirmación de Entrevista';
 
-        // Set HTML
         $mail->isHTML(TRUE);
         $mail->CharSet = 'UTF-8';
 
@@ -45,7 +43,7 @@ class EmailCita {
         $contenido .= '</html>';
         $mail->Body = $contenido;
 
-        // Enviar el mail
         $mail->send();
     }
 }
+

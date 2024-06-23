@@ -66,8 +66,18 @@ class CitasController {
                     $entrevista->curriculum = $nombre_archivo;
                 }
 
-                // Generar token único y fecha de expiración
-                $entrevista->token = bin2hex(random_bytes(16));
+                // Generar token con la estructura personalizada
+                $prefijo = 'CITA';
+                $identificador = $entrevista->id; // O algún identificador único de usuario o entrevista
+                $fechaHoraCreacion = date('Ymd\THis');
+                $codigoAleatorio = bin2hex(random_bytes(6)); // Código aleatorio seguro de 12 caracteres
+                $entrevista->token = "$prefijo-$identificador-$fechaHoraCreacion-$codigoAleatorio";
+                
+                // Verificar longitud del token
+                if (strlen($entrevista->token) > 64) {
+                    $entrevista->token = substr($entrevista->token, 0, 64);
+                }
+                
                 $fechaExpiracion = new DateTime();
                 $fechaExpiracion->modify('+1 day');
                 $entrevista->token_expiracion = $fechaExpiracion->format('Y-m-d H:i:s');
