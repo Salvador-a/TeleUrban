@@ -1,16 +1,8 @@
-<?php
-// Detectar si el formulario ha sido enviado
-$formEnviado = false;
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $formEnviado = true;
-    // Procesar el formulario...
-}
-?>
-
 <div class="formulario-contenedor">
     <div class="contenedor-formulario">
         <h1 class="contenedor-formulario__titulo">Contacto</h1>
         <form class="formulario" id="formulario-contacto" method="POST" enctype="multipart/form-data" action="/citas">
+            <input type="hidden" name="confirmado" value="false">
             <div class="formulario__pagina formulario__pagina--activa" id="pagina1">
                 <fieldset class="formulario__seccion">
                     <legend class="formulario__leyenda">Tus Datos</legend>
@@ -155,12 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <button type="button" class="formulario__boton formulario__boton--anterior" onclick="mostrarPagina(1)">Anterior</button>
-                    <input class="formulario__boton <?php echo $formEnviado ? 'boton-desactivado' : ''; ?>" type="button" <?php echo $formEnviado ? 'disabled' : ''; ?> value="Agendar">
-
+                    <input class="formulario__boton formulario__boton--agendar" id="boton-agendar" type="button" value="Agendar">
                 </fieldset>
             </div>
         </form>
     </div>
 </div>
-
-

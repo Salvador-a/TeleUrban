@@ -79,9 +79,9 @@ class Entrevista extends ActiveRecord {
         if (!$this->modalidad_id) {
             self::setAlerta('error', 'La modalidad es obligatoria');
         }
-    
+
         return self::getAlertas();
-    }    
+    }
 
     public static function eliminarTokensExpirados() {
         $fechaActual = date('Y-m-d H:i:s');
