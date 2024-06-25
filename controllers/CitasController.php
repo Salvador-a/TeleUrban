@@ -55,13 +55,16 @@ class CitasController {
                     return;
                 }
 
-                // Validar que no haya una cita con la misma fecha y hora
-                $existeFechaHora = Entrevista::where('fecha_hora', $entrevista->fecha_hora);
+                // Validar que no haya una cita con la misma fecha, hora y área
+                $existeFechaHora = Entrevista::findWhere([
+                    'fecha_hora' => $entrevista->fecha_hora,
+                    'area_id' => $entrevista->area_id
+                ]);
                 if ($existeFechaHora) {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas.'
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para esta área.'
                     ]);
                     return;
                 }
@@ -132,13 +135,16 @@ class CitasController {
                 $fechaExpiracion->modify('+1 day');
                 $entrevista->token_expiracion = $fechaExpiracion->format('Y-m-d H:i:s');
 
-                // Validar que no haya una cita con la misma fecha y hora antes de guardar
-                $existeFechaHora = Entrevista::where('fecha_hora', $entrevista->fecha_hora);
+                // Validar que no haya una cita con la misma fecha, hora y área antes de guardar
+                $existeFechaHora = Entrevista::findWhere([
+                    'fecha_hora' => $entrevista->fecha_hora,
+                    'area_id' => $entrevista->area_id
+                ]);
                 if ($existeFechaHora) {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas.'
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para esta área.'
                     ]);
                     return;
                 }
@@ -187,8 +193,9 @@ class CitasController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);
             $fecha_hora = $data['fecha_hora'] ?? null;
+            $area_id = $data['area_id'] ?? null;
 
-            if ($fecha_hora) {
+            if ($fecha_hora && $area_id) {
                 $fecha_hora = DateTime::createFromFormat('Y-m-d h:i A', $fecha_hora);
                 if ($fecha_hora) {
                     $fecha_hora = $fecha_hora->format('Y-m-d H:i:s');
@@ -202,12 +209,15 @@ class CitasController {
                     return;
                 }
 
-                $existe = Entrevista::where('fecha_hora', $fecha_hora);
+                $existe = Entrevista::findWhere([
+                    'fecha_hora' => $fecha_hora,
+                    'area_id' => $area_id
+                ]);
                 if ($existe) {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas.'
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para esta área.'
                     ]);
                     return;
                 }
@@ -218,3 +228,4 @@ class CitasController {
         }
     }
 }
+?>

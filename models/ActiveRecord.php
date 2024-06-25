@@ -241,6 +241,21 @@ class ActiveRecord {
         return $resultado; // Retorna el resultado de la consulta
     }
 
+    // Agregar el método findWhere
+    public static function findWhere($conditions) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ";
+        $queryParams = [];
+
+        foreach ($conditions as $field => $value) {
+            $queryParams[] = "$field = '" . self::$db->escape_string($value) . "'";
+        }
+
+        $query .= implode(' AND ', $queryParams);
+
+        $resultado = self::consultarSQL($query);
+        return array_shift($resultado);
+    }
+
     // Eliminar un Registro por su ID
     public function eliminar() {
         // Crea la consulta SQL para eliminar un registro por su ID

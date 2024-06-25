@@ -1,5 +1,3 @@
-import Swal from 'sweetalert2';
-
 document.addEventListener('DOMContentLoaded', function () {
     function mostrarPagina(pagina) {
         var paginas = document.querySelectorAll('.formulario__pagina');
@@ -65,12 +63,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function validarFechaHora(fechaHora) {
+        const areaId = document.querySelector('#area_id').value;
         fetch('/validar-fecha-hora', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ fecha_hora: fechaHora })
+            body: JSON.stringify({ fecha_hora: fechaHora, area_id: areaId })
         })
         .then(response => response.json())
         .then(data => {
