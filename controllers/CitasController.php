@@ -29,6 +29,20 @@ class CitasController {
             if ($_POST['confirmado'] === 'false') {
                 $entrevista->sincronizar($_POST);
 
+                // Convertir la fecha y hora al formato esperado por la base de datos
+                $fecha_hora = DateTime::createFromFormat('Y-m-d h:i A', $_POST['fecha_hora']);
+                if ($fecha_hora) {
+                    $entrevista->fecha_hora = $fecha_hora->format('Y-m-d H:i:s');
+                } else {
+                    // Manejar error en la conversión de la fecha
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'error' => true,
+                        'mensaje' => 'Formato de fecha y hora inválido',
+                    ]);
+                    return;
+                }
+
                 // Validar que no haya una cita con el mismo correo
                 $existe = Entrevista::where('email', $entrevista->email);
                 if ($existe) {
@@ -37,6 +51,17 @@ class CitasController {
                         'error' => true,
                         'mensaje' => 'El correo ya tiene una cita pendiente',
                         'redirect' => '/citas'
+                    ]);
+                    return;
+                }
+
+                // Validar que no haya una cita con la misma fecha y hora
+                $existeFechaHora = Entrevista::where('fecha_hora', $entrevista->fecha_hora);
+                if ($existeFechaHora) {
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'error' => true,
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas.'
                     ]);
                     return;
                 }
@@ -75,6 +100,20 @@ class CitasController {
             } else {
                 $entrevista->sincronizar($_POST);
 
+                // Convertir la fecha y hora al formato esperado por la base de datos
+                $fecha_hora = DateTime::createFromFormat('Y-m-d h:i A', $_POST['fecha_hora']);
+                if ($fecha_hora) {
+                    $entrevista->fecha_hora = $fecha_hora->format('Y-m-d H:i:s');
+                } else {
+                    // Manejar error en la conversión de la fecha
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'error' => true,
+                        'mensaje' => 'Formato de fecha y hora inválido',
+                    ]);
+                    return;
+                }
+
                 if (isset($_FILES['curriculum']) && $_FILES['curriculum']['error'] === UPLOAD_ERR_OK) {
                     $carpeta_cv = '../public/cv';
 
@@ -92,6 +131,17 @@ class CitasController {
                 $fechaExpiracion = new DateTime();
                 $fechaExpiracion->modify('+1 day');
                 $entrevista->token_expiracion = $fechaExpiracion->format('Y-m-d H:i:s');
+
+                // Validar que no haya una cita con la misma fecha y hora antes de guardar
+                $existeFechaHora = Entrevista::where('fecha_hora', $entrevista->fecha_hora);
+                if ($existeFechaHora) {
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'error' => true,
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas.'
+                    ]);
+                    return;
+                }
 
                 // Guardar la nueva entrevista en la base de datos
                 $resultado = $entrevista->guardar();
@@ -133,48 +183,38 @@ class CitasController {
         ]);
     }
 
-    public static function editar(Router $router) {
-        $token = $_GET['token'] ?? null;
+    public static function validarFechaHora() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents("php://input"), true);
+            $fecha_hora = $data['fecha_hora'] ?? null;
 
-        if (!$token) {
-            header('Location: /error');
-            return;
-        }
+            if ($fecha_hora) {
+                $fecha_hora = DateTime::createFromFormat('Y-m-d h:i A', $fecha_hora);
+                if ($fecha_hora) {
+                    $fecha_hora = $fecha_hora->format('Y-m-d H:i:s');
+                } else {
+                    // Manejar error en la conversión de la fecha
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'error' => true,
+                        'mensaje' => 'Formato de fecha y hora inválido',
+                    ]);
+                    return;
+                }
 
-        $entrevista = Entrevista::where('token', $token);
+                $existe = Entrevista::where('fecha_hora', $fecha_hora);
+                if ($existe) {
+                    header('Content-Type: application/json');
+                    echo json_encode([
+                        'error' => true,
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas.'
+                    ]);
+                    return;
+                }
+            }
 
-        if (!$entrevista || new DateTime() > new DateTime($entrevista->token_expiracion)) {
-            header('Location: /token-expirado');
-            return;
-        }
-
-        $router->render('paginas/editar-cita', [
-            'entrevista' => $entrevista
-        ]);
-    }
-
-    public static function guardarEdicion(Router $router) {
-        $token = $_POST['token'] ?? null;
-
-        if (!$token) {
-            header('Location: /error');
-            return;
-        }
-
-        $entrevista = Entrevista::where('token', $token);
-
-        if (!$entrevista || new DateTime() > new DateTime($entrevista->token_expiracion)) {
-            header('Location: /token-expirado');
-            return;
-        }
-
-        $entrevista->sincronizar($_POST);
-        $resultado = $entrevista->guardar();
-
-        if ($resultado) {
-            header('Location: /exito');
-        } else {
-            header('Location: /error');
+            header('Content-Type: application/json');
+            echo json_encode(['error' => false]);
         }
     }
 }

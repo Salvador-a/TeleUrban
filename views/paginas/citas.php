@@ -115,7 +115,7 @@
                         <label class="formulario__etiqueta" for="fecha_hora">Fecha y Hora:</label>
                         <div class="formulario__input-con-icono">
                             <i class="material-icons">event</i>
-                            <input class="formulario__entrada" type="datetime-local" id="fecha_hora" name="fecha_hora" value="<?php echo $entrevista->fecha_hora; ?>">
+                            <input class="formulario__entrada" type="text" id="fecha_hora" name="fecha_hora" placeholder="Selecciona fecha y hora" value="<?php echo $entrevista->fecha_hora; ?>">
                         </div>
                     </div>
                     <div class="formulario__campo">

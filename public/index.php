@@ -4,11 +4,12 @@ require_once __DIR__ . '/../includes/app.php';
 
 use MVC\Router;
 use Controllers\AuthController;
+use Controllers\CitasController;
 use Controllers\PaginasController;
 use Controllers\DashboardController;
 use Controllers\EmpleadosController;
+use Controllers\EntrevistaController;
 use Controllers\DepartamentosController;
-use Controllers\CitasController;
 
 $router = new Router();
 
@@ -63,6 +64,7 @@ $router->get('/departamentos', [PaginasController::class, 'departamentos']);
 $router->get('/departamento', [DepartamentosController::class, 'detalle']); // Nueva ruta para detalles de departamento
 $router->get('/citas', [CitasController::class, 'crear']);
 $router->post('/citas', [CitasController::class, 'crear']);
+$router->post('/validar-fecha-hora', [CitasController::class, 'validarFechaHora']); // Ruta para validar fecha y hora
 $router->get('/404', [PaginasController::class, 'error']);
 
 // Área de Entrevistas (Admin)
