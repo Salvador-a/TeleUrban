@@ -2,16 +2,16 @@
 
 namespace Controllers;
 
+use DateTime;
 use MVC\Router;
-use Model\Entrevista;
-use Model\Discapacidad;
 use Model\Genero;
 use Model\Semestre;
-use Model\Universidad;
-use Model\Area;
-use Model\Descripcion;
+use Model\Entrevista;
 use Classes\EmailCita;
-use DateTime;
+use Model\Descripcion;
+use Model\Universidad;
+use Model\Departamento;
+use Model\Discapacidad;
 
 class CitasController {
     public static function crear(Router $router) {
@@ -22,7 +22,7 @@ class CitasController {
         $generos = Genero::all();
         $semestres = Semestre::all();
         $universidades = Universidad::all();
-        $areas = Area::all();
+        $departamentos = Departamento::all(); // Cambiado a Departamento
         $modalidades = Descripcion::all();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -55,16 +55,16 @@ class CitasController {
                     return;
                 }
 
-                // Validar que no haya una cita con la misma fecha, hora y área
+                // Validar que no haya una cita con la misma fecha, hora y departamento
                 $existeFechaHora = Entrevista::findWhere([
                     'fecha_hora' => $entrevista->fecha_hora,
-                    'area_id' => $entrevista->area_id
+                    'departamento_id' => $entrevista->departamento_id
                 ]);
                 if ($existeFechaHora) {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para esta área.'
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para este departamento.'
                     ]);
                     return;
                 }
@@ -135,16 +135,16 @@ class CitasController {
                 $fechaExpiracion->modify('+1 day');
                 $entrevista->token_expiracion = $fechaExpiracion->format('Y-m-d H:i:s');
 
-                // Validar que no haya una cita con la misma fecha, hora y área antes de guardar
+                // Validar que no haya una cita con la misma fecha, hora y departamento antes de guardar
                 $existeFechaHora = Entrevista::findWhere([
                     'fecha_hora' => $entrevista->fecha_hora,
-                    'area_id' => $entrevista->area_id
+                    'departamento_id' => $entrevista->departamento_id
                 ]);
                 if ($existeFechaHora) {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para esta área.'
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para este departamento.'
                     ]);
                     return;
                 }
@@ -184,7 +184,7 @@ class CitasController {
             'generos' => $generos,
             'semestres' => $semestres,
             'universidades' => $universidades,
-            'areas' => $areas,
+            'departamentos' => $departamentos, // Cambiado a Departamento
             'modalidades' => $modalidades
         ]);
     }
@@ -193,9 +193,9 @@ class CitasController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);
             $fecha_hora = $data['fecha_hora'] ?? null;
-            $area_id = $data['area_id'] ?? null;
+            $departamento_id = $data['departamento_id'] ?? null;
 
-            if ($fecha_hora && $area_id) {
+            if ($fecha_hora && $departamento_id) {
                 $fecha_hora = DateTime::createFromFormat('Y-m-d h:i A', $fecha_hora);
                 if ($fecha_hora) {
                     $fecha_hora = $fecha_hora->format('Y-m-d H:i:s');
@@ -211,13 +211,13 @@ class CitasController {
 
                 $existe = Entrevista::findWhere([
                     'fecha_hora' => $fecha_hora,
-                    'area_id' => $area_id
+                    'departamento_id' => $departamento_id
                 ]);
                 if ($existe) {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para esta área.'
+                        'mensaje' => 'La fecha y hora seleccionadas ya están ocupadas para este departamento.'
                     ]);
                     return;
                 }

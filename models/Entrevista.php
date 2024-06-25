@@ -4,7 +4,7 @@ namespace Model;
 
 class Entrevista extends ActiveRecord {
     protected static $tabla = 'entrevistas';
-    protected static $columnasDB = ['id', 'nombre', 'a_paterno', 'a_materno', 'email', 'telefono', 'discapacidad_id', 'genero_id', 'semestre_id', 'universidad_id', 'curriculum', 'fecha_hora', 'area_id', 'modalidad_id', 'token', 'token_expiracion'];
+    protected static $columnasDB = ['id', 'nombre', 'a_paterno', 'a_materno', 'email', 'telefono', 'discapacidad_id', 'genero_id', 'semestre_id', 'universidad_id', 'curriculum', 'fecha_hora', 'departamento_id', 'modalidad_id', 'token', 'token_expiracion'];
 
     public $id;
     public $nombre;
@@ -18,7 +18,7 @@ class Entrevista extends ActiveRecord {
     public $universidad_id;
     public $curriculum;
     public $fecha_hora;
-    public $area_id;
+    public $departamento_id;
     public $modalidad_id;
     public $token;
     public $token_expiracion;
@@ -36,7 +36,7 @@ class Entrevista extends ActiveRecord {
         $this->semestre_id = $args['semestre_id'] ?? '';
         $this->universidad_id = $args['universidad_id'] ?? '';
         $this->curriculum = $args['curriculum'] ?? '';
-        $this->area_id = $args['area_id'] ?? '';
+        $this->departamento_id = $args['departamento_id'] ?? '';
         $this->modalidad_id = $args['modalidad_id'] ?? '';
         $this->token = $args['token'] ?? '';
         $this->token_expiracion = $args['token_expiracion'] ?? '';
@@ -73,7 +73,7 @@ class Entrevista extends ActiveRecord {
         if (!$this->universidad_id) {
             self::setAlerta('error', 'La universidad es obligatoria');
         }
-        if (!$this->area_id) {
+        if (!$this->departamento_id) {
             self::setAlerta('error', 'El área es obligatoria');
         }
         if (!$this->modalidad_id) {

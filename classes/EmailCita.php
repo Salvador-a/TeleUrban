@@ -34,7 +34,7 @@ class EmailCita {
         $contenido .= "<p>Detalles de la entrevista:</p>";
         $contenido .= "<ul>";
         $contenido .= "<li><strong>Fecha y Hora:</strong> " . $entrevista->fecha_hora . "</li>";
-        $contenido .= "<li><strong>Área:</strong> " . $entrevista->area_id . "</li>";
+        $contenido .= "<li><strong>Área:</strong> " . $entrevista->departamento_id . "</li>";
         $contenido .= "<li><strong>Modalidad:</strong> " . $entrevista->modalidad_id . "</li>";
         $contenido .= "</ul>";
         $contenido .= "<p>Tu token para editar la cita es: <strong>" . $entrevista->token . "</strong></p>";

@@ -119,14 +119,14 @@
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__etiqueta" for="area_id">Área:</label>
+                        <label class="formulario__etiqueta" for="departamento_id">Área:</label>
                         <div class="formulario__input-con-icono">
                             <i class="material-icons">business_center</i>
-                            <select class="formulario__seleccion" id="area_id" name="area_id">
+                            <select class="formulario__seleccion" id="departamento_id" name="departamento_id">
                                 <option value="">- Seleccione un Área -</option>
-                                <?php foreach ($areas as $area) { ?>
-                                    <option value="<?php echo $area->id; ?>" <?php echo $entrevista->area_id == $area->id ? 'selected' : ''; ?>>
-                                        <?php echo $area->nombre; ?>
+                                <?php foreach ($departamentos as $departamento) { ?>
+                                    <option value="<?php echo $departamento->id; ?>" <?php echo $entrevista->departamento_id == $departamento->id ? 'selected' : ''; ?>>
+                                        <?php echo $departamento->nombre_departamento; ?>
                                     </option>
                                 <?php } ?>
                             </select>

@@ -22,17 +22,17 @@ class Departamento extends ActiveRecord {
 
     public function validar() {
         if (!$this->nombre_departamento) {
-            self::$alertas['error'][] = 'El Nombre del Departamento es Obligatorio';
+            self::setAlerta('error', 'El nombre del departamento es obligatorio');
         }
         if (!$this->id_encargado) {
-            self::$alertas['error'][] = 'El Jefe del Departamento es Obligatorio';
+            self::setAlerta('error', 'El encargado del departamento es obligatorio');
         }
         if (!$this->descripcion) {
-            self::$alertas['error'][] = 'La Descripción es Obligatoria';
+            self::setAlerta('error', 'La descripción es obligatoria');
         }
         if (!$this->imagen) {
-            self::$alertas['error'][] = 'La Imagen es Obligatoria';
+            self::setAlerta('error', 'La imagen es obligatoria');
         }
-        return self::$alertas;
+        return self::getAlertas();
     }
 }
