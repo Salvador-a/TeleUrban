@@ -10,6 +10,7 @@ use Model\Semestre;
 use Model\Universidad;
 use Model\Area;
 use Model\Descripcion;
+use Classes\EmailCita;
 
 class EntrevistaController {
     public static function index(Router $router) {
@@ -27,6 +28,7 @@ class EntrevistaController {
             $entrevista->modalidad_nombre = $entrevista->obtenerModalidad();
             $entrevista->discapacidad_nombre = $entrevista->obtenerDiscapacidad();
             $entrevista->genero_nombre = $entrevista->obtenerGenero();
+            $entrevista->estatus_nombre = $entrevista->obtenerEstatus();
         }
 
         $router->render('admin/registrados/index', [
@@ -53,6 +55,7 @@ class EntrevistaController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $entrevista->sincronizar($_POST);
+            $entrevista->estatus_id = 1; // Estado predeterminado en "Pendiente"
             $alertas = $entrevista->validar();
 
             if (empty($alertas)) {
@@ -185,5 +188,140 @@ class EntrevistaController {
                 header('Location: /admin/registrados');
             }
         }
+    }
+
+    public static function aceptar() {
+        if (!is_admin()) {
+            header('Location: /login');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if (!$id) {
+                header('Location: /admin/registrados');
+                return;
+            }
+
+            $entrevista = Entrevista::find($id);
+
+            if (!$entrevista) {
+                header('Location: /admin/registrados');
+                return;
+            }
+
+            $entrevista->estatus_id = 2; // Aceptado
+            $resultado = $entrevista->guardar();
+
+            if ($resultado) {
+                // Enviar correo de aceptación
+                $email = new EmailCita($entrevista->email, $entrevista->nombre);
+                $email->enviarConfirmacionAceptacion($entrevista);
+            }
+
+            header('Location: /admin/registrados');
+        }
+    }
+
+    public static function rechazar() {
+        if (!is_admin()) {
+            header('Location: /login');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if (!$id) {
+                header('Location: /admin/registrados');
+                return;
+            }
+
+            $entrevista = Entrevista::find($id);
+
+            if (!$entrevista) {
+                header('Location: /admin/registrados');
+                return;
+            }
+
+            $entrevista->estatus_id = 3; // Rechazado
+            $resultado = $entrevista->guardar();
+
+            if ($resultado) {
+                // Enviar correo de rechazo
+                $email = new EmailCita($entrevista->email, $entrevista->nombre);
+                $email->enviarConfirmacionRechazo($entrevista);
+            }
+
+            header('Location: /admin/registrados');
+        }
+    }
+
+    public static function cv() {
+        if (!is_admin()) {
+            header('Location: /login');
+            return;
+        }
+
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /admin/registrados');
+            return;
+        }
+
+        $entrevista = Entrevista::find($id);
+
+        if (!$entrevista) {
+            header('Location: /admin/registrados');
+            return;
+        }
+
+        $cvPath = '../public/cv/' . $entrevista->curriculum;
+        if (file_exists($cvPath)) {
+            header('Content-Type: application/pdf');
+            readfile($cvPath);
+        } else {
+            header('Location: /admin/registrados');
+        }
+    }
+
+    public static function verMasInformacion(Router $router) {
+        if (!is_admin()) {
+            header('Location: /login');
+            return;
+        }
+
+        $id = $_GET['id'];
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+
+        if (!$id) {
+            header('Location: /admin/registrados');
+            return;
+        }
+
+        $entrevista = Entrevista::find($id);
+
+        if (!$entrevista) {
+            header('Location: /admin/registrados');
+            return;
+        }
+
+        // Obtener nombres correspondientes a los IDs
+        $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
+        $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
+        $entrevista->departamento_nombre = $entrevista->obtenerDepartamento();
+        $entrevista->modalidad_nombre = $entrevista->obtenerModalidad();
+        $entrevista->discapacidad_nombre = $entrevista->obtenerDiscapacidad();
+        $entrevista->genero_nombre = $entrevista->obtenerGenero();
+
+        $router->render('admin/registrados/ver', [
+            'titulo' => 'Detalles del Postulante',
+            'entrevista' => $entrevista
+        ]);
     }
 }

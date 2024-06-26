@@ -52,4 +52,54 @@ class EmailCita {
 
         $mail->send();
     }
+
+    public function enviarConfirmacionAceptacion($entrevista) {
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = $_ENV['EMAIL_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
+
+        $mail->setFrom('citas@TeleUrban.com', 'TeleUrban');
+        $mail->addAddress($this->email, $this->nombre);
+        $mail->Subject = 'Entrevista Aceptada';
+
+        $mail->isHTML(TRUE);
+        $mail->CharSet = 'UTF-8';
+
+        $contenido = '<html>';
+        $contenido .= "<p><strong>Hola " . $this->nombre .  "</strong>, tu entrevista en TeleUrban ha sido aceptada.</p>";
+        $contenido .= "<p>Nos pondremos en contacto contigo para más detalles.</p>";
+        $contenido .= '</html>';
+        $mail->Body = $contenido;
+
+        $mail->send();
+    }
+
+    public function enviarConfirmacionRechazo($entrevista) {
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = $_ENV['EMAIL_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
+
+        $mail->setFrom('citas@TeleUrban.com', 'TeleUrban');
+        $mail->addAddress($this->email, $this->nombre);
+        $mail->Subject = 'Entrevista Rechazada';
+
+        $mail->isHTML(TRUE);
+        $mail->CharSet = 'UTF-8';
+
+        $contenido = '<html>';
+        $contenido .= "<p><strong>Hola " . $this->nombre .  "</strong>, lamentamos informarte que tu entrevista en TeleUrban ha sido rechazada.</p>";
+        $contenido .= "<p>Nos pondremos en contacto contigo para más detalles.</p>";
+        $contenido .= '</html>';
+        $mail->Body = $contenido;
+
+        $mail->send();
+    }
 }

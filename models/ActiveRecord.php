@@ -257,10 +257,20 @@ class ActiveRecord {
     }
     
     public static function obtenerNombrePorId($tabla, $id, $columnaNombre = 'nombre') {
-        $query = "SELECT {$columnaNombre} FROM {$tabla} WHERE id = " . self::$db->escape_string($id);
+        if (is_null($id)) {
+            return '';
+        }
+
+        $id = self::$db->escape_string($id);
+        $query = "SELECT {$columnaNombre} FROM {$tabla} WHERE id = {$id}";
         $resultado = self::$db->query($query);
-        $registro = $resultado->fetch_assoc();
-        return $registro[$columnaNombre] ?? '';
+
+        if ($resultado) {
+            $registro = $resultado->fetch_assoc();
+            return $registro[$columnaNombre] ?? '';
+        }
+
+        return '';
     }
     
 

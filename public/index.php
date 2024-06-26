@@ -56,6 +56,12 @@ $router->post('/admin/departamentos/editar', [DepartamentosController::class, 'e
 $router->post('/admin/departamentos/eliminar', [DepartamentosController::class, 'eliminar']);
 $router->post('/admin/departamentos/publicar', [DepartamentosController::class, 'publicar']);
 
+//area de entrevistas
+$router->post('/admin/registrados/aceptar', [EntrevistaController::class, 'aceptar']);
+$router->post('/admin/registrados/rechazar', [EntrevistaController::class, 'rechazar']);
+$router->get('/admin/registrados/cv', [EntrevistaController::class, 'cv']);
+$router->get('/admin/registrados/ver', [EntrevistaController::class, 'verMasInformacion']);
+
 // Nueva ruta para ver detalles del departamento
 $router->get('/departamento', [DepartamentosController::class, 'detalle']);
 

@@ -1,3 +1,4 @@
+<!-- admin/registrados/index.php -->
 <h2 class="dashboard__heading"><?php echo $titulo; ?></h2>
 
 <div class="dashboard__contenedor-boton">
@@ -19,7 +20,7 @@
                     <th scope="col" class="table__th">Universidad</th>
                     <th scope="col" class="table__th">Fecha y hora</th>
                     <th scope="col" class="table__th">Descripción</th>
-                    <!-- <th scope="col" class="table__th">Estatus</th> -->
+                    <th scope="col" class="table__th">Estatus</th>
                     <th scope="col" class="table__th">Acciones</th>
                 </tr>
             </thead>
@@ -34,8 +35,26 @@
                         <td class="table__td"><?php echo $entrevista->universidad_nombre; ?></td>
                         <td class="table__td"><?php echo $entrevista->fecha_hora; ?></td>
                         <td class="table__td"><?php echo $entrevista->habilidades; ?></td>
-                        <!-- <td class="table__td"><?php echo $entrevista->estatus; ?></td> -->
+                        <td class="table__td"><?php echo $entrevista->estatus_nombre; ?></td>
                         <td class="table__td--acciones">
+                            <form method="POST" action="/admin/registrados/aceptar" class="table__formulario">
+                                <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
+                                <button class="table__accion table__accion--aceptar" type="submit">
+                                    <i class="fa-solid fa-check"></i>
+                                    Aceptar
+                                </button>
+                            </form>
+                            <form method="POST" action="/admin/registrados/rechazar" class="table__formulario">
+                                <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
+                                <button class="table__accion table__accion--rechazar" type="submit">
+                                    <i class="fa-solid fa-times"></i>
+                                    Rechazar
+                                </button>
+                            </form>
+                            <a class="table__accion table__accion--cv" href="/admin/registrados/cv?id=<?php echo $entrevista->id; ?>" target="_blank">
+                                <i class="fa-solid fa-file"></i>
+                                CV
+                            </a>
                             <a class="table__accion table__accion--editar" href="/admin/registrados/editar?id=<?php echo $entrevista->id; ?>">
                                 <i class="fa-solid fa-user-pen"></i>
                                 Editar

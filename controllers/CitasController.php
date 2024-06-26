@@ -135,6 +135,9 @@ class CitasController {
                 $fechaExpiracion->modify('+1 day');
                 $entrevista->token_expiracion = $fechaExpiracion->format('Y-m-d H:i:s');
 
+                // Asignar el estado "Pendiente" por defecto
+                $entrevista->estatus_id = 1;
+
                 // Validar que no haya una cita con la misma fecha, hora y departamento antes de guardar
                 $existeFechaHora = Entrevista::findWhere([
                     'fecha_hora' => $entrevista->fecha_hora,
