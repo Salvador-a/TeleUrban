@@ -98,6 +98,13 @@
                         </div>
                     </div>
                     <div class="formulario__campo">
+                        <label class="formulario__etiqueta" for="habilidades">Habilidades:</label>
+                        <div class="formulario__input-con-icono formulario__input-con-icono--grande">
+                            <i class="material-icons">build</i>
+                            <textarea class="formulario__entrada formulario__entrada--grande" id="habilidades" name="habilidades" placeholder="Describe tus habilidades"><?php echo $entrevista->habilidades; ?></textarea>
+                        </div>
+                    </div>
+                    <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="curriculum">Curriculum (PDF):</label>
                         <div class="formulario__input-con-icono">
                             <i class="material-icons">description</i>

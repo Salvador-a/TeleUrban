@@ -1,3 +1,5 @@
+
+
 <?php 
 
 require_once __DIR__ . '/../includes/app.php';
@@ -66,6 +68,9 @@ $router->get('/citas', [CitasController::class, 'crear']);
 $router->post('/citas', [CitasController::class, 'crear']);
 $router->post('/validar-fecha-hora', [CitasController::class, 'validarFechaHora']); // Ruta para validar fecha y hora
 $router->get('/404', [PaginasController::class, 'error']);
+
+// Nueva ruta para listar entrevistas con nombres en lugar de IDs
+$router->get('/entrevistas', [CitasController::class, 'listar']);
 
 // Área de Entrevistas (Admin)
 $router->get('/admin/registrados', [EntrevistaController::class, 'index']);

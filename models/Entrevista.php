@@ -4,7 +4,7 @@ namespace Model;
 
 class Entrevista extends ActiveRecord {
     protected static $tabla = 'entrevistas';
-    protected static $columnasDB = ['id', 'nombre', 'a_paterno', 'a_materno', 'email', 'telefono', 'discapacidad_id', 'genero_id', 'semestre_id', 'universidad_id', 'curriculum', 'fecha_hora', 'departamento_id', 'modalidad_id', 'token', 'token_expiracion'];
+    protected static $columnasDB = ['id', 'nombre', 'a_paterno', 'a_materno', 'email', 'telefono', 'discapacidad_id', 'genero_id', 'semestre_id', 'universidad_id', 'curriculum', 'fecha_hora', 'departamento_id', 'modalidad_id', 'habilidades', 'token', 'token_expiracion'];
 
     public $id;
     public $nombre;
@@ -20,6 +20,7 @@ class Entrevista extends ActiveRecord {
     public $fecha_hora;
     public $departamento_id;
     public $modalidad_id;
+    public $habilidades;
     public $token;
     public $token_expiracion;
 
@@ -38,9 +39,35 @@ class Entrevista extends ActiveRecord {
         $this->curriculum = $args['curriculum'] ?? '';
         $this->departamento_id = $args['departamento_id'] ?? '';
         $this->modalidad_id = $args['modalidad_id'] ?? '';
+        $this->habilidades = $args['habilidades'] ?? '';
         $this->token = $args['token'] ?? '';
         $this->token_expiracion = $args['token_expiracion'] ?? '';
     }
+
+    public function obtenerUniversidad() {
+        return self::obtenerNombrePorId('universidad', $this->universidad_id);
+    }
+    
+    public function obtenerSemestre() {
+        return self::obtenerNombrePorId('semestre', $this->semestre_id, 'grado');
+    }
+    
+    public function obtenerDepartamento() {
+        return self::obtenerNombrePorId('departamentos', $this->departamento_id, 'nombre_departamento');
+    }
+    
+    public function obtenerModalidad() {
+        return self::obtenerNombrePorId('descripcion', $this->modalidad_id);
+    }
+    
+    public function obtenerDiscapacidad() {
+        return self::obtenerNombrePorId('discapacidad', $this->discapacidad_id);
+    }
+    
+    public function obtenerGenero() {
+        return self::obtenerNombrePorId('genero', $this->genero_id);
+    }
+    
 
     public function validar() {
         if (!$this->nombre) {
@@ -79,9 +106,14 @@ class Entrevista extends ActiveRecord {
         if (!$this->modalidad_id) {
             self::setAlerta('error', 'La modalidad es obligatoria');
         }
+        if (!$this->habilidades) {
+            self::setAlerta('error', 'Las habilidades son obligatorias');
+        }
 
         return self::getAlertas();
     }
+
+    
 
     public static function eliminarTokensExpirados() {
         $fechaActual = date('Y-m-d H:i:s');

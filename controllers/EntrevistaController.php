@@ -19,6 +19,16 @@ class EntrevistaController {
         }
 
         $entrevistas = Entrevista::all();
+
+        foreach ($entrevistas as $entrevista) {
+            $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
+            $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
+            $entrevista->departamento_nombre = $entrevista->obtenerDepartamento();
+            $entrevista->modalidad_nombre = $entrevista->obtenerModalidad();
+            $entrevista->discapacidad_nombre = $entrevista->obtenerDiscapacidad();
+            $entrevista->genero_nombre = $entrevista->obtenerGenero();
+        }
+
         $router->render('admin/registrados/index', [
             'titulo' => 'Citas de Entrevista',
             'entrevistas' => $entrevistas
@@ -42,33 +52,22 @@ class EntrevistaController {
         $modalidades = Descripcion::all();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Sincronizar con los datos del POST
             $entrevista->sincronizar($_POST);
-
-            // Validar
             $alertas = $entrevista->validar();
 
-            // Manejar la subida del archivo de currículum
             if (empty($alertas)) {
                 if (isset($_FILES['curriculum']) && $_FILES['curriculum']['error'] === UPLOAD_ERR_OK) {
                     $carpeta_cv = '../public/cv';
 
-                    // Crear la carpeta si no existe
                     if (!is_dir($carpeta_cv)) {
                         mkdir($carpeta_cv, 0755, true);
                     }
 
-                    // Nombre del archivo
                     $nombre_archivo = md5(uniqid(rand(), true)) . '.pdf';
-
-                    // Mover el archivo a la carpeta
                     move_uploaded_file($_FILES['curriculum']['tmp_name'], $carpeta_cv . '/' . $nombre_archivo);
-
-                    // Asignar el nombre del archivo al modelo
                     $entrevista->curriculum = $nombre_archivo;
                 }
 
-                // Guardar en la base de datos
                 $resultado = $entrevista->guardar();
                 if ($resultado) {
                     header('Location: /admin/registrados');
@@ -120,35 +119,24 @@ class EntrevistaController {
         $modalidades = Descripcion::all();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Sincronizar con los datos del POST
             $entrevista->sincronizar($_POST);
-
-            // Validar
             $alertas = $entrevista->validar();
 
-            // Manejar la subida del archivo de currículum
             if (empty($alertas)) {
                 if (isset($_FILES['curriculum']) && $_FILES['curriculum']['error'] === UPLOAD_ERR_OK) {
                     $carpeta_cv = '../public/cv';
 
-                    // Crear la carpeta si no existe
                     if (!is_dir($carpeta_cv)) {
                         mkdir($carpeta_cv, 0755, true);
                     }
 
-                    // Nombre del archivo
                     $nombre_archivo = md5(uniqid(rand(), true)) . '.pdf';
-
-                    // Mover el archivo a la carpeta
                     move_uploaded_file($_FILES['curriculum']['tmp_name'], $carpeta_cv . '/' . $nombre_archivo);
-
-                    // Asignar el nombre del archivo al modelo
                     $entrevista->curriculum = $nombre_archivo;
                 } else {
                     $entrevista->curriculum = $entrevista->curriculum_actual;
                 }
 
-                // Guardar en la base de datos
                 $resultado = $entrevista->guardar();
                 if ($resultado) {
                     header('Location: /admin/registrados');

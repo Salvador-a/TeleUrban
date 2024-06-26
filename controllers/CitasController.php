@@ -22,7 +22,7 @@ class CitasController {
         $generos = Genero::all();
         $semestres = Semestre::all();
         $universidades = Universidad::all();
-        $departamentos = Departamento::all(); // Cambiado a Departamento
+        $departamentos = Departamento::all();
         $modalidades = Descripcion::all();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -184,7 +184,7 @@ class CitasController {
             'generos' => $generos,
             'semestres' => $semestres,
             'universidades' => $universidades,
-            'departamentos' => $departamentos, // Cambiado a Departamento
+            'departamentos' => $departamentos,
             'modalidades' => $modalidades
         ]);
     }
@@ -228,4 +228,3 @@ class CitasController {
         }
     }
 }
-?>

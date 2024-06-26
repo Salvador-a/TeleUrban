@@ -255,6 +255,14 @@ class ActiveRecord {
         $resultado = self::consultarSQL($query);
         return array_shift($resultado);
     }
+    
+    public static function obtenerNombrePorId($tabla, $id, $columnaNombre = 'nombre') {
+        $query = "SELECT {$columnaNombre} FROM {$tabla} WHERE id = " . self::$db->escape_string($id);
+        $resultado = self::$db->query($query);
+        $registro = $resultado->fetch_assoc();
+        return $registro[$columnaNombre] ?? '';
+    }
+    
 
     // Eliminar un Registro por su ID
     public function eliminar() {

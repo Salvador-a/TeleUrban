@@ -3,6 +3,8 @@
 namespace Classes;
 
 use PHPMailer\PHPMailer\PHPMailer;
+use Model\Departamento;
+use Model\Descripcion;
 
 class EmailCita {
     public $email;
@@ -14,6 +16,10 @@ class EmailCita {
     }
 
     public function enviarConfirmacionEntrevista($entrevista) {
+        // Obtener los nombres correspondientes a los IDs
+        $departamento = Departamento::find($entrevista->departamento_id);
+        $modalidad = Descripcion::find($entrevista->modalidad_id);
+
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
@@ -34,8 +40,9 @@ class EmailCita {
         $contenido .= "<p>Detalles de la entrevista:</p>";
         $contenido .= "<ul>";
         $contenido .= "<li><strong>Fecha y Hora:</strong> " . $entrevista->fecha_hora . "</li>";
-        $contenido .= "<li><strong>Área:</strong> " . $entrevista->departamento_id . "</li>";
-        $contenido .= "<li><strong>Modalidad:</strong> " . $entrevista->modalidad_id . "</li>";
+        $contenido .= "<li><strong>Área:</strong> " . $departamento->nombre_departamento . "</li>";
+        $contenido .= "<li><strong>Modalidad:</strong> " . $modalidad->nombre . "</li>";
+        $contenido .= "<li><strong>Habilidades:</strong> " . $entrevista->habilidades . "</li>";
         $contenido .= "</ul>";
         $contenido .= "<p>Tu token para editar la cita es: <strong>" . $entrevista->token . "</strong></p>";
         $contenido .= "<p>Este token es válido por 24 horas.</p>";
@@ -46,4 +53,3 @@ class EmailCita {
         $mail->send();
     }
 }
-

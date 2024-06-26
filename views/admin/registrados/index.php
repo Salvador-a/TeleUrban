@@ -15,6 +15,11 @@
                     <th scope="col" class="table__th">Nombre</th>
                     <th scope="col" class="table__th">E-mail</th>
                     <th scope="col" class="table__th">Teléfono</th>
+                    <th scope="col" class="table__th">Semestre</th>
+                    <th scope="col" class="table__th">Universidad</th>
+                    <th scope="col" class="table__th">Fecha y hora</th>
+                    <th scope="col" class="table__th">Descripción</th>
+                    <!-- <th scope="col" class="table__th">Estatus</th> -->
                     <th scope="col" class="table__th">Acciones</th>
                 </tr>
             </thead>
@@ -25,6 +30,11 @@
                         <td class="table__td"><?php echo $entrevista->nombre; ?></td>
                         <td class="table__td"><?php echo $entrevista->email; ?></td>
                         <td class="table__td"><?php echo $entrevista->telefono; ?></td>
+                        <td class="table__td"><?php echo $entrevista->semestre_nombre; ?></td>
+                        <td class="table__td"><?php echo $entrevista->universidad_nombre; ?></td>
+                        <td class="table__td"><?php echo $entrevista->fecha_hora; ?></td>
+                        <td class="table__td"><?php echo $entrevista->habilidades; ?></td>
+                        <!-- <td class="table__td"><?php echo $entrevista->estatus; ?></td> -->
                         <td class="table__td--acciones">
                             <a class="table__accion table__accion--editar" href="/admin/registrados/editar?id=<?php echo $entrevista->id; ?>">
                                 <i class="fa-solid fa-user-pen"></i>
