@@ -18,9 +18,9 @@ class EntrevistaController {
             header('Location: /login');
             return;
         }
-
+    
         $entrevistas = Entrevista::all();
-
+    
         foreach ($entrevistas as $entrevista) {
             $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
             $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
@@ -30,10 +30,11 @@ class EntrevistaController {
             $entrevista->genero_nombre = $entrevista->obtenerGenero();
             $entrevista->estatus_nombre = $entrevista->obtenerEstatus();
         }
-
+    
         $router->render('admin/registrados/index', [
             'titulo' => 'Citas de Entrevista',
-            'entrevistas' => $entrevistas
+            'entrevistas' => $entrevistas,
+            'mostrarAcciones' => true // Asegurarse de que esta variable esté siempre definida
         ]);
     }
 
@@ -91,7 +92,7 @@ class EntrevistaController {
         ]);
     }
 
-    public static function editar(Router $router) {
+    public static function ver(Router $router) {
         if (!is_admin()) {
             header('Location: /login');
             return;
@@ -112,53 +113,20 @@ class EntrevistaController {
             return;
         }
 
-        $alertas = [];
+        // Obtener nombres correspondientes a los IDs
+        $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
+        $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
+        $entrevista->departamento_nombre = $entrevista->obtenerDepartamento();
+        $entrevista->modalidad_nombre = $entrevista->obtenerModalidad();
+        $entrevista->discapacidad_nombre = $entrevista->obtenerDiscapacidad();
+        $entrevista->genero_nombre = $entrevista->obtenerGenero();
 
-        $discapacidades = Discapacidad::all();
-        $generos = Genero::all();
-        $semestres = Semestre::all();
-        $universidades = Universidad::all();
-        $areas = Area::all();
-        $modalidades = Descripcion::all();
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $entrevista->sincronizar($_POST);
-            $alertas = $entrevista->validar();
-
-            if (empty($alertas)) {
-                if (isset($_FILES['curriculum']) && $_FILES['curriculum']['error'] === UPLOAD_ERR_OK) {
-                    $carpeta_cv = '../public/cv';
-
-                    if (!is_dir($carpeta_cv)) {
-                        mkdir($carpeta_cv, 0755, true);
-                    }
-
-                    $nombre_archivo = md5(uniqid(rand(), true)) . '.pdf';
-                    move_uploaded_file($_FILES['curriculum']['tmp_name'], $carpeta_cv . '/' . $nombre_archivo);
-                    $entrevista->curriculum = $nombre_archivo;
-                } else {
-                    $entrevista->curriculum = $entrevista->curriculum_actual;
-                }
-
-                $resultado = $entrevista->guardar();
-                if ($resultado) {
-                    header('Location: /admin/registrados');
-                }
-            }
-        }
-
-        $router->render('admin/registrados/editar', [
-            'titulo' => 'Editar Cita de Entrevista',
-            'entrevista' => $entrevista,
-            'alertas' => $alertas,
-            'discapacidades' => $discapacidades,
-            'generos' => $generos,
-            'semestres' => $semestres,
-            'universidades' => $universidades,
-            'areas' => $areas,
-            'modalidades' => $modalidades
+        $router->render('admin/registrados/ver', [
+            'titulo' => 'Detalles del Postulante',
+            'entrevista' => $entrevista
         ]);
     }
+
 
     public static function eliminar() {
         if (!is_admin()) {
@@ -324,4 +292,58 @@ class EntrevistaController {
             'entrevista' => $entrevista
         ]);
     }
+
+    public static function aceptados(Router $router) {
+        if (!is_admin()) {
+            header('Location: /login');
+            return;
+        }
+    
+        // Obtener entrevistas con estatus "Aceptado"
+        $entrevistas = Entrevista::where('estatus_id', 2);
+    
+        foreach ($entrevistas as $entrevista) {
+            $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
+            $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
+            $entrevista->departamento_nombre = $entrevista->obtenerDepartamento();
+            $entrevista->modalidad_nombre = $entrevista->obtenerModalidad();
+            $entrevista->discapacidad_nombre = $entrevista->obtenerDiscapacidad();
+            $entrevista->genero_nombre = $entrevista->obtenerGenero();
+            $entrevista->estatus_nombre = $entrevista->obtenerEstatus();
+        }
+    
+        $router->render('admin/registrados/index', [
+            'titulo' => 'Entrevistas Aceptadas',
+            'entrevistas' => $entrevistas,
+            'mostrarAcciones' => false // No mostrar acciones para esta vista
+        ]);
+    }
+    
+    public static function rechazados(Router $router) {
+        if (!is_admin()) {
+            header('Location: /login');
+            return;
+        }
+    
+        // Obtener entrevistas con estatus "Rechazado"
+        $entrevistas = Entrevista::where('estatus_id', 3);
+    
+        foreach ($entrevistas as $entrevista) {
+            $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
+            $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
+            $entrevista->departamento_nombre = $entrevista->obtenerDepartamento();
+            $entrevista->modalidad_nombre = $entrevista->obtenerModalidad();
+            $entrevista->discapacidad_nombre = $entrevista->obtenerDiscapacidad();
+            $entrevista->genero_nombre = $entrevista->obtenerGenero();
+            $entrevista->estatus_nombre = $entrevista->obtenerEstatus();
+        }
+    
+        $router->render('admin/registrados/index', [
+            'titulo' => 'Entrevistas Rechazadas',
+            'entrevistas' => $entrevistas,
+            'mostrarAcciones' => false // No mostrar acciones para esta vista
+        ]);
+    }
+    
+    
 }

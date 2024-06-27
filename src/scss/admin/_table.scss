@@ -76,6 +76,10 @@
 
         &--acciones {
             text-align: right; // Alinea los botones a la derecha
+            display: flex;
+            flex-direction: column; // Distribuye los botones en columna
+            align-items: flex-start; // Alinea los botones al inicio
+            gap: 0.5rem; // Espacio entre los botones
         }
 
         &--descripcion {
@@ -142,6 +146,18 @@
         display: inline-flex; // Cambia de flex a inline-flex
         align-items: center;
         margin-left: 0.5rem; // Asegura un pequeño espacio entre los botones
+
+        &--aceptar {
+            color: v.$verde;
+        }
+
+        &--rechazar {
+            color: v.$rojo;
+        }
+
+        &--cv {
+            color: v.$negro;
+        }
 
         &--editar {
             color: v.$azul;

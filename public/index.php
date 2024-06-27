@@ -1,5 +1,3 @@
-
-
 <?php 
 
 require_once __DIR__ . '/../includes/app.php';
@@ -56,14 +54,11 @@ $router->post('/admin/departamentos/editar', [DepartamentosController::class, 'e
 $router->post('/admin/departamentos/eliminar', [DepartamentosController::class, 'eliminar']);
 $router->post('/admin/departamentos/publicar', [DepartamentosController::class, 'publicar']);
 
-//area de entrevistas
+// Área de Entrevistas
 $router->post('/admin/registrados/aceptar', [EntrevistaController::class, 'aceptar']);
 $router->post('/admin/registrados/rechazar', [EntrevistaController::class, 'rechazar']);
 $router->get('/admin/registrados/cv', [EntrevistaController::class, 'cv']);
-$router->get('/admin/registrados/ver', [EntrevistaController::class, 'verMasInformacion']);
-
-// Nueva ruta para ver detalles del departamento
-$router->get('/departamento', [DepartamentosController::class, 'detalle']);
+$router->get('/admin/registrados/ver', [EntrevistaController::class, 'verMasInformacion']); // Nueva ruta para ver información del postulante
 
 // Área Pública 
 $router->get('/', [PaginasController::class, 'index']);
@@ -85,3 +80,4 @@ $router->post('/admin/registrados/editar', [EntrevistaController::class, 'editar
 $router->post('/admin/registrados/eliminar', [EntrevistaController::class, 'eliminar']);
 
 $router->comprobarRutas();
+

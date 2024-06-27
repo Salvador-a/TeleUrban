@@ -1,0 +1,207 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.ver {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(10px);
+    font-family: v.$fuente_principal;
+
+    &__card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        width: 100%;
+        max-width: 800px;
+        transition: transform 0.2s, background 0.2s;
+        animation: fadeInUp 1s ease-in-out;
+
+        &:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        &__header {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+
+            .card__name {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin: 0;
+                color: #333;
+            }
+
+            .card__email,
+            .card__phone {
+                font-size: 1.4rem;
+                color: #666;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                i {
+                    margin-right: 0.5rem;
+                    color: #007bff;
+                }
+            }
+        }
+
+        &__body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+
+            .card__section {
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                transition: background 0.2s;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.95);
+                }
+
+                h3 {
+                    margin-top: 0;
+                    font-size: 2rem;
+                    color: #333;
+                }
+
+                p {
+                    margin: 10px 0;
+                    font-size: 1.4rem;
+                    color: #444;
+                    display: flex;
+                    align-items: center;
+
+                    i {
+                        margin-right: 0.5rem;
+                        color: #007bff;
+                    }
+                }
+
+                a {
+                    color: #007bff;
+                    text-decoration: underline;
+                    transition: color 0.2s;
+
+                    &:hover {
+                        color: #0056b3;
+                    }
+                }
+            }
+
+            .card__skills {
+                grid-column: span 2;
+                @include m.tablet {
+                    grid-column: span 1;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .ver__card {
+            width: 100%;
+
+            &__header {
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+
+            .card__name {
+                font-size: 2rem;
+            }
+
+            .card__email,
+            .card__phone {
+                font-size: 1.2rem;
+            }
+
+            .card__body {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .card__section {
+                padding: 15px;
+
+                h3 {
+                    font-size: 1.6rem;
+                }
+
+                p {
+                    font-size: 1.1rem;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .card__name {
+            font-size: 1.8rem;
+        }
+
+        .card__email,
+        .card__phone {
+            font-size: 1rem;
+        }
+
+        .card__section h3 {
+            font-size: 1.4rem;
+        }
+
+        .card__section p {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .ver__card {
+            padding: 15px;
+
+            .card__name {
+                font-size: 1.6rem;
+            }
+
+            .card__email,
+            .card__phone {
+                font-size: 1rem;
+            }
+
+            .card__section {
+                padding: 10px;
+
+                h3 {
+                    font-size: 1.3rem;
+                }
+
+                p {
+                    font-size: 1.1rem;
+                }
+            }
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

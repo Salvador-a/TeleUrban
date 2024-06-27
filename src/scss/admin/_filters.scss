@@ -1,0 +1,37 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.filtros-estado {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.dashboard__filtro {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: v.$verde;
+    color: v.$blanco;
+    border: 1px solid darken(v.$verde, 10%);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    @include m.shadow; // Añadir sombra
+
+    &:hover {
+        background-color: darken(v.$verde, 10%);
+    }
+
+    &.active {
+        background-color: darken(v.$verde, 15%);
+    }
+
+    i {
+        font-size: 1.2rem;
+    }
+}
+
+
+

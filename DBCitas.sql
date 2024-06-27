@@ -135,7 +135,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES (1,'Sonia','Quinteri','Ciudad de México','México','Gerente de Calidad','Gestión de Calidad (ISO 9001),Auditorías de Calidad,Mejora Continua (Lean, Six Sigma),Análisis y Control de Calidad','null','6c924f64827c6acca0313e9a10e97f3f'),(2,'Karla','López','Neza','Mexico','Ingeniera Frontend (Frontend Engineer)','HTML,CSS,JavaScript,React, Vue.js,Desarrollo Responsivo,Accesibilidad Web (WCAG)','null','aa13d3658ddba2a99b72e35c80e69cfa'),(3,'Gerente de Mantenimiento','Martínez','Mexico','México','Gerente de Proyectos','Mantenimiento Preventivo y Correctivo,Gestión de Sistemas Tecnológicos (hardware y software),Análisis de Fallas y Solución de Problemas,Programación y Planificación de Mantenimiento','null','603e5c647aad33fa55d059b018a77975'),(4,'Laura','Hernández','Mexico','México','Analista de Datos','Gestión de Proyectos,Metodologías Ágiles (Scrum, Kanban),Gestión de Recursos y Presupuestos,Coordinación de Equipos','null','9900427a177c053e3f343accef022a6a'),(11,'Casandra','Martinez','Mexico','México','Consultora de Innovación Tecnológica','Análisis de Mercado y Tendencias Tecnológicas,Estrategias de Innovación,Transformación Digital','null','c17dfd4e28e622c72b9b9ff36e3f0361'),(12,'Pedro','Gutierrez','Chimalhucan','México','Ingeniero de Redes','Configuración y administración de redes LAN/WAN,Seguridad de redes y firewalls,Protocolos de red (TCP/IP, DNS, DHCP),Optimización del rendimiento de la red','null','99f7d0d567d2f4319eeed561de45e001');
+INSERT INTO `empleados` VALUES (1,'Sonia','Quinteri','Ciudad de México','México','Gerente de Calidad','Gestión de Calidad (ISO 9001),Auditorías de Calidad,Mejora Continua (Lean, Six Sigma),Análisis y Control de Calidad','null','6c924f64827c6acca0313e9a10e97f3f'),(2,'Karla','López','Neza','Mexico','Ingeniera Frontend (Frontend Engineer)','HTML,CSS,JavaScript,React, Vue.js,Desarrollo Responsivo,Accesibilidad Web (WCAG)','null','aa13d3658ddba2a99b72e35c80e69cfa'),(3,'Gerente de Mantenimiento','Martínez','Mexico','México','Gerente de Proyectos','Mantenimiento Preventivo y Correctivo,Gestión de Sistemas Tecnológicos (hardware y software),Análisis de Fallas y Solución de Problemas,Programación y Planificación de Mantenimiento','null','603e5c647aad33fa55d059b018a77975'),(4,'Laura','Hernández','Mexico','México','Analista de Datos','Gestión de Proyectos,Metodologías Ágiles (Scrum, Kanban),Gestión de Recursos y Presupuestos,Coordinación de Equipos','null','9900427a177c053e3f343accef022a6a'),(11,'Casandra','Martinez','Mexico','México','Consultora de Innovación Tecnológica','Análisis de Mercado y Tendencias Tecnológicas,Estrategias de Innovación,Transformación Digital','null','c17dfd4e28e622c72b9b9ff36e3f0361'),(12,'Pedro ','Gutierrez','Chimalhucan','México','Ingeniero de Redes','Configuración y administración de redes LAN/WAN,Seguridad de redes y firewalls,Protocolos de red (TCP/IP, DNS, DHCP),Optimización del rendimiento de la red','null','99f7d0d567d2f4319eeed561de45e001');
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `encargado_credencial`;
@@ -178,10 +178,10 @@ LOCK TABLES `encargado_personal` WRITE;
 INSERT INTO `encargado_personal` VALUES (7,'Alexandro','Ruelas'),(6,'Brenda','Barrera'),(9,'Damian','Alanis'),(1,'Diego','Rodriguez'),(4,'Fernando','Flores'),(8,'Gabriel','Ruelas'),(3,'Jorge','Coxtinica'),(2,'Karen','Alcala'),(5,'Karla','Oaxaca');
 /*!40000 ALTER TABLE `encargado_personal` ENABLE KEYS */;
 UNLOCK TABLES;
-DROP TABLE IF EXISTS `entrevista`;
+DROP TABLE IF EXISTS `entrevistas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `entrevista` (
+CREATE TABLE `entrevistas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `a_paterno` varchar(255) NOT NULL,
@@ -194,32 +194,39 @@ CREATE TABLE `entrevista` (
   `universidad_id` bigint DEFAULT NULL,
   `curriculum` longblob,
   `fecha_hora` datetime NOT NULL,
-  `area_id` bigint DEFAULT NULL,
   `modalidad_id` bigint DEFAULT NULL,
+  `token` varchar(82) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `token_expiracion` datetime DEFAULT NULL,
+  `departamento_id` bigint DEFAULT NULL,
+  `habilidades` text,
+  `estatus_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `discapacidad_id` (`discapacidad_id`),
   KEY `genero_id` (`genero_id`),
   KEY `semestre_id` (`semestre_id`),
   KEY `universidad_id` (`universidad_id`),
-  KEY `area_id` (`area_id`),
   KEY `modalidad_id` (`modalidad_id`),
-  CONSTRAINT `entrevista_ibfk_1` FOREIGN KEY (`discapacidad_id`) REFERENCES `discapacidad` (`id`),
-  CONSTRAINT `entrevista_ibfk_2` FOREIGN KEY (`genero_id`) REFERENCES `genero` (`id`),
-  CONSTRAINT `entrevista_ibfk_3` FOREIGN KEY (`semestre_id`) REFERENCES `semestre` (`id`),
-  CONSTRAINT `entrevista_ibfk_4` FOREIGN KEY (`universidad_id`) REFERENCES `universidad` (`id`),
-  CONSTRAINT `entrevista_ibfk_5` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`),
-  CONSTRAINT `entrevista_ibfk_6` FOREIGN KEY (`modalidad_id`) REFERENCES `descripcion` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_departamento_id` (`departamento_id`),
+  KEY `fk_estatus` (`estatus_id`),
+  CONSTRAINT `entrevistas_ibfk_1` FOREIGN KEY (`discapacidad_id`) REFERENCES `discapacidad` (`id`),
+  CONSTRAINT `entrevistas_ibfk_2` FOREIGN KEY (`genero_id`) REFERENCES `genero` (`id`),
+  CONSTRAINT `entrevistas_ibfk_3` FOREIGN KEY (`semestre_id`) REFERENCES `semestre` (`id`),
+  CONSTRAINT `entrevistas_ibfk_4` FOREIGN KEY (`universidad_id`) REFERENCES `universidad` (`id`),
+  CONSTRAINT `entrevistas_ibfk_6` FOREIGN KEY (`modalidad_id`) REFERENCES `descripcion` (`id`),
+  CONSTRAINT `entrevistas_ibfk_departamento` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
+  CONSTRAINT `fk_departamento_id` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
+  CONSTRAINT `fk_estatus` FOREIGN KEY (`estatus_id`) REFERENCES `status` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `entrevista` WRITE;
-/*!40000 ALTER TABLE `entrevista` DISABLE KEYS */;
-/*!40000 ALTER TABLE `entrevista` ENABLE KEYS */;
+LOCK TABLES `entrevistas` WRITE;
+/*!40000 ALTER TABLE `entrevistas` DISABLE KEYS */;
+INSERT INTO `entrevistas` VALUES (85,' Salvador','Acosta','Rodriguez','salvador.ar614@gmail.com','5610136814',3,1,4,5,_binary '92fe04c23f99bdd7aefaf2ec127f6bf1.pdf','2024-06-27 12:00:00',3,'CITA--20240626224216-33b6457fc3fa','2024-06-27 22:42:16',5,'soy mu puntual',3),(86,' Salvador','Acosta','Rodriguez','salvador.sar.14@gmail.com','5610136814',5,2,4,5,_binary '63b2cec91c0ab7ac364e51028ce3f39c.pdf','2024-06-27 12:00:00',3,'CITA--20240626230035-a59debd4e435','2024-06-27 23:00:35',4,'dsfsfsdf',2);
+/*!40000 ALTER TABLE `entrevistas` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `genero`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-
 CREATE TABLE `genero` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(250) NOT NULL,
@@ -273,12 +280,12 @@ CREATE TABLE `status` (
   `nombre` varchar(250) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (2,'Aceptado'),(1,'Pendiente');
+INSERT INTO `status` VALUES (2,'Aceptado'),(1,'Pendiente'),(3,'Rechazado');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `universidad`;
