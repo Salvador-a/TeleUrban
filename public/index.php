@@ -1,5 +1,6 @@
 <?php 
 
+// Archivo: index.php en la carpeta public
 require_once __DIR__ . '/../includes/app.php';
 
 use MVC\Router;
@@ -34,7 +35,7 @@ $router->post('/reestablecer', [AuthController::class, 'reestablecer']);
 $router->get('/mensaje', [AuthController::class, 'mensaje']);
 $router->get('/confirmar-cuenta', [AuthController::class, 'confirmar']);
 
-// Área de Administración
+// Área de Administración (incluye todos los roles)
 $router->get('/admin/dashboard', [DashboardController::class, 'index']);
 
 // Área de Empleados
@@ -80,4 +81,3 @@ $router->post('/admin/registrados/editar', [EntrevistaController::class, 'editar
 $router->post('/admin/registrados/eliminar', [EntrevistaController::class, 'eliminar']);
 
 $router->comprobarRutas();
-

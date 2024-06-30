@@ -9,7 +9,7 @@
             id="nombre"
             name="nombre"
             placeholder="Nombre empleado"
-            value="<?php echo $empleado->nombre ?? ''; ?>"
+            value="<?php echo s($empleado->nombre); ?>"
         >
     </div>
 
@@ -21,7 +21,7 @@
             id="apellido"
             name="apellido"
             placeholder="Apellido empleado"
-            value="<?php echo $empleado->apellido ?? ''; ?>"
+            value="<?php echo s($empleado->apellido); ?>"
         >
     </div>
 
@@ -32,8 +32,8 @@
             class="formulario__input"
             id="ciudad"
             name="ciudad"
-            placeholder="Ciudad "
-            value="<?php echo $empleado->ciudad ?? ''; ?>"
+            placeholder="Ciudad"
+            value="<?php echo s($empleado->ciudad); ?>"
         >
     </div>
 
@@ -45,10 +45,10 @@
             id="pais"
             name="pais"
             placeholder="País empleado"
-            value="<?php echo $empleado->pais ?? ''; ?>"
+            value="<?php echo s($empleado->pais); ?>"
         >
     </div>
-    
+
     <div class="formulario__campo">
         <label for="imagen" class="formulario__label">Imagen</label>
         <input
@@ -56,7 +56,6 @@
             class="formulario__input formulario__input--file"
             id="imagen"
             name="imagen"
-            value="<?php echo $_POST['imagen'] ?? ''; ?>"
         >
     </div>
 
@@ -64,29 +63,27 @@
         <p class="formulario__texto">Imagen Actual:</p>
         <div class="formulario__imagen">
             <picture>
-                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $empleado->imagen; ?>.webp" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $empleado->imagen; ?>.png" type="image/png">
-                <img src="<?php echo $_ENV['HOST'] . '/img/galeria/' . $empleado->imagen; ?>.png" alt="Imagen empleado">
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . s($empleado->imagen); ?>.webp" type="image/webp">
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . s($empleado->imagen); ?>.png" type="image/png">
+                <img src="<?php echo $_ENV['HOST'] . '/img/galeria/' . s($empleado->imagen); ?>.png" alt="Imagen empleado">
             </picture>
         </div>
-
     <?php } ?>
 </fieldset>
-
 
 <fieldset class="formulario__fieldset">
     <legend class="formulario__legend">Información Extra</legend>
 
     <div class="formulario__campo">
-        <label for="job_title" class="formulario__label">Puesto de trabajo</label>
-        <input
-            type="text"
-            class="formulario__input"
-            id="puesto_trabajo"
-            name="puesto_trabajo"
-            placeholder="Ej. Desarrollador Full Stack"
-            value="<?php echo $empleado->puesto_trabajo ?? ''; ?>"
-        >
+        <label for="puesto_trabajo_id" class="formulario__label">Puesto de Trabajo</label>
+        <select class="formulario__select" id="puesto_trabajo_id" name="puesto_trabajo_id">
+            <option value="">Seleccione un Puesto de Trabajo</option>
+            <?php foreach($puestos_trabajo as $puesto) { ?>
+                <option value="<?php echo s($puesto->id); ?>" <?php echo $empleado->puesto_trabajo_id === $puesto->id ? 'selected' : ''; ?>>
+                    <?php echo s($puesto->nombre_puesto); ?>
+                </option>
+            <?php } ?>
+        </select>
     </div>
 
     <div class="formulario__campo">
@@ -95,17 +92,28 @@
             type="text"
             class="formulario__input"
             id="tags_input"
+            name="tags_input"
             placeholder="Ej. Node.js, PHP, CSS, Laravel, UX / UI"
+            value="<?php echo s($empleado->tags); ?>"
         >
-
         <div id="tags" class="formulario__listado"></div>
         <input 
             type="hidden" 
             name="tags" 
-            value="<?php echo $empleado->tags ?? ''; ?>"> 
+            value="<?php echo s($empleado->tags); ?>"> 
     </div>
 
-   
+    <div class="formulario__campo">
+        <label for="departamento_id" class="formulario__label">Departamento</label>
+        <select class="formulario__select" id="departamento_id" name="departamento_id">
+            <option value="">Seleccione un Departamento</option>
+            <?php foreach($departamentos as $departamento) { ?>
+                <option value="<?php echo s($departamento->id); ?>" <?php echo $empleado->departamento_id === $departamento->id ? 'selected' : ''; ?>>
+                    <?php echo s($departamento->nombre_departamento); ?>
+                </option>
+            <?php } ?>
+        </select>
+    </div>
 </fieldset>
 
 <fieldset class="formulario__fieldset">
@@ -121,7 +129,7 @@
                 class="formulario__input--sociales"
                 name="redes[facebook]"
                 placeholder="Facebook"
-                value="<?php echo $redes_sociales->facebook ?? ''; ?>"
+                value="<?php echo s($redes_sociales->facebook ?? ''); ?>"
             >
         </div>
     </div>
@@ -136,12 +144,10 @@
                 class="formulario__input--sociales"
                 name="redes[twitter]"
                 placeholder="Twitter (𝕏)"
-                value="<?php echo $redes_sociales->twitter ?? ''; ?>"
+                value="<?php echo s($redes_sociales->twitter ?? ''); ?>"
             >
         </div>
     </div>
-
-   
 
     <div class="formulario__campo">
         <div class="formulario__contenedor-icono">
@@ -153,12 +159,10 @@
                 class="formulario__input--sociales"
                 name="redes[instagram]"
                 placeholder="Instagram"
-                value="<?php echo $redes_sociales->instagram ?? ''; ?>"
+                value="<?php echo s($redes_sociales->instagram ?? ''); ?>"
             >
         </div>
     </div>
-
-    
 
     <div class="formulario__campo">
         <div class="formulario__contenedor-icono">
@@ -170,7 +174,7 @@
                 class="formulario__input--sociales"
                 name="redes[github]"
                 placeholder="GitHub"
-                value="<?php echo $redes_sociales->github ?? ''; ?>"
+                value="<?php echo s($redes_sociales->github ?? ''); ?>"
             >
         </div>
     </div>
@@ -185,9 +189,8 @@
                 class="formulario__input--sociales"
                 name="redes[linkedin]"
                 placeholder="LinkedIn"
-                value="<?php echo $redes_sociales->linkedin ?? ''; ?>"
+                value="<?php echo s($redes_sociales->linkedin ?? ''); ?>"
             >
         </div>
     </div>
-
 </fieldset>

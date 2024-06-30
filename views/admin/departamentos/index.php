@@ -1,5 +1,4 @@
 <h2 class="dashboard__heading"><?php echo $titulo; ?></h2>
-
 <div class="dashboard__contenedor-boton">
     <a class="dashboard__boton" href="/admin/departamentos/crear">
         <i class="fa-solid fa-circle-plus"></i>
@@ -31,10 +30,10 @@
                         </td>
                         <td class="table__td" data-label="Encargado">
                             <div class="encargado">
-                                <img src="/img/galeria/<?php echo $departamento->encargado->imagen; ?>.png" alt="Imagen de <?php echo $departamento->encargado->nombre; ?>" class="encargado__imagen">
+                                <img src="/img/galeria/<?php echo $departamento->encargado_imagen; ?>.png" alt="Imagen de <?php echo $departamento->encargado_nombre; ?>" class="encargado__imagen">
                                 <div class="encargado__info">
-                                    <p class="encargado__nombre"><?php echo $departamento->encargado->nombre . " " . $departamento->encargado->apellido; ?></p>
-                                    <p class="encargado__puesto"><?php echo $departamento->encargado->puesto_trabajo; ?></p>
+                                    <p class="encargado__nombre"><?php echo $departamento->encargado_nombre . " " . $departamento->encargado_apellido; ?></p>
+                                    <p class="encargado__puesto"><?php echo $departamento->encargado_puesto; ?></p>
                                 </div>
                             </div>
                         </td>

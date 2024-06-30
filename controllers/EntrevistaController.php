@@ -14,13 +14,20 @@ use Classes\EmailCita;
 
 class EntrevistaController {
     public static function index(Router $router) {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth()) {
             header('Location: /login');
             return;
         }
-    
+
+        if (!is_admin() && !is_jefe() && !is_trabajador()) {
+            header('Location: /403');
+            return;
+        }
+
         $entrevistas = Entrevista::all();
-    
+
         foreach ($entrevistas as $entrevista) {
             $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
             $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
@@ -30,7 +37,7 @@ class EntrevistaController {
             $entrevista->genero_nombre = $entrevista->obtenerGenero();
             $entrevista->estatus_nombre = $entrevista->obtenerEstatus();
         }
-    
+
         $router->render('admin/registrados/index', [
             'titulo' => 'Citas de Entrevista',
             'entrevistas' => $entrevistas,
@@ -39,7 +46,9 @@ class EntrevistaController {
     }
 
     public static function crear(Router $router) {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin()) {
             header('Location: /login');
             return;
         }
@@ -93,7 +102,9 @@ class EntrevistaController {
     }
 
     public static function ver(Router $router) {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe() && !is_trabajador()) {
             header('Location: /login');
             return;
         }
@@ -127,9 +138,10 @@ class EntrevistaController {
         ]);
     }
 
-
     public static function eliminar() {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe()) {
             header('Location: /login');
             return;
         }
@@ -159,7 +171,9 @@ class EntrevistaController {
     }
 
     public static function aceptar() {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe()) {
             header('Location: /login');
             return;
         }
@@ -194,7 +208,9 @@ class EntrevistaController {
     }
 
     public static function rechazar() {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe()) {
             header('Location: /login');
             return;
         }
@@ -229,7 +245,9 @@ class EntrevistaController {
     }
 
     public static function cv() {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe() && !is_trabajador()) {
             header('Location: /login');
             return;
         }
@@ -259,7 +277,9 @@ class EntrevistaController {
     }
 
     public static function verMasInformacion(Router $router) {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe() && !is_trabajador()) {
             header('Location: /login');
             return;
         }
@@ -294,14 +314,16 @@ class EntrevistaController {
     }
 
     public static function aceptados(Router $router) {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe() && !is_trabajador()) {
             header('Location: /login');
             return;
         }
-    
+
         // Obtener entrevistas con estatus "Aceptado"
         $entrevistas = Entrevista::where('estatus_id', 2);
-    
+
         foreach ($entrevistas as $entrevista) {
             $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
             $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
@@ -311,23 +333,25 @@ class EntrevistaController {
             $entrevista->genero_nombre = $entrevista->obtenerGenero();
             $entrevista->estatus_nombre = $entrevista->obtenerEstatus();
         }
-    
+
         $router->render('admin/registrados/index', [
             'titulo' => 'Entrevistas Aceptadas',
             'entrevistas' => $entrevistas,
             'mostrarAcciones' => false // No mostrar acciones para esta vista
         ]);
     }
-    
+
     public static function rechazados(Router $router) {
-        if (!is_admin()) {
+        session_start();
+
+        if (!is_auth() || !is_admin() && !is_jefe() && !is_trabajador()) {
             header('Location: /login');
             return;
         }
-    
+
         // Obtener entrevistas con estatus "Rechazado"
         $entrevistas = Entrevista::where('estatus_id', 3);
-    
+
         foreach ($entrevistas as $entrevista) {
             $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
             $entrevista->semestre_nombre = $entrevista->obtenerSemestre();
@@ -337,13 +361,11 @@ class EntrevistaController {
             $entrevista->genero_nombre = $entrevista->obtenerGenero();
             $entrevista->estatus_nombre = $entrevista->obtenerEstatus();
         }
-    
+
         $router->render('admin/registrados/index', [
             'titulo' => 'Entrevistas Rechazadas',
             'entrevistas' => $entrevistas,
             'mostrarAcciones' => false // No mostrar acciones para esta vista
         ]);
     }
-    
-    
 }

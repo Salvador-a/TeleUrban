@@ -1,8 +1,3 @@
-<!-- admin/registrados/index.php -->
-<?php
-$mostrarAcciones = $mostrarAcciones ?? true;
-?>
-
 <h2 class="dashboard__heading"><?php echo $titulo; ?></h2>
 
 <div class="dashboard__contenedor-boton">
