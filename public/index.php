@@ -54,6 +54,8 @@ $router->get('/admin/departamentos/editar', [DepartamentosController::class, 'ed
 $router->post('/admin/departamentos/editar', [DepartamentosController::class, 'editar']);
 $router->post('/admin/departamentos/eliminar', [DepartamentosController::class, 'eliminar']);
 $router->post('/admin/departamentos/publicar', [DepartamentosController::class, 'publicar']);
+$router->post('/admin/departamentos/despublicar', [DepartamentosController::class, 'despublicar']);
+$router->post('/admin/departamentos/toggle-disponibilidad', [DepartamentosController::class, 'toggleDisponibilidad']); // Nueva ruta
 
 // Área de Entrevistas
 $router->post('/admin/registrados/aceptar', [EntrevistaController::class, 'aceptar']);
@@ -81,3 +83,4 @@ $router->post('/admin/registrados/editar', [EntrevistaController::class, 'editar
 $router->post('/admin/registrados/eliminar', [EntrevistaController::class, 'eliminar']);
 
 $router->comprobarRutas();
+

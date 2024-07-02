@@ -7,7 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Preconecta a Google Fonts para una carga más rápida de las fuentes -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Preconecta a Google Static Fonts para una carga más rápida de las fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet"> <!-- Importa la fuente Outfit de Google Fonts -->
-   
+    <!-- Importacion de los iconos de google -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/build/css/app.css"> <!-- Importa el archivo CSS principal de la aplicación -->
 </head>
 <body class="dashboard">

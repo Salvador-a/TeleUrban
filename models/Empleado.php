@@ -52,9 +52,7 @@ class Empleado extends ActiveRecord {
         if (!$this->tags) {
             self::setAlerta('error', 'El Campo Áreas de Experiencia es obligatorio');
         }
-        if (!$this->redes_sociales) {
-            self::setAlerta('error', 'El Campo Redes Sociales es obligatorio');
-        }
+        
         if (!$this->departamento_id) {
             self::setAlerta('error', 'El Campo Departamento es Obligatorio');
         }

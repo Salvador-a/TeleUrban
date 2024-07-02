@@ -54,38 +54,40 @@
                         <td class="table__td"><?php echo $entrevista->fecha_hora; ?></td>
                         <td class="table__td"><?php echo $entrevista->habilidades; ?></td>
                         <td class="table__td"><?php echo $entrevista->estatus_nombre; ?></td>
-                        <td class="table__td--acciones">
-                            <?php if ($mostrarAcciones) { ?>
-                                <form method="POST" action="/admin/registrados/aceptar" class="table__formulario">
-                                    <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
-                                    <button class="table__accion table__accion--aceptar" type="submit" <?php echo $entrevista->estatus_id != 1 ? 'disabled' : ''; ?>>
-                                        <i class="fa-solid fa-check"></i>
-                                        Aceptar
+                        <td class="table__td table__td--acciones">
+                            <div class="acciones-contenedor">
+                                <?php if ($mostrarAcciones) { ?>
+                                    <form method="POST" action="/admin/registrados/aceptar" class="table__formulario">
+                                        <button class="table__accion table__accion--aceptar" type="submit" <?php echo $entrevista->estatus_id != 1 ? 'disabled' : ''; ?>>
+                                            <i class="material-icons">check</i>
+                                            Aceptar
+                                        </button>
+                                        <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
+                                    </form>
+                                    <form method="POST" action="/admin/registrados/rechazar" class="table__formulario">
+                                        <button class="table__accion table__accion--rechazar" type="submit" <?php echo $entrevista->estatus_id != 1 ? 'disabled' : ''; ?>>
+                                            <i class="material-icons">close</i>
+                                            Rechazar
+                                        </button>
+                                        <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
+                                    </form>
+                                <?php } ?>
+                                <a class="table__accion table__accion--cv" href="/admin/registrados/cv?id=<?php echo $entrevista->id; ?>" target="_blank">
+                                    <i class="material-icons">insert_drive_file</i>
+                                    CV
+                                </a>
+                                <a class="table__accion table__accion--ver" href="/admin/registrados/ver?id=<?php echo $entrevista->id; ?>">
+                                    <i class="material-icons">visibility</i>
+                                    Leer más
+                                </a>
+                                <form method="POST" action="/admin/registrados/eliminar" class="table__formulario">
+                                    <button class="table__accion table__accion--eliminar" type="submit">
+                                        <i class="material-icons">delete</i>
+                                        Eliminar
                                     </button>
-                                </form>
-                                <form method="POST" action="/admin/registrados/rechazar" class="table__formulario">
                                     <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
-                                    <button class="table__accion table__accion--rechazar" type="submit" <?php echo $entrevista->estatus_id != 1 ? 'disabled' : ''; ?>>
-                                        <i class="fa-solid fa-times"></i>
-                                        Rechazar
-                                    </button>
                                 </form>
-                            <?php } ?>
-                            <a class="table__accion table__accion--cv" href="/admin/registrados/cv?id=<?php echo $entrevista->id; ?>" target="_blank">
-                                <i class="fa-solid fa-file"></i>
-                                CV
-                            </a>
-                            <a class="table__accion table__accion--ver" href="/admin/registrados/ver?id=<?php echo $entrevista->id; ?>">
-                                <i class="fa-solid fa-eye"></i>
-                                Ver Más Información
-                            </a>
-                            <form method="POST" action="/admin/registrados/eliminar" class="table__formulario">
-                                <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
-                                <button class="table__accion table__accion--eliminar" type="submit">
-                                    <i class="fa-solid fa-circle-xmark"></i>
-                                    Eliminar
-                                </button>
-                            </form>
+                            </div>
                         </td>
                     </tr>
                 <?php } ?>

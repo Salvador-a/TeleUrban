@@ -25,6 +25,12 @@ class EmpleadosController {
         }
 
         $user_role = '';
+        $departamento_id = $_SESSION['departamento_id'] ?? null;
+        $user_nombre = $_SESSION['nombre'] ?? '';
+        $user_apellido = $_SESSION['apellido'] ?? '';
+        $user_puesto_trabajo = $_SESSION['puesto_trabajo'] ?? '';
+        $user_departamento_nombre = Empleado::obtenerNombrePorId('departamentos', $departamento_id, 'nombre_departamento');
+
         if (is_admin()) {
             $user_role = 'admin';
         } elseif (is_jefe()) {
@@ -42,7 +48,12 @@ class EmpleadosController {
         }
 
         $registros_por_pagina = 4;
-        $total = Empleado::total();
+        if (is_admin()) {
+            $total = Empleado::total();
+        } else {
+            $total = Empleado::total('departamento_id', $departamento_id);
+        }
+
         $paginacion = new Paginacion($pagina_actual, $registros_por_pagina, $total);
 
         if ($paginacion->total_paginas() < $pagina_actual) {
@@ -50,7 +61,11 @@ class EmpleadosController {
             return;
         }
 
-        $empleados = Empleado::paginar($registros_por_pagina, $paginacion->offset());
+        if (is_admin()) {
+            $empleados = Empleado::paginar($registros_por_pagina, $paginacion->offset());
+        } else {
+            $empleados = Empleado::whereArray(['departamento_id' => $departamento_id]);
+        }
 
         foreach ($empleados as $empleado) {
             $empleado->puesto_trabajo_nombre = $empleado->obtenerNombrePuestoTrabajo();
@@ -61,7 +76,11 @@ class EmpleadosController {
             'titulo' => 'Empleados',
             'empleados' => $empleados,
             'paginacion' => $paginacion->paginacion(),
-            'user_role' => $user_role
+            'user_role' => $user_role,
+            'user_nombre' => $user_nombre,
+            'user_apellido' => $user_apellido,
+            'user_puesto_trabajo' => $user_puesto_trabajo,
+            'user_departamento_nombre' => $user_departamento_nombre
         ]);
     }
 
@@ -83,26 +102,29 @@ class EmpleadosController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $empleado->sincronizar($_POST);
 
+            // Validar imagen
+            if (!empty($_FILES['imagen']['tmp_name'])) {
+                $carpeta_imagenes = CARPETA_IMAGENES;
+
+                if (!is_dir($carpeta_imagenes)) {
+                    mkdir($carpeta_imagenes, 0755, true);
+                }
+
+                $imagen_png = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('png', 80);
+                $imagen_webp = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('webp', 80);
+
+                $nombre_imagen = md5(uniqid(rand(), true));
+                $imagen_png->save($carpeta_imagenes . '/' . $nombre_imagen . ".png");
+                $imagen_webp->save($carpeta_imagenes . '/' . $nombre_imagen . ".webp");
+
+                $empleado->imagen = $nombre_imagen;
+            } else {
+                $alertas['error'][] = 'La imagen es obligatoria';
+            }
+
             $alertas = $empleado->validar();
 
             if (empty($alertas)) {
-                if (!empty($_FILES['imagen']['tmp_name'])) {
-                    $carpeta_imagenes = '../public/img/galeria';
-
-                    if (!is_dir($carpeta_imagenes)) {
-                        mkdir($carpeta_imagenes, 0755, true);
-                    }
-
-                    $imagen_png = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('png', 80);
-                    $imagen_webp = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('webp', 80);
-
-                    $nombre_imagen = md5(uniqid(rand(), true));
-                    $imagen_png->save($carpeta_imagenes . '/' . $nombre_imagen . ".png");
-                    $imagen_webp->save($carpeta_imagenes . '/' . $nombre_imagen . ".webp");
-
-                    $empleado->imagen = $nombre_imagen;
-                }
-
                 $resultado = $empleado->guardar();
 
                 if ($resultado) {
@@ -154,28 +176,29 @@ class EmpleadosController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $empleado->sincronizar($_POST);
 
+            // Validar imagen
+            if (!empty($_FILES['imagen']['tmp_name'])) {
+                $carpeta_imagenes = CARPETA_IMAGENES;
+
+                if (!is_dir($carpeta_imagenes)) {
+                    mkdir($carpeta_imagenes, 0755, true);
+                }
+
+                $imagen_png = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('png', 80);
+                $imagen_webp = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('webp', 80);
+
+                $nombre_imagen = md5(uniqid(rand(), true));
+                $imagen_png->save($carpeta_imagenes . '/' . $nombre_imagen . ".png");
+                $imagen_webp->save($carpeta_imagenes . '/' . $nombre_imagen . ".webp");
+
+                $empleado->imagen = $nombre_imagen;
+            } else {
+                $empleado->imagen = $empleado->imagen_actual;
+            }
+
             $alertas = $empleado->validar();
 
             if (empty($alertas)) {
-                if (!empty($_FILES['imagen']['tmp_name'])) {
-                    $carpeta_imagenes = '../public/img/galeria';
-
-                    if (!is_dir($carpeta_imagenes)) {
-                        mkdir($carpeta_imagenes, 0755, true);
-                    }
-
-                    $imagen_png = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('png', 80);
-                    $imagen_webp = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 800)->encode('webp', 80);
-
-                    $nombre_imagen = md5(uniqid(rand(), true));
-                    $imagen_png->save($carpeta_imagenes . '/' . $nombre_imagen . ".png");
-                    $imagen_webp->save($carpeta_imagenes . '/' . $nombre_imagen . ".webp");
-
-                    $empleado->imagen = $nombre_imagen;
-                } else {
-                    $empleado->imagen = $empleado->imagen_actual;
-                }
-
                 $resultado = $empleado->guardar();
                 if ($resultado) {
                     header('Location: /admin/empleados');
@@ -203,14 +226,18 @@ class EmpleadosController {
             }
 
             $id = $_POST['id'];
-            $empleado = Empleado::find($id);
-            if (!isset($empleado)) {
-                header('Location: /admin/empleados');
-                return;
-            }
-            $resultado = $empleado->eliminar();
-            if ($resultado) {
-                header('Location: /admin/empleados');
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if ($id) {
+                $empleado = Empleado::find($id);
+
+                if ($empleado) {
+                    $resultado = $empleado->eliminar();
+                    if ($resultado) {
+                        header('Location: /admin/empleados');
+                        exit;
+                    }
+                }
             }
         }
     }

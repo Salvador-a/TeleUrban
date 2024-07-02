@@ -22,7 +22,7 @@ class CitasController {
         $generos = Genero::all();
         $semestres = Semestre::all();
         $universidades = Universidad::all();
-        $departamentos = Departamento::all();
+        $departamentos = Departamento::where('disponible', '1'); // Obtener solo departamentos disponibles
         $modalidades = Descripcion::all();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

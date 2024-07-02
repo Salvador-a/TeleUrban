@@ -9,7 +9,7 @@
             id="nombre_departamento"
             name="nombre_departamento"
             placeholder="Nombre del Departamento"
-            value="<?php echo $departamento->nombre_departamento ?? ''; ?>"
+            value="<?php echo htmlspecialchars($departamento->nombre_departamento ?? ''); ?>"
         >
     </div>
 
@@ -23,7 +23,7 @@
             <option value="">-- Seleccionar --</option>
             <?php foreach($empleados as $empleado) { ?>
                 <option value="<?php echo $empleado->id; ?>" <?php echo $departamento->id_encargado == $empleado->id ? 'selected' : ''; ?>>
-                    <?php echo $empleado->nombre . " " . $empleado->apellido . ' - ' . $empleado->puesto_trabajo; ?>
+                    <?php echo htmlspecialchars($empleado->nombre . " " . $empleado->apellido . ' - ' . $empleado->obtenerNombrePuestoTrabajo()); ?>
                 </option>
             <?php } ?>
         </select>
@@ -40,13 +40,13 @@
         >
     </div>
 
-    <?php if(isset($departamento->imagen_actual)) { ?>
+    <?php if(isset($departamento->imagen)) { ?>
         <p class="formulario__texto">Imagen Actual:</p>
         <div class="formulario__imagen">
             <picture>
-                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $departamento->imagen_actual; ?>.webp" type="image/webp">
-                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . $departamento->imagen_actual; ?>.png" type="image/png">
-                <img src="<?php echo $_ENV['HOST'] . '/img/galeria/' . $departamento->imagen_actual; ?>.png" alt="Imagen departamento">
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . htmlspecialchars($departamento->imagen); ?>.webp" type="image/webp">
+                <source srcset="<?php echo $_ENV['HOST'] . '/img/galeria/' . htmlspecialchars($departamento->imagen); ?>.png" type="image/png">
+                <img src="<?php echo $_ENV['HOST'] . '/img/galeria/' . htmlspecialchars($departamento->imagen); ?>.png" alt="Imagen departamento">
             </picture>
         </div>
     <?php } ?>
@@ -59,6 +59,6 @@
             name="descripcion"
             placeholder="Descripción del Departamento"
             rows="8"
-        ><?php echo $departamento->descripcion ?? ''; ?></textarea>
+        ><?php echo htmlspecialchars($departamento->descripcion ?? ''); ?></textarea>
     </div>
 </fieldset>

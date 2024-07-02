@@ -21,12 +21,17 @@ class EntrevistaController {
             return;
         }
 
-        if (!is_admin() && !is_jefe() && !is_trabajador()) {
+        $entrevistas = [];
+
+        if (is_admin()) {
+            $entrevistas = Entrevista::all();
+        } elseif (is_jefe() || is_trabajador()) {
+            $user_departamento_id = $_SESSION['departamento_id'];
+            $entrevistas = Entrevista::where('departamento_id', $user_departamento_id);
+        } else {
             header('Location: /403');
             return;
         }
-
-        $entrevistas = Entrevista::all();
 
         foreach ($entrevistas as $entrevista) {
             $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
@@ -41,7 +46,7 @@ class EntrevistaController {
         $router->render('admin/registrados/index', [
             'titulo' => 'Citas de Entrevista',
             'entrevistas' => $entrevistas,
-            'mostrarAcciones' => true // Asegurarse de que esta variable esté siempre definida
+            'mostrarAcciones' => true
         ]);
     }
 
@@ -322,7 +327,15 @@ class EntrevistaController {
         }
 
         // Obtener entrevistas con estatus "Aceptado"
-        $entrevistas = Entrevista::where('estatus_id', 2);
+        if (is_admin()) {
+            $entrevistas = Entrevista::where('estatus_id', 2);
+        } elseif (is_jefe() || is_trabajador()) {
+            $user_departamento_id = $_SESSION['departamento_id'];
+            $entrevistas = Entrevista::findWhere(['estatus_id' => 2, 'departamento_id' => $user_departamento_id]);
+        } else {
+            header('Location: /403');
+            return;
+        }
 
         foreach ($entrevistas as $entrevista) {
             $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();
@@ -350,7 +363,15 @@ class EntrevistaController {
         }
 
         // Obtener entrevistas con estatus "Rechazado"
-        $entrevistas = Entrevista::where('estatus_id', 3);
+        if (is_admin()) {
+            $entrevistas = Entrevista::where('estatus_id', 3);
+        } elseif (is_jefe() || is_trabajador()) {
+            $user_departamento_id = $_SESSION['departamento_id'];
+            $entrevistas = Entrevista::findWhere(['estatus_id' => 3, 'departamento_id' => $user_departamento_id]);
+        } else {
+            header('Location: /403');
+            return;
+        }
 
         foreach ($entrevistas as $entrevista) {
             $entrevista->universidad_nombre = $entrevista->obtenerUniversidad();

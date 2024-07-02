@@ -1,4 +1,6 @@
 <?php
+
+// models/ActiveRecord.php
 namespace Model; // Define el espacio de nombres del archivo
 
 #[\AllowDynamicProperties] // Permite propiedades dinámicas en la clase
@@ -32,6 +34,7 @@ class ActiveRecord {
         static::$alertas = []; // Reinicia las alertas
         return static::$alertas; // Devuelve las alertas
     }
+
     // Consulta SQL para crear un objeto en Memoria (Active Record)
     public static function consultarSQL($query) {
         // Consultar la base de datos
@@ -86,8 +89,8 @@ class ActiveRecord {
     // Sincroniza BD con Objetos en memoria
     public function sincronizar($args=[]) { 
         foreach($args as $key => $value) {
-            if(property_exists($this, $key) && !is_null($value)) {
-                $this->$key = $value; // Si la propiedad existe y el valor no es nulo, asigna el valor a la propiedad
+            if(property_exists($this, $key)) {
+                $this->$key = $key === 'disponible' ? (int)$value : $value; // Si la propiedad existe, asigna el valor a la propiedad
             }
         }
     }
@@ -137,7 +140,7 @@ class ActiveRecord {
     public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE {$columna} = '{$valor}'"; // Crea la consulta SQL para buscar registros donde una columna tenga un valor específico
         $resultado = self::consultarSQL($query); // Ejecuta la consulta SQL
-        return array_shift( $resultado ) ; // Retorna el primer elemento del resultado
+        return $resultado ; // Retorna los resultados
     }
 
     // Retornas los registros por un orden
@@ -206,7 +209,6 @@ class ActiveRecord {
         $query .= join("', '", array_values($atributos)); // Une los valores del array de atributos con comas
         $query .= " ') ";
     
-
         // debuguear($query); // Descomentar si no te funciona algo
 
         // Ejecuta la consulta SQL
@@ -272,7 +274,6 @@ class ActiveRecord {
 
         return '';
     }
-    
 
     // Eliminar un Registro por su ID
     public function eliminar() {

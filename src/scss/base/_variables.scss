@@ -1,3 +1,12 @@
+// Tamaño de Toggle
+$size: 40px;
+
+// Colores para Toggle
+$color-on: rgba(3, 169, 244, 0.5);
+$color-off: rgba(244, 67, 54, 0.5);
+$transition: all 0.5s ease;
+$light-color: rgba(255, 255, 255, 0.4);
+
 // Fuentes
 $fuente-principal: 'Outfit', sans-serif; // Define la fuente principal
 
@@ -10,18 +19,16 @@ $xl_desktop: 1200px; // Define el tamaño de pantalla para desktops extra grande
 // Colores
 $azul: #007df4; // Define el color azul
 $secundario: #00c8c2; // Define el color secundario
-
 $negro: #1a1b15;
 $verde: #5ec85e; // Define el color verde
 $verde-oscuro: #28952f; // Define el color verde oscuro
-$azul-verdoso: #00c8c2; // Define el color azul verdoso	
+$azul-verdoso: #00c8c2; // Define el color azul verdoso
 $blanco: #FFFFFF; // Define el color blanco
 $blanco-ahumado: #f5f5f5; // Define el color blanco ahumado
 $gris: #64748B; // Define el color gris
 $gris-claro: #F8FAFC; // Define el color gris claro
 $gris-oscuro: #A9A9A9; // Define el color gris oscuro
 $gris-oscuro-2: #4A4A4A; // Define otro tono de gris oscuro
-
 $rojo: rgb(169, 0, 0); // Define el color rojo
 $verde-claro: #02db02; // Define el color verde claro
 
@@ -30,4 +37,3 @@ $delgada: 300; // Define el peso de la fuente delgada
 $regular: 400; // Define el peso de la fuente regular
 $bold: 700; // Define el peso de la fuente bold
 $black: 900; // Define el peso de la fuente black
-

@@ -21,7 +21,7 @@ class AuthController {
 
             if (empty($alertas)) {
                 // Verificar que el usuario exista
-                $usuario = Usuario::where('email', $usuario->email);
+                $usuario = Usuario::where('email', $usuario->email)[0] ?? null;
                 if (!$usuario || !$usuario->confirmado) {
                     Usuario::setAlerta('error', 'El Usuario No Existe o no está confirmado');
                 } else {
@@ -84,7 +84,7 @@ class AuthController {
             $alertas = $usuario->validarCuenta();
 
             if (empty($alertas)) {
-                $existeUsuario = Usuario::where('email', $usuario->email);
+                $existeUsuario = Usuario::where('email', $usuario->email)[0] ?? null;
 
                 if ($existeUsuario) {
                     Usuario::setAlerta('error', 'El Usuario ya está registrado');
@@ -147,7 +147,7 @@ class AuthController {
 
             if (empty($alertas)) {
                 // Buscar el usuario
-                $usuario = Usuario::where('email', $usuario->email);
+                $usuario = Usuario::where('email', $usuario->email)[0] ?? null;
 
                 if ($usuario && $usuario->confirmado) {
                     // Generar un nuevo token
@@ -183,7 +183,7 @@ class AuthController {
         if (!$token) header('Location: /');
 
         // Identificar el usuario con este token
-        $usuario = Usuario::where('token', $token);
+        $usuario = Usuario::where('token', $token)[0] ?? null;
 
         if (empty($usuario)) {
             Usuario::setAlerta('error', 'Token No Válido, intenta de nuevo');
@@ -236,7 +236,7 @@ class AuthController {
         if (!$token) header('Location: /');
 
         // Encontrar al usuario con este token
-        $usuario = Usuario::where('token', $token);
+        $usuario = Usuario::where('token', $token)[0] ?? null;
 
         if (empty($usuario)) {
             // No se encontró un usuario con ese token
