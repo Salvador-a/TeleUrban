@@ -15,12 +15,12 @@ DROP TABLE IF EXISTS `administra`;
 CREATE TABLE `administra` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `id_encargado` bigint NOT NULL,
-  `id_area` bigint NOT NULL,
+  `id_departamento` bigint NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_encargado` (`id_encargado`,`id_area`),
-  KEY `id_area` (`id_area`),
+  UNIQUE KEY `id_encargado` (`id_encargado`,`id_departamento`),
+  KEY `id_departamento` (`id_departamento`),
   CONSTRAINT `administra_ibfk_1` FOREIGN KEY (`id_encargado`) REFERENCES `encargado_personal` (`id`),
-  CONSTRAINT `administra_ibfk_2` FOREIGN KEY (`id_area`) REFERENCES `area` (`id`)
+  CONSTRAINT `administra_ibfk_2` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -57,15 +57,17 @@ CREATE TABLE `departamentos` (
   `id_encargado` bigint NOT NULL,
   `descripcion` text,
   `imagen` varchar(255) DEFAULT NULL,
+  `publicado` tinyint(1) DEFAULT '0',
+  `disponible` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `departamento_ibfk_1` (`id_encargado`),
   CONSTRAINT `departamentos_ibfk_1` FOREIGN KEY (`id_encargado`) REFERENCES `empleados` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `departamentos` WRITE;
 /*!40000 ALTER TABLE `departamentos` DISABLE KEYS */;
-INSERT INTO `departamentos` VALUES (1,'Desarrollo y Diseño',2,'Nuestro equipo especializado se encarga de dar vida a tus ideas en el mundo digital. Utilizando frameworks como Laravel y dominando tecnologías como PHP, HTML y CSS, creamos aplicaciones web de alto rendimiento y funcionalidad. Diseñamos interfaces visuales sorprendentes y envolventes que cautivan a los usuarios. Además, hacemos uso de herramientas como Figma para esculpir la arquitectura de sitios web con destreza y precisión.','3292d40f36842a22158673eec0209403'),(2,'Operaciones y Mantenimiento',3,'Nuestro equipo se dedica a gestionar la cadena de suministro, coordinar la producción y realizar tareas de mantenimiento preventivo y correctivo en sistemas tecnológicos. Administramos el inventario, mejoramos continuamente nuestras operaciones y garantizamos la estabilidad y seguridad de software y hardware. Enfocados en la eficiencia y calidad, buscamos maximizar la productividad, cumplir plazos establecidos y satisfacer las necesidades de los clientes. Nuestro objetivo es lograr una ejecución eficiente para alcanzar el éxito empresarial y la satisfacción de nuestros clientes, respaldando sus operaciones con soluciones confiables y eficientes.','92c1d8669b3b99770cf461b8737634c7'),(3,'Administración',4,'Este departamento se encarga de la creación, mantenimiento y mejora de software para la empresa. Los empleados de este departamento trabajan en proyectos de desarrollo web, aplicaciones móviles y sistemas internos. Su objetivo es proporcionar soluciones tecnológicas eficientes y de alta calidad para apoyar las operaciones de la empresa.','4194a8228585eaf151d698a97330e568'),(4,'Infraestructura',12,'Nuestro equipo se encarga de diseñar, construir y mantener las infraestructuras tecnológicas y físicas necesarias para que nuestros servicios funcionen de manera óptima. Trabajamos para asegurar la disponibilidad, confiabilidad y seguridad de nuestros sistemas, redes y equipos, así como para optimizar los recursos y la eficiencia energética. Con nuestro enfoque en la infraestructura de calidad, nos comprometemos a brindar a nuestros clientes un entorno estable y confiable que respalde su experiencia y garantice el éxito de sus proyectos.','b2c83b0c1b1f01205b44ef3885e40ba6'),(5,'Innovación',11,'Nuestro equipo se dedica a identificar oportunidades de mejora, fomentar la generación de ideas y promover la implementación de proyectos disruptivos. Utilizamos metodologías y herramientas especializadas para estimular la colaboración y la experimentación, buscando generar valor y diferenciación en un entorno empresarial dinámico. Con nuestro enfoque centrado en la innovación, buscamos impulsar el crecimiento y la transformación de nuestro negocio, siempre buscando estar a la vanguardia en nuestra industria.\r\n\r\n','8e0cbef04f1873039c8aabb0d156c4b7'),(6,' Procesos',1,'Nuestro equipo de Procesos se especializa en la optimización y perfeccionamiento de los flujos de trabajo empresariales. Nos apasiona simplificar procesos, identificar mejoras y convertir desafíos en oportunidades. Trabajamos en estrecha colaboración con todos los departamentos para impulsar la eficiencia operativa y el éxito sostenible de la organización.\r\n\r\n','13f0051277046bde1c219f75b59ae1df');
+INSERT INTO `departamentos` VALUES (1,'Desarrollo y Diseño',2,'Nuestro equipo especializado se encarga de dar vida a tus ideas en el mundo digital. Utilizando frameworks como Laravel y dominando tecnologías como PHP, HTML y CSS, creamos aplicaciones web de alto rendimiento y funcionalidad. Diseñamos interfaces visuales sorprendentes y envolventes que cautivan a los usuarios. Además, hacemos uso de herramientas como Figma para esculpir la arquitectura de sitios web con destreza y precisión.','3292d40f36842a22158673eec0209403',1,1),(2,'Operaciones y Mantenimiento',3,'Nuestro equipo se dedica a gestionar la cadena de suministro, coordinar la producción y realizar tareas de mantenimiento preventivo y correctivo en sistemas tecnológicos. Administramos el inventario, mejoramos continuamente nuestras operaciones y garantizamos la estabilidad y seguridad de software y hardware. Enfocados en la eficiencia y calidad, buscamos maximizar la productividad, cumplir plazos establecidos y satisfacer las necesidades de los clientes. Nuestro objetivo es lograr una ejecución eficiente para alcanzar el éxito empresarial y la satisfacción de nuestros clientes, respaldando sus operaciones con soluciones confiables y eficientes.','92c1d8669b3b99770cf461b8737634c7',1,1),(3,'Administración',4,'Este departamento se encarga de la creación, mantenimiento y mejora de software para la empresa. Los empleados de este departamento trabajan en proyectos de desarrollo web, aplicaciones móviles y sistemas internos. Su objetivo es proporcionar soluciones tecnológicas eficientes y de alta calidad para apoyar las operaciones de la empresa.','4194a8228585eaf151d698a97330e568',1,1),(4,'Infraestructura',12,'Nuestro equipo se encarga de diseñar, construir y mantener las infraestructuras tecnológicas y físicas necesarias para que nuestros servicios funcionen de manera óptima. Trabajamos para asegurar la disponibilidad, confiabilidad y seguridad de nuestros sistemas, redes y equipos, así como para optimizar los recursos y la eficiencia energética. Con nuestro enfoque en la infraestructura de calidad, nos comprometemos a brindar a nuestros clientes un entorno estable y confiable que respalde su experiencia y garantice el éxito de sus proyectos.','b2c83b0c1b1f01205b44ef3885e40ba6',1,1),(5,'Innovación',11,'Nuestro equipo se dedica a identificar oportunidades de mejora, fomentar la generación de ideas y promover la implementación de proyectos disruptivos. Utilizamos metodologías y herramientas especializadas para estimular la colaboración y la experimentación, buscando generar valor y diferenciación en un entorno empresarial dinámico. Con nuestro enfoque centrado en la innovación, buscamos impulsar el crecimiento y la transformación de nuestro negocio, siempre buscando estar a la vanguardia en nuestra industria.\r\n\r\n','8e0cbef04f1873039c8aabb0d156c4b7',1,1),(6,' Procesos ',1,'Nuestro equipo de Procesos se especializa en la optimización y perfeccionamiento de los flujos de trabajo empresariales. Nos apasiona simplificar procesos, identificar mejoras y convertir desafíos en oportunidades. Trabajamos en estrecha colaboración con todos los departamentos para impulsar la eficiencia operativa y el éxito sostenible de la organización.\r\n\r\n','13f0051277046bde1c219f75b59ae1df',1,1),(13,' CEO',14,'sdasf sfds asaf as f','e26698b0e5069cec233042913bd33a78',0,0);
 /*!40000 ALTER TABLE `departamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `descripcion`;
@@ -129,13 +131,19 @@ CREATE TABLE `empleados` (
   `tags` varchar(255) DEFAULT NULL,
   `redes_sociales` text,
   `imagen` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `departamento_id` bigint DEFAULT NULL,
+  `puesto_trabajo_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `departamento_id` (`departamento_id`),
+  KEY `puesto_trabajo_id` (`puesto_trabajo_id`),
+  CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
+  CONSTRAINT `empleados_ibfk_2` FOREIGN KEY (`puesto_trabajo_id`) REFERENCES `puestos_trabajo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES (1,'Sonia','Quinteri','Ciudad de México','México','Gerente de Calidad','Gestión de Calidad (ISO 9001),Auditorías de Calidad,Mejora Continua (Lean, Six Sigma),Análisis y Control de Calidad','null','6c924f64827c6acca0313e9a10e97f3f'),(2,'Karla','López','Neza','Mexico','Ingeniera Frontend (Frontend Engineer)','HTML,CSS,JavaScript,React, Vue.js,Desarrollo Responsivo,Accesibilidad Web (WCAG)','null','aa13d3658ddba2a99b72e35c80e69cfa'),(3,'Gerente de Mantenimiento','Martínez','Mexico','México','Gerente de Proyectos','Mantenimiento Preventivo y Correctivo,Gestión de Sistemas Tecnológicos (hardware y software),Análisis de Fallas y Solución de Problemas,Programación y Planificación de Mantenimiento','null','603e5c647aad33fa55d059b018a77975'),(4,'Laura','Hernández','Mexico','México','Analista de Datos','Gestión de Proyectos,Metodologías Ágiles (Scrum, Kanban),Gestión de Recursos y Presupuestos,Coordinación de Equipos','null','9900427a177c053e3f343accef022a6a'),(11,'Casandra','Martinez','Mexico','México','Consultora de Innovación Tecnológica','Análisis de Mercado y Tendencias Tecnológicas,Estrategias de Innovación,Transformación Digital','null','c17dfd4e28e622c72b9b9ff36e3f0361'),(12,'Pedro ','Gutierrez','Chimalhucan','México','Ingeniero de Redes','Configuración y administración de redes LAN/WAN,Seguridad de redes y firewalls,Protocolos de red (TCP/IP, DNS, DHCP),Optimización del rendimiento de la red','null','99f7d0d567d2f4319eeed561de45e001');
+INSERT INTO `empleados` VALUES (1,'Sonia','Quinteri','Ciudad de México','México','Gerente de Calidad','Gestión de Calidad (ISO 9001),Auditorías de Calidad,Mejora Continua (Lean, Six Sigma),Análisis y Control de Calidad','null','6c924f64827c6acca0313e9a10e97f3f',6,2),(2,'Karla','López','Neza','Mexico','Ingeniera Frontend (Frontend Engineer)','HTML,CSS,JavaScript,React, Vue.js,Desarrollo Responsivo,Accesibilidad Web (WCAG)','null','aa13d3658ddba2a99b72e35c80e69cfa',1,2),(3,'Sebastián','Martínez','Mexico','México','Gerente de Proyectos','Mantenimiento Preventivo y Correctivo,Gestión de Sistemas Tecnológicos (hardware y software),Análisis de Fallas y Solución de Problemas,Programación y Planificación de Mantenimiento','null','603e5c647aad33fa55d059b018a77975',2,2),(4,'Laura','Hernández','Mexico','México','Analista de Datos','Gestión de Proyectos,Metodologías Ágiles (Scrum, Kanban),Gestión de Recursos y Presupuestos,Coordinación de Equipos','null','9900427a177c053e3f343accef022a6a',3,2),(11,'Casandra','Martinez','Mexico','México','Consultora de Innovación Tecnológica','Análisis de Mercado y Tendencias Tecnológicas,Estrategias de Innovación,Transformación Digital','null','c17dfd4e28e622c72b9b9ff36e3f0361',5,2),(12,'Pedro ','Gutierrez','Chimalhucan','México','Ingeniero de Redes','Configuración y administración de redes LAN/WAN,Seguridad de redes y firewalls,Protocolos de red (TCP/IP, DNS, DHCP),Optimización del rendimiento de la red','null','99f7d0d567d2f4319eeed561de45e001',4,2),(14,' Pamela','Castro','Chimalhucan','México',NULL,'HTML','','f9ea60de89b2afa1a3db335b6d66cd09',13,1);
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `encargado_credencial`;
@@ -216,12 +224,12 @@ CREATE TABLE `entrevistas` (
   CONSTRAINT `entrevistas_ibfk_departamento` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
   CONSTRAINT `fk_departamento_id` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
   CONSTRAINT `fk_estatus` FOREIGN KEY (`estatus_id`) REFERENCES `status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `entrevistas` WRITE;
 /*!40000 ALTER TABLE `entrevistas` DISABLE KEYS */;
-INSERT INTO `entrevistas` VALUES (85,' Salvador','Acosta','Rodriguez','salvador.ar614@gmail.com','5610136814',3,1,4,5,_binary '92fe04c23f99bdd7aefaf2ec127f6bf1.pdf','2024-06-27 12:00:00',3,'CITA--20240626224216-33b6457fc3fa','2024-06-27 22:42:16',5,'soy mu puntual',3),(86,' Salvador','Acosta','Rodriguez','salvador.sar.14@gmail.com','5610136814',5,2,4,5,_binary '63b2cec91c0ab7ac364e51028ce3f39c.pdf','2024-06-27 12:00:00',3,'CITA--20240626230035-a59debd4e435','2024-06-27 23:00:35',4,'dsfsfsdf',2);
+INSERT INTO `entrevistas` VALUES (1,'Ana','Perez','Lopez','ana.perez@example.com','1234567890',5,1,1,1,NULL,'2024-07-05 10:00:00',1,NULL,NULL,1,'SQL, PHP',1),(2,'Juan','Martinez','Garcia','juan.martinez@example.com','1234567891',1,2,2,2,NULL,'2024-07-05 11:00:00',2,NULL,NULL,2,'Java, Python',1),(3,'Maria','Gonzalez','Rodriguez','maria.gonzalez@example.com','1234567892',3,1,3,3,NULL,'2024-07-05 12:00:00',3,NULL,NULL,3,'HTML, CSS',1),(4,'Luis','Fernandez','Martinez','luis.fernandez@example.com','1234567893',4,2,4,4,NULL,'2024-07-05 13:00:00',1,NULL,NULL,4,'JavaScript, Node.js',1),(5,'Carmen','Lopez','Hernandez','carmen.lopez@example.com','1234567894',6,1,1,5,NULL,'2024-07-05 14:00:00',2,NULL,NULL,5,'Ruby, Rails',1),(6,'Jose','Diaz','Gomez','jose.diaz@example.com','1234567895',5,2,2,6,NULL,'2024-07-05 15:00:00',3,NULL,NULL,6,'C++, C#',1),(7,'Elena','Sanchez','Lopez','elena.sanchez@example.com','1234567896',1,1,3,1,NULL,'2024-07-05 16:00:00',1,NULL,NULL,1,'Python, Django',1),(8,'Miguel','Perez','Fernandez','miguel.perez@example.com','1234567897',3,2,4,2,NULL,'2024-07-05 17:00:00',2,NULL,NULL,2,'Go, Rust',1),(9,'Rosa','Garcia','Sanchez','rosa.garcia@example.com','1234567898',6,1,1,3,NULL,'2024-07-08 10:00:00',3,NULL,NULL,3,'Perl, Lua',1),(10,'Carlos','Hernandez','Martinez','carlos.hernandez@example.com','1234567899',5,2,2,4,NULL,'2024-07-08 11:00:00',1,NULL,NULL,4,'Swift, Objective-C',1),(11,'Laura','Lopez','Gomez','laura.lopez@example.com','1234567800',1,1,3,5,NULL,'2024-07-08 12:00:00',2,NULL,NULL,5,'Kotlin, Java',1),(12,'Pedro','Martinez','Diaz','pedro.martinez@example.com','1234567801',3,2,4,6,NULL,'2024-07-08 13:00:00',3,NULL,NULL,6,'PHP, Laravel',1),(13,'Paula','Rodriguez','Garcia','paula.rodriguez@example.com','1234567802',6,1,1,1,NULL,'2024-07-08 14:00:00',1,NULL,NULL,1,'Scala, Akka',1),(14,'Andres','Fernandez','Perez','andres.fernandez@example.com','1234567803',4,2,2,2,NULL,'2024-07-08 15:00:00',2,NULL,NULL,2,'Haskell, Elm',1),(15,'Teresa','Sanchez','Gonzalez','teresa.sanchez@example.com','1234567804',5,1,3,3,NULL,'2024-07-08 16:00:00',3,NULL,NULL,3,'R, Julia',1),(16,'Raul','Diaz','Hernandez','raul.diaz@example.com','1234567805',6,2,4,4,NULL,'2024-07-08 17:00:00',1,NULL,NULL,4,'Erlang, Elixir',1),(17,'Sara','Martinez','Lopez','sara.martinez@example.com','1234567806',1,1,1,5,NULL,'2024-07-09 10:00:00',2,NULL,NULL,5,'TypeScript, Angular',1),(18,'David','Garcia','Martinez','david.garcia@example.com','1234567807',3,2,2,6,NULL,'2024-07-09 11:00:00',3,NULL,NULL,6,'Vue.js, Nuxt.js',1),(19,'Isabel','Hernandez','Diaz','isabel.hernandez@example.com','1234567808',4,1,3,1,NULL,'2024-07-09 12:00:00',1,NULL,NULL,1,'Flutter, Dart',3),(20,'Mario','Lopez','Garcia','mario.lopez@example.com','1234567809',5,2,4,2,_binary 'NULL','2024-07-09 13:00:00',2,'NULL','2024-07-06 01:19:05',2,'React Native, Redux',2),(21,' Salvador','Acosta','Rodriguez','salvador.ar614@gmail.com','5610136814',3,1,4,5,_binary 'edd26267e130cafc2636b20cd2e38597.pdf','2024-07-05 12:00:00',3,'CITA--20240705020810-dc875ae4301c','2024-07-06 02:08:10',5,'html, css java',2);
 /*!40000 ALTER TABLE `entrevistas` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `genero`;
@@ -255,6 +263,22 @@ LOCK TABLES `nivel` WRITE;
 /*!40000 ALTER TABLE `nivel` DISABLE KEYS */;
 INSERT INTO `nivel` VALUES (2,'Administrador'),(1,'Jefe');
 /*!40000 ALTER TABLE `nivel` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `puestos_trabajo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `puestos_trabajo` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nombre_puesto` varchar(255) NOT NULL,
+  `rol` enum('admin','jefe','trabajador') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `puestos_trabajo` WRITE;
+/*!40000 ALTER TABLE `puestos_trabajo` DISABLE KEYS */;
+INSERT INTO `puestos_trabajo` VALUES (1,'CEO','admin'),(2,'Gerente de área','jefe'),(3,'Empleado','trabajador');
+/*!40000 ALTER TABLE `puestos_trabajo` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `semestre`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -310,19 +334,31 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(40) DEFAULT NULL,
-  `apellido` varchar(40) DEFAULT NULL,
-  `email` varchar(40) DEFAULT NULL,
+  `a_paterno` varchar(40) DEFAULT NULL,
+  `a_materno` varchar(40) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
+  `genero_id` bigint DEFAULT NULL,
+  `departamento_id` bigint DEFAULT NULL,
+  `puesto_trabajo_id` bigint DEFAULT NULL,
   `confirmado` tinyint(1) DEFAULT NULL,
-  `token` varchar(13) DEFAULT NULL,
-  `admin` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `token` varchar(26) DEFAULT NULL,
+  `rol` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `genero_id` (`genero_id`),
+  KEY `departamento_id` (`departamento_id`),
+  KEY `puesto_trabajo_id` (`puesto_trabajo_id`),
+  CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`genero_id`) REFERENCES `genero` (`id`),
+  CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
+  CONSTRAINT `usuarios_ibfk_3` FOREIGN KEY (`puesto_trabajo_id`) REFERENCES `puestos_trabajo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Salvador','Acosta','salvador.ar614@gmail.com','$2y$10$S9sHFtNr2UBe6g7eS9Q68.EVK2Pd4agmUThsY6X.XZRg4SgtrVIEy',1,'',1);
+INSERT INTO `usuarios` VALUES (5,' Salvador','Acosta','Rodriguez','salvador.ar614@gmail.com','$2y$10$S/GxNVhZx1IDui0/BxdEiusaOqcI/CYcYw4hKhDzFTc8soUsKhGpG','5610136814',1,6,1,1,'',1),(6,' Pedro','Quintero','Lopez','salvador.sar.14@gmail.com','$2y$10$mrRCdQJbUuPlcnw7fBGlP./bCdXrhagJOWxoO6CCCD9uBDVcMPkzW','5610136814',1,6,2,1,'',2),(7,' Salvador','Acosta','Rodriguez','sacosta.sar@gmail.com','$2y$10$TNqdtsPDqknNqzc9xJuqCua9r/L8Ju9OX3VmhwNHLNKs2yG/VfqcO','5610136814',2,6,3,1,'',0),(8,' Elizabel','Loprz','Quintero','elizabellopez05@gmail.com','$2y$10$ppONVlx0rtEUB21ieUgosubVKuhrtzsoRIrEUXE6wBjxHO3KgzRE2','5610136814',2,6,2,1,'',2);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
