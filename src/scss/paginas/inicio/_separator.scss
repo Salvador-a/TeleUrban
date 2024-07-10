@@ -1,0 +1,34 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.separator {
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, v.$verde 0%, v.$blanco 50%, v.$verde 100%);
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, rgba(v.$verde, 0.5), rgba(v.$blanco, 0));
+        clip-path: polygon(0 100%, 100% 0, 100% 100%);
+        transform: translateX(-50%);
+        z-index: -1;
+    }
+
+    @include m.tablet {
+        height: 8rem;
+    }
+
+    @include m.telefono {
+        height: 6rem;
+    }
+}

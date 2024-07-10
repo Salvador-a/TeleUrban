@@ -31,13 +31,6 @@
             </span>
         </a>
 
-        <a href="/admin/regalos" class="dashboard__enlace  <?php echo pagina_actual('/regalos') ? 'dashboard__enlace--actual' : ''; ?> ">
-            <i class="fa-solid fa-gift dashboard__icono"></i>
-
-            <span class="dashboard__menu-texto">
-                Regalos
-            </span>
-        </a>
     </nav>
 
 </aside>

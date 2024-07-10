@@ -6,3 +6,4 @@
         <a href="/" class="pagina_404__enlace">Ir al inicio</a>
     </div>
 </main>
+

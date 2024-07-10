@@ -81,7 +81,7 @@ class ActiveRecord {
         $atributos = $this->atributos(); // Obtiene los atributos del objeto
         $sanitizado = []; // Inicializa un array vacío para los atributos sanitizados
         foreach($atributos as $key => $value ) {
-            $sanitizado[$key] = self::$db->escape_string($value); // Sanitiza el valor y lo añade al array sanitizado
+            $sanitizado[$key] = $value === null ? null : self::$db->escape_string($value); // Sanitiza el valor y lo añade al array sanitizado
         }
         return $sanitizado; // Retorna los atributos sanitizados
     }
@@ -151,7 +151,7 @@ class ActiveRecord {
     }
 
     // Retorna registros ordenados y limitados
-    public static function ordenarLimete($columna, $orden, $limite) {
+    public static function ordenarLimite($columna, $orden, $limite) {
         $query = "SELECT * FROM " . static::$tabla . " ORDER BY {$columna} {$orden} LIMIT {$limite} "; // Crea la consulta SQL para obtener registros ordenados y limitados
         $resultado = self::consultarSQL($query); // Ejecuta la consulta SQL
         return $resultado; // Retorna los resultados
@@ -229,7 +229,7 @@ class ActiveRecord {
         // Itera para ir agregando cada campo de la BD
         $valores = [];
         foreach($atributos as $key => $value) {
-            $valores[] = "{$key}='{$value}'"; // Añade cada valor al array de valores
+            $valores[] = $value === null ? "{$key}=NULL" : "{$key}='{$value}'"; // Añade cada valor al array de valores
         }
 
         // Consulta SQL
@@ -243,21 +243,26 @@ class ActiveRecord {
         return $resultado; // Retorna el resultado de la consulta
     }
 
+        
     // Agregar el método findWhere
     public static function findWhere($conditions) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ";
         $queryParams = [];
-
+    
         foreach ($conditions as $field => $value) {
             $queryParams[] = "$field = '" . self::$db->escape_string($value) . "'";
         }
-
+    
         $query .= implode(' AND ', $queryParams);
-
+    
         $resultado = self::consultarSQL($query);
-        return array_shift($resultado);
+        return array_shift($resultado); // Asegúrate de que solo se devuelva un objeto
     }
     
+
+
+
+    // Método para obtener el nombre por ID en tablas relacionadas
     public static function obtenerNombrePorId($tabla, $id, $columnaNombre = 'nombre') {
         if (is_null($id)) {
             return '';

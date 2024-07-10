@@ -236,3 +236,140 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
+// Mixin para el carrusel de tarjetas con parámetros personalizables
+@mixin carrusel-de-tarjetas($primary-color: v.$azul, $secondary-color: v.$gris-oscuro, $hover-color: v.$rojo) {
+    .carrusel {
+        // Contenedor principal del carrusel
+        &__contenedor {
+            width: 90%;
+            max-width: 120rem; // 1200px
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        // Slide del carrusel
+        &__slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        // Tarjeta del carrusel
+        &__tarjeta {
+            width: 26rem; // 260px
+            background: rgba($primary-color, 0.1);
+            backdrop-filter: blur(1rem); // 10px
+            border-radius: 1.5rem; // 15px
+            overflow: hidden;
+            box-shadow: 0 0.4rem 0.8rem rgba($secondary-color, 0.1), 0 1.2rem 2.4rem rgba($secondary-color, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0 0.2rem; // Ajusta el margen para que las tarjetas estén mucho más juntas
+
+            // Estilo para el estado hover de la tarjeta
+            &:hover {
+                transform: translateY(-1rem); // 10px
+                box-shadow: 0 0.8rem 1.6rem rgba($secondary-color, 0.2), 0 2.4rem 4.8rem rgba($secondary-color, 0.3);
+            }
+
+            // Imagen de la tarjeta
+            &__imagen {
+                width: 100%;
+                height: 15rem; // 150px
+                object-fit: cover;
+            }
+
+            // Contenido de la tarjeta
+            &__contenido {
+                padding: 1.5rem; // 15px
+            }
+
+            // Título de la tarjeta
+            &__titulo {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 2rem; // 20px
+                color: $primary-color;
+                margin: 0;
+            }
+
+            // Descripción de la tarjeta
+            &__descripcion {
+                font-size: 1.4rem; // 14px
+                color: $secondary-color;
+                margin: 1rem 0; // 10px
+            }
+
+            // Pie de la tarjeta
+            &__pie {
+                display: flex;
+                align-items: center;
+            }
+
+            // Avatar en el pie de la tarjeta
+            &__avatar {
+                width: 4rem; // 40px
+                height: 4rem; // 40px
+                border-radius: 50%;
+                margin-right: 1rem; // 10px
+            }
+
+            // Nombre en el pie de la tarjeta
+            &__nombre {
+                font-size: 1.4rem; // 14px
+                color: $secondary-color;
+                flex-grow: 1; // Hace que el nombre ocupe el espacio restante
+            }
+
+            // Botón en el pie de la tarjeta
+            &__boton {
+                background-color: $primary-color;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 4rem; // 40px
+                height: 4rem; // 40px
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                // Estilo para el estado hover del botón
+                &:hover {
+                    background-color: $hover-color;
+                }
+
+                // Ícono dentro del botón
+                & i {
+                    font-size: 2.4rem; // 24px
+                }
+            }
+        }
+
+        // Flechas de navegación del carrusel
+        &__flecha {
+            color: $secondary-color;
+            position: absolute; // Posiciona las flechas de manera absoluta
+            top: 50%; // Centra verticalmente las flechas
+            transform: translateY(-50%); // Ajusta para que estén perfectamente centradas
+            z-index: 10; // Asegura que las flechas estén por encima del contenido
+
+            // Flecha siguiente
+            &--siguiente {
+                right: -2.5rem; // 25px
+            }
+
+            // Flecha anterior
+            &--anterior {
+                left: -2.5rem; // 25px
+            }
+        }
+
+        // Paginación activa del carrusel
+        &__paginacion {
+            &-bullet-activo {
+                background: $primary-color;
+            }
+        }
+    }
+}
+

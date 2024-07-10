@@ -8,8 +8,19 @@ use Model\Departamento;
 
 class PaginasController {
     public static function index(Router $router) {
+        // Obtener solo los departamentos publicados
+        $departamentos = Departamento::where('publicado', 1);
+
+        foreach ($departamentos as $departamento) {
+            // Obtener el encargado para cada departamento
+            if (is_object($departamento)) {
+                $departamento->encargado = Empleado::find($departamento->id_encargado);
+            }
+        }
+
         $router->render('paginas/index', [
-            'titulo' => 'Inicio'
+            'titulo' => 'Inicio',
+            'departamentos' => $departamentos
         ]);
     }
 

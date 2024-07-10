@@ -76,6 +76,16 @@ $router->get('/404', [PaginasController::class, 'error']);
 // Nueva ruta para listar entrevistas con nombres en lugar de IDs
 $router->get('/entrevistas', [CitasController::class, 'listar']);
 
+
+// index.php en la carpeta public
+$router->get('/modificar-cita', [CitasController::class, 'editar']);
+$router->post('/modificar-cita', [CitasController::class, 'editar']);
+
+// Nueva ruta para el login de citas
+$router->get('/login-cita', [CitasController::class, 'login']);
+$router->post('/login-cita', [CitasController::class, 'login']);
+
+
 // Área de Entrevistas (Admin)
 $router->get('/admin/registrados', [EntrevistaController::class, 'index']);
 $router->get('/admin/registrados/editar', [EntrevistaController::class, 'editar']);
@@ -83,4 +93,3 @@ $router->post('/admin/registrados/editar', [EntrevistaController::class, 'editar
 $router->post('/admin/registrados/eliminar', [EntrevistaController::class, 'eliminar']);
 
 $router->comprobarRutas();
-

@@ -4,16 +4,105 @@
 .mapa {
     height: 45rem;
     margin-top: 5rem;
-
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0.5rem 1.5rem rgba(v.$gris-oscuro, 0.1), 0 0.5rem 1rem rgba(v.$verde, 0.2);
+    position: relative;
 
     &__heading {
         margin: 0;
-        text-align: left;
-    }
+        text-align: center;
+        font-size: 3rem;
+        color: v.$negro;
+        text-shadow: 0.1rem 0.1rem 0.3rem rgba(v.$negro, 0.3);
+        padding-bottom: 2rem;
 
+        @include m.tablet {
+            font-size: 3.5rem;
+        }
+
+        @include m.desktop {
+            font-size: 4rem;
+        }
+    }
 
     &__texto {
         font-size: 1.8rem;
         margin: 0;
+    }
+
+    &__info {
+        text-align: center;
+        margin-top: 3rem;
+
+        &__direccion {
+            font-size: 1.6rem;
+            color: v.$gris-oscuro;
+            margin-bottom: 1rem;
+
+            @include m.tablet {
+                font-size: 1.8rem;
+            }
+
+            @include m.desktop {
+                font-size: 2rem;
+            }
+        }
+
+        &__horarios {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 0 2rem;
+
+            &__horario {
+                background: rgba(v.$blanco, 0.8);
+                border-radius: 1.5rem;
+                box-shadow: 0 0.5rem 1.5rem rgba(v.$gris-oscuro, 0.1), 0 0.5rem 1rem rgba(v.$verde, 0.2);
+                padding: 2rem;
+                text-align: center;
+                width: 22rem;
+                margin: 0.5rem;
+                backdrop-filter: blur(0.5rem);
+                transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+
+                @include m.telefono {
+                    width: 100%;
+                }
+
+                @include m.tablet {
+                    width: 20rem;
+                }
+
+                @include m.desktop {
+                    width: 22rem;
+                }
+
+                &:hover {
+                    transform: translateY(-0.5rem) scale(1.05);
+                    box-shadow: 0 1rem 2rem rgba(v.$gris-oscuro, 0.2), 0 1rem 2rem rgba(v.$verde, 0.3);
+                    background: rgba(v.$blanco, 0.9);
+                }
+
+                &__texto {
+                    font-size: 1.4rem;
+                    color: v.$gris-oscuro;
+                    text-shadow: 0.1rem 0.1rem 0.2rem rgba(v.$gris-oscuro, 0.2);
+
+                    @include m.telefono {
+                        font-size: 1.2rem;
+                    }
+
+                    @include m.tablet {
+                        font-size: 1.4rem;
+                    }
+
+                    @include m.desktop {
+                        font-size: 1.6rem;
+                    }
+                }
+            }
+        }
     }
 }

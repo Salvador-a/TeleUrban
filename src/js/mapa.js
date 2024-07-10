@@ -1,16 +1,24 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//     function mostrarPagina(pagina) {
-//         var paginas = document.querySelectorAll('.formulario__pagina');
-        
-//         paginas.forEach(function (paginaElemento) {
-//             paginaElemento.classList.remove('formulario__pagina--activa');
-//         });
-        
-//         var paginaActiva = document.getElementById('pagina' + pagina);
-//         if (paginaActiva) {
-//             paginaActiva.classList.add('formulario__pagina--activa');
-//         }
-//     }
+if (document.querySelector("#mapa")) {
 
-//     window.mostrarPagina = mostrarPagina;
-// });
+    const lat =  19.432264
+    const lng = -98.983563
+    const zoom = 20
+    
+      
+    const map = L.map("mapa").setView([lat, lng], zoom);
+  
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+  
+    L.marker([lat, lng])
+      .addTo(map)
+      .bindPopup(`
+          <h2 class="mapa__heading">TeleUrban</h2>
+          <p class="mapa__texto">Oficinas</p>
+          
+      `)
+      .openPopup();
+  }
+  
