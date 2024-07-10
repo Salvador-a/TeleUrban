@@ -17,7 +17,8 @@
                             <div class="carrusel__tarjeta__pie">
                                 <img src="/img/galeria/<?php echo $encargado_imagen; ?>.png" alt="Avatar" class="carrusel__tarjeta__avatar">
                                 <span class="carrusel__tarjeta__nombre"><?php echo htmlspecialchars($departamento->encargado->nombre . ' ' . $departamento->encargado->apellido); ?></span>
-                                <button href="/departamento?id=<?php echo $departamento->id; ?>" class="carrusel__tarjeta__boton"><i class="material-icons">arrow_forward</i></button>
+                                <a class="carrusel__tarjeta__boton" href="/departamento?id=<?php echo $departamento->id; ?>" class="categorias__follow-btn"><i class="material-icons">arrow_forward</i></a>
+                                
                             </div>
                         </div>
                     </div>
