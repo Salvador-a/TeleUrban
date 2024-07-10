@@ -52,4 +52,7 @@ class PaginasController {
             'titulo' => 'Página no encontrada'
         ]);
     }
+
+
+    
 }

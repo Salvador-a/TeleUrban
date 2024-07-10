@@ -353,13 +353,7 @@ class DepartamentosController {
     }
 
     public static function detalle(Router $router) {
-        session_start();
-
-        if (!is_auth()) {
-            header('Location: /login');
-            exit;
-        }
-
+        
         $id = $_GET['id'] ?? null;
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
