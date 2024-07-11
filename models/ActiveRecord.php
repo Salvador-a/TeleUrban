@@ -1,12 +1,11 @@
 <?php
 
-// models/ActiveRecord.php
 namespace Model; // Define el espacio de nombres del archivo
 
 #[\AllowDynamicProperties] // Permite propiedades dinámicas en la clase
 class ActiveRecord {
 
-    // Base DE DATOS
+    // Base de datos
     protected static $db; // Variable estática para la base de datos
     protected static $tabla = ''; // Variable estática para la tabla de la base de datos
     protected static $columnasDB = []; // Variable estática para las columnas de la tabla
@@ -258,9 +257,6 @@ class ActiveRecord {
         $resultado = self::consultarSQL($query);
         return array_shift($resultado); // Asegúrate de que solo se devuelva un objeto
     }
-    
-
-
 
     // Método para obtener el nombre por ID en tablas relacionadas
     public static function obtenerNombrePorId($tabla, $id, $columnaNombre = 'nombre') {

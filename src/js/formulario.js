@@ -84,4 +84,71 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error:', error));
     }
+
+    // Autocompletado de correos
+    const emailInput = document.getElementById('email');
+
+    emailInput.addEventListener('input', function () {
+        const value = emailInput.value;
+        const atPosition = value.lastIndexOf('@');
+
+        if (atPosition !== -1) {
+            const domainFragment = value.slice(atPosition);
+
+            // Autocompletar solo si el usuario ha ingresado más de un carácter después del @
+            if (domainFragment.length > 1) {
+                switch (domainFragment) {
+                    case '@g':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'mail.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@o':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'utlook.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@h':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'otmail.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@y':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'ahoo.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@i':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'cloud.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@a':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'ol.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@p':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'rotonmail.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@l':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'ive.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@z':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'oho.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@g':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'mx.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@y':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'andex.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    case '@m':
+                        emailInput.value = value.slice(0, atPosition + 2) + 'ail.com';
+                        emailInput.setSelectionRange(atPosition + 2, emailInput.value.length);
+                        break;
+                    // Agrega más casos según los dominios que necesites
+                }
+            }
+        }
+    });
 });

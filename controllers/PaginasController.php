@@ -7,26 +7,31 @@ use Model\Empleado;
 use Model\Departamento;
 
 class PaginasController {
+
     public static function index(Router $router) {
         // Obtener solo los departamentos publicados
         $departamentos = Departamento::where('publicado', 1);
 
+        // Iterar sobre cada departamento para obtener su encargado
         foreach ($departamentos as $departamento) {
-            // Obtener el encargado para cada departamento
+            // Verificar si el departamento es un objeto válido
             if (is_object($departamento)) {
+                // Obtener el encargado del departamento
                 $departamento->encargado = Empleado::find($departamento->id_encargado);
             }
         }
 
+        // Renderizar la vista de la página principal
         $router->render('paginas/index', [
-            'titulo' => 'Inicio',
-            'departamentos' => $departamentos
+            'titulo' => 'Inicio', // Título de la página
+            'departamentos' => $departamentos // Departamentos para mostrar
         ]);
     }
 
     public static function nosotros(Router $router) {
+        // Renderizar la vista de la página "Sobre Nosotros"
         $router->render('paginas/teleurban', [
-            'titulo' => 'Sobre Nosotros'
+            'titulo' => 'Sobre Nosotros' // Título de la página
         ]);
     }
 
@@ -34,25 +39,26 @@ class PaginasController {
         // Obtener solo los departamentos publicados
         $departamentos = Departamento::where('publicado', 1);
 
+        // Iterar sobre cada departamento para obtener su encargado
         foreach ($departamentos as $departamento) {
-            // Obtener el encargado para cada departamento
+            // Verificar si el departamento es un objeto válido
             if (is_object($departamento)) {
+                // Obtener el encargado del departamento
                 $departamento->encargado = Empleado::find($departamento->id_encargado);
             }
         }
 
+        // Renderizar la vista de la página de departamentos
         $router->render('paginas/departamentos', [
-            'titulo' => 'Departamentos',
-            'departamentos' => $departamentos
+            'titulo' => 'Departamentos', // Título de la página
+            'departamentos' => $departamentos // Departamentos para mostrar
         ]);
     }
 
     public static function error(Router $router) {
+        // Renderizar la vista de la página de error
         $router->render('paginas/error', [
-            'titulo' => 'Página no encontrada'
+            'titulo' => 'Página no encontrada' // Título de la página
         ]);
     }
-
-
-    
 }

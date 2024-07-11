@@ -9,26 +9,58 @@
     box-shadow: 0 0.5rem 1.5rem rgba(v.$gris-oscuro, 0.1), 0 0.5rem 1rem rgba(v.$verde, 0.2);
     position: relative;
 
+    &__popup {
+        text-align: center;
+        max-width: 300px; /* Ajusta el ancho máximo del popup */
+        margin: 0 auto; /* Centra el popup */
+    }
+
     &__heading {
         margin: 0;
         text-align: center;
-        font-size: 3rem;
+        font-size: 20px; /* Ajusta el tamaño de la fuente */
         color: v.$negro;
         text-shadow: 0.1rem 0.1rem 0.3rem rgba(v.$negro, 0.3);
         padding-bottom: 2rem;
 
         @include m.tablet {
-            font-size: 3.5rem;
+            font-size: 22px;
         }
 
         @include m.desktop {
-            font-size: 4rem;
+            font-size: 24px;
         }
     }
 
     &__texto {
-        font-size: 1.8rem;
+        font-size: 16px; /* Ajusta el tamaño de la fuente */
         margin: 0;
+    }
+
+    &__imagen {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(v.$gris-oscuro, 0.1);
+        margin-bottom: 8px;
+        cursor: pointer; /* Cambia el cursor al pasar el mouse por la imagen */
+    }
+
+    &__boton {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: v.$verde; // Color de fondo verde
+        color: v.$blanco !important; // Color del texto blanco
+        border-radius: 4px;
+        text-decoration: none !important;
+        font-size: 14px; // Tamaño de la fuente
+        text-align: center;
+        transition: background-color 0.3s;
+        cursor: pointer; // Cambiar el cursor al pasar el mouse
+
+        &:hover {
+            background-color: darken(v.$verde, 10%); // Color de fondo más oscuro en hover
+        }
     }
 
     &__info {
