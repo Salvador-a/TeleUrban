@@ -46,9 +46,9 @@ class AuthController {
                         if ($usuario->rol == 1) {
                             header('Location: /admin/dashboard'); // Redirige al dashboard de admin
                         } elseif ($usuario->rol == 2) {
-                            header('Location: /jefe/dashboard'); // Redirige al dashboard de jefe
+                            header('Location: /admin/dashboard'); // Redirige al dashboard de jefe
                         } else {
-                            header('Location: /trabajador/dashboard'); // Redirige al dashboard de trabajador
+                            header('Location: /admin/dashboard'); // Redirige al dashboard de trabajador
                         }
                         exit; // Termina el script para asegurarse de que no se ejecuten más líneas
                     } else {

@@ -7,8 +7,8 @@ class Entrevista extends ActiveRecord {
     protected static $columnasDB = [
         'id', 'nombre', 'a_paterno', 'a_materno', 'email', 'telefono',
         'discapacidad_id', 'genero_id', 'semestre_id', 'universidad_id',
-        'curriculum', 'fecha_hora', 'departamento_id', 'modalidad_id',
-        'habilidades', 'token', 'token_expiracion', 'estatus_id'
+        'curriculum', 'fecha_hora', 'departamento_id', 'modalidad_id', 
+        'tags', 'habilidades', 'token', 'token_expiracion', 'estatus_id'
     ]; // Define las columnas de la tabla
 
     public $id;
@@ -25,6 +25,7 @@ class Entrevista extends ActiveRecord {
     public $fecha_hora;
     public $departamento_id;
     public $modalidad_id;
+    public $tags;
     public $habilidades;
     public $token;
     public $token_expiracion;
@@ -45,6 +46,7 @@ class Entrevista extends ActiveRecord {
         $this->curriculum = $args['curriculum'] ?? ''; // Asigna el curriculum
         $this->departamento_id = $args['departamento_id'] ?? ''; // Asigna el departamento
         $this->modalidad_id = $args['modalidad_id'] ?? ''; // Asigna la modalidad
+        $this->tags = $args['tags'] ?? ''; // Asigna las tags
         $this->habilidades = $args['habilidades'] ?? ''; // Asigna las habilidades
         $this->token = $args['token'] ?? ''; // Asigna el token
         $this->token_expiracion = $args['token_expiracion'] ?? ''; // Asigna la expiración del token
@@ -118,6 +120,10 @@ class Entrevista extends ActiveRecord {
         }
         if (!$this->habilidades) {
             self::setAlerta('error', 'Las habilidades son obligatorias'); // Valida las habilidades
+        }
+
+        if (!$this->tags) {
+            self::setAlerta('error', 'El Campo Áreas de Experiencia es obligatorio'); // Valida las áreas de experiencia
         }
 
         return self::getAlertas(); // Retorna las alertas

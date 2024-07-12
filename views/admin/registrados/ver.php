@@ -1,3 +1,6 @@
+<h2 class="teleurban__heading"><?php echo $titulo; ?></h2>
+    <p class="teleurban__descripcion">Accede a la información detallada del candidato seleccionado.</p>
+
 <div class="ver">
     <div class="ver__card">
         <div class="ver__card__header">
@@ -26,8 +29,10 @@
                 <p><i class="fas fa-clock"></i> <strong>Fecha y Hora:</strong> <?php echo $entrevista->fecha_hora; ?></p>
                 <p><i class="fas fa-file"></i> <strong>Curriculum:</strong> <a href="/cv/<?php echo $entrevista->curriculum; ?>" target="_blank">Ver Curriculum</a></p>
             </div>
+            
             <div class="card__section card__skills">
                 <h3>Habilidades</h3>
+                <p><i class="fas fa-tasks"></i> <?php echo $entrevista->tags; ?></p>
                 <p><i class="fas fa-tasks"></i> <?php echo $entrevista->habilidades; ?></p>
             </div>
         </div>
