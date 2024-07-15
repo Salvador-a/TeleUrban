@@ -1,3 +1,6 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
 .formulario-contenedor {
     display: flex;
     justify-content: center;
@@ -7,10 +10,10 @@
 
 .contenedor-formulario {
     background: #fff;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 600px;
+    padding: 3rem;
+    border-radius: 2rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2);
+    width: 60rem;
     max-width: 100%;
     max-height: 90vh;
     overflow-y: hidden;
@@ -22,7 +25,7 @@
 
 .contenedor-formulario__titulo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     font-size: 2rem;
 }
 
@@ -40,26 +43,26 @@
 }
 
 .formulario__seccion {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     border: none;
 }
 
 .formulario__leyenda {
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     background-color: #84c441;
     color: white;
-    padding: 10px 15px;
-    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    border-radius: 1.5rem;
     font-size: 1.5rem;
 }
 
 .formulario__campo {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 }
 
 .formulario__etiqueta {
-    margin-top: 15px;
+    margin-top: 1.5rem;
     display: block;
     font-size: 1.25rem;
 }
@@ -68,25 +71,25 @@
     position: relative;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+    border-radius: 1.5rem;
 }
 
 .formulario__input-con-icono i {
     position: absolute;
-    left: 15px;
-    font-size: 25px;
+    left: 1.5rem;
+    font-size: 2.5rem;
     color: #aaa;
 }
 
 .formulario__entrada,
 .formulario__seleccion {
     width: 100%;
-    padding: 12px 12px 12px 50px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.2rem 1.2rem 1.2rem 5rem;
+    margin-top: 1rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 1.5rem;
+    box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
     font-size: 1.25rem;
 }
 
@@ -94,7 +97,7 @@
 .formulario__seleccion:focus {
     outline: none;
     border-color: #84c441;
-    box-shadow: 0 0 7px rgba(132, 196, 65, 0.5);
+    box-shadow: 0 0 0.7rem rgba(132, 196, 65, 0.5);
 }
 
 .formulario__boton {
@@ -104,10 +107,10 @@
     cursor: pointer;
     transition: background-color 0.3s;
     text-align: center;
-    padding: 15px 30px;
-    margin-top: 20px;
-    border-radius: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 3rem;
+    margin-top: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
     font-size: 1.25rem;
 }
 
@@ -127,7 +130,7 @@
 }
 
 .contenedor-formulario::-webkit-scrollbar {
-    width: 10px;
+    width: 1rem;
 }
 
 .contenedor-formulario::-webkit-scrollbar-track {
@@ -136,7 +139,7 @@
 
 .contenedor-formulario::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    border-radius: 1rem;
 }
 
 .contenedor-formulario:hover::-webkit-scrollbar-thumb {
@@ -170,4 +173,143 @@
     .formulario__etiqueta, .formulario__entrada, .formulario__seleccion, .formulario__boton {
         font-size: 1rem;
     }
+}
+
+/* Estilos para el estado de validación */
+.formulario__entrada--error {
+    border-color: v.$rojo;
+}
+
+.formulario__entrada--correcto {
+    border-color: v.$verde;
+}
+
+.icono-validacion {
+    position: absolute;
+    right: 1.5rem;
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.icono-validacion--error i {
+    color: v.$rojo;
+}
+
+.icono-validacion--correcto i {
+    color: v.$verde;
+}
+
+/* Estilos para la caja de sugerencias */
+.suggestion-box {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: v.$blanco;
+    border: 1px solid v.$gris;
+    border-radius: 0 0 1.5rem 1.5rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    max-height: 20rem;
+    overflow-y: auto;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.suggestion-item:hover,
+.suggestion-item--active {
+    background-color: v.$gris-claro;
+}
+
+.tooltip-icon {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 0.5rem;
+
+    i {
+        font-size: 1.5rem;
+        color: #555; // Color del icono
+    }
+
+    .tooltip {
+        visibility: hidden;
+        width: 200px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%; // Posición de la burbuja de texto
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%; // La flecha apuntando hacia abajo
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+    }
+
+    &:hover .tooltip,
+    &:focus .tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+
+.indicador-progreso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.indicador-paso {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    color: white;
+}
+
+.indicador-paso.completado {
+    background-color: #84c441;
+}
+
+.barra-progreso {
+    position: relative;
+    width: 100px;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: auto 10px;
+}
+
+.progreso {
+    height: 100%;
+    background-color: #84c441;
+    border-radius: 5px;
+    width: 0%;
 }

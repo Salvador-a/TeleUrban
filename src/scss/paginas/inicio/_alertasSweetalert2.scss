@@ -1,0 +1,7 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.swal2-html-container .subtitulo {
+    font-size: 0.9em; /* Tamaño de fuente más pequeño */
+    color: #6c757d; /* Color más claro */
+}

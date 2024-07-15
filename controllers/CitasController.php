@@ -187,7 +187,7 @@ class CitasController {
 
         // Renderiza la vista de creación de citas
         $router->render('paginas/citas', [
-            'titulo' => 'Nueva Cita de Entrevista', // Título de la página
+            'titulo' => 'Programar Entrevista', // Título de la página
             'entrevista' => $entrevista, // Entrevista para el formulario
             'alertas' => $alertas, // Alertas para mostrar
             'discapacidades' => $discapacidades, // Discapacidades para el formulario

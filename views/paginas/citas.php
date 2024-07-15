@@ -1,5 +1,16 @@
-<h2 class="auth__heading"><?php echo $titulo; ?></h2>
-    <p class="contenedor-formulario__titulo class="auth__texto">Inicia sesión en TeleUrban</p>
+<h2 class="teleurban__heading"><?php echo $titulo; ?></h2>
+<p class="teleurban__descripcion">Elige el mejor horario para tu entrevista</p>
+
+<div class="indicador-progreso">
+    <div class="indicador-paso" id="paso1">1</div>
+    <div class="barra-progreso">
+        <div class="progreso" id="progreso-paso1"></div>
+    </div>
+    <div class="indicador-paso" id="paso2">2</div>
+    <div class="barra-progreso">
+        <div class="progreso" id="progreso-paso2"></div>
+    </div>
+</div>
 
 <div class="formulario-contenedor">
     <div class="contenedor-formulario">
@@ -16,6 +27,7 @@
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">person</i>
                             <input class="formulario__entrada" type="text" id="nombre" name="nombre" placeholder="Ingresa nombre" value="<?php echo $entrevista->nombre; ?>" aria-required="true">
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -24,6 +36,7 @@
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">person</i>
                             <input class="formulario__entrada" type="text" id="a_paterno" name="a_paterno" placeholder="Ingresa apellido paterno" value="<?php echo $entrevista->a_paterno; ?>" aria-required="true">
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -32,6 +45,7 @@
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">person</i>
                             <input class="formulario__entrada" type="text" id="a_materno" name="a_materno" placeholder="Ingresa apellido materno" value="<?php echo $entrevista->a_materno; ?>" aria-required="true">
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -40,6 +54,7 @@
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">email</i>
                             <input class="formulario__entrada" type="email" id="email" name="email" placeholder="Ingresa email" value="<?php echo $entrevista->email; ?>" aria-required="true">
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -48,6 +63,7 @@
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">phone</i>
                             <input class="formulario__entrada" type="tel" id="telefono" name="telefono" placeholder="Ingresa teléfono" value="<?php echo $entrevista->telefono; ?>" aria-required="true">
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -63,6 +79,7 @@
                                     </option>
                                 <?php } ?>
                             </select>
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -78,6 +95,7 @@
                                     </option>
                                 <?php } ?>
                             </select>
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -93,6 +111,7 @@
                                     </option>
                                 <?php } ?>
                             </select>
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -108,43 +127,43 @@
                                     </option>
                                 <?php } ?>
                             </select>
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
                     <div class="formulario__campo">
-                        <label for="tags_input" class="formulario__etiqueta">Áreas de Experiencia (separadas por coma)</label>
-                        <div class="formulario__input-con-icono">
-                            <i class="material-icons" aria-hidden="true">star</i>
-                            <input
-                                type="text"
-                                class="formulario__entrada"
-                                id="tags_input"
-                                name="tags_input"
-                                placeholder="Ej. Comunicación, Trabajo en equipo, Liderazgo"
-                                value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>"
-                                aria-required="true"
-                            >
-                        </div>
-                        <div id="tags" class="formulario__listado"></div>
-                        <input 
-                            type="hidden" 
-                            name="tags" 
-                            value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>"> 
-                    </div>
+    <label for="tags_input" class="formulario__etiqueta">Áreas de Experiencia (separadas por coma)
+        <span class="tooltip-icon">
+            <i class="material-icons" aria-hidden="true">lightbulb_outline</i>
+            <span class="tooltip">Cada habilidad que pongas debe estar separada por coma. Si deseas eliminar alguna de las tags, solo debes darle doble clic en la tag que desees eliminar.</span>
+        </span>
+    </label>
+    <div class="formulario__input-con-icono">
+        <i class="material-icons" aria-hidden="true">star</i>
+        <input type="text" class="formulario__entrada" id="tags_input" name="tags_input" placeholder="Ej. Comunicación, Trabajo en equipo, Liderazgo" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>" aria-required="true">
+        <span class="icono-validacion"></span>
+    </div>
+    <div id="tags" class="formulario__listado"></div>
+    <input type="hidden" name="tags" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>"> 
+</div>
 
-                    <div class="formulario__campo">
-                        <label class="formulario__etiqueta" for="habilidades">Habilidades:</label>
-                        <div class="formulario__input-con-icono formulario__input-con-icono--grande">
-                            <i class="material-icons" aria-hidden="true">build</i>
-                            <textarea class="formulario__entrada formulario__entrada--grande" id="habilidades" name="habilidades" placeholder="Describe tus habilidades" aria-required="true"><?php echo $entrevista->habilidades; ?></textarea>
-                        </div>
-                    </div>
+
+<div class="formulario__campo">
+    <label class="formulario__etiqueta" for="habilidades">Habilidades:</label>
+    <div class="formulario__input-con-icono formulario__input-con-icono--grande">
+        <i class="material-icons" aria-hidden="true">build</i>
+        <textarea class="formulario__entrada formulario__entrada--grande" id="habilidades" name="habilidades" placeholder="Describe tus habilidades" aria-required="true"><?php echo $entrevista->habilidades; ?></textarea>
+        <span class="icono-validacion"></span>
+    </div>
+</div>
+
 
                     <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="curriculum">Curriculum (PDF):</label>
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">description</i>
                             <input class="formulario__entrada" type="file" id="curriculum" name="curriculum" accept="application/pdf" aria-required="true">
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -161,6 +180,7 @@
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">event</i>
                             <input class="formulario__entrada" type="text" id="fecha_hora" name="fecha_hora" placeholder="Selecciona fecha y hora" value="<?php echo $entrevista->fecha_hora; ?>" aria-required="true">
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -176,6 +196,7 @@
                                     </option>
                                 <?php } ?>
                             </select>
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
 
@@ -191,6 +212,7 @@
                                     </option>
                                 <?php } ?>
                             </select>
+                            <span class="icono-validacion"></span>
                         </div>
                     </div>
                     

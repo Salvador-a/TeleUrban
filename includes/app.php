@@ -16,4 +16,3 @@ require 'database.php'; // Requiere el archivo de configuración de la base de d
 
 // Conectarnos a la base de datos
 ActiveRecord::setDB($db); // Establece la conexión a la base de datos
-?>

@@ -73,8 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
                               if (!finalResult.error) {
                                   Swal.fire({
                                       title: '¡Enviado!',
-                                      text: 'Tu formulario ha sido enviado exitosamente.',
-                                      icon: 'success'
+                                      html: '<p>Tu formulario ha sido enviado exitosamente.</p><p class="subtitulo">Hemos enviado un correo electrónico a la dirección proporcionada. Por favor, revíselo.</p>',
+                                      icon: 'success',
+                                      confirmButtonText: 'OK',
+                                      customClass: {
+                                          content: 'content-class'
+                                      }
                                   }).then(() => {
                                       window.location.href = finalResult.redirect;
                                   });
