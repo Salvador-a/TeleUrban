@@ -6,6 +6,4 @@ import './filtrarEntrevistas.js'
 import './botonToggle.js'
 import './carrusel.js'
 import './grafica.js'
-
-
-
+import './editarCita.js'

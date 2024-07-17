@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Define el título de la página -->
-    <title>TeleUrban | <?php echo $titulo; ?></title>
+    <title>TeleUrban | <?php echo $titulo ?? ''; ?></title>
     
     <!-- Establece una preconexión con Google Fonts para mejorar el rendimiento de carga -->
     <link rel="preconnect" href="https://fonts.googleapis.com"> 

@@ -11,6 +11,7 @@ use Controllers\DashboardController;
 use Controllers\EmpleadosController;
 use Controllers\EntrevistaController;
 use Controllers\DepartamentosController;
+use Controllers\EditarCitasController;
 
 $router = new Router();
 
@@ -78,12 +79,12 @@ $router->get('/entrevistas', [CitasController::class, 'listar']);
 
 
 // index.php en la carpeta public
-$router->get('/modificar-cita', [CitasController::class, 'editar']);
-$router->post('/modificar-cita', [CitasController::class, 'editar']);
+$router->get('/modificar-cita', [EditarCitasController::class, 'editar']);
+$router->post('/modificar-cita', [EditarCitasController::class, 'editar']);
 
 // Nueva ruta para el login de citas
-$router->get('/login-cita', [CitasController::class, 'login']);
-$router->post('/login-cita', [CitasController::class, 'login']);
+$router->get('/login-cita', [EditarCitasController::class, 'login']);
+$router->post('/login-cita', [EditarCitasController::class, 'login']);
 
 
 // Área de Entrevistas (Admin)
