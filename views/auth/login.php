@@ -13,7 +13,7 @@
                 placeholder="Tu Email"
                 id="email"
                 name="email"
-                value="<?php echo s($usuario->email); ?>"
+                value="<?php echo isset($usuario->email) ? s($usuario->email) : ''; ?>"
             />
         </div>
         

@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const paginaActiva = document.getElementById('pagina' + pagina);
         if (paginaActiva) {
             paginaActiva.classList.add('formulario__pagina--activa');
+        } else {
+            console.error('Elemento con id "pagina' + pagina + '" no encontrado.');
         }
     }
 
@@ -174,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Inicializa el formulario y agrega eventos de validación
-    const formulario = document.querySelector('#formulario-contacto');
+    const formulario = document.querySelector('#formulario-contacto, #formulario-editar');
     if (formulario) {
         // Campos de la primera parte del formulario
         const camposParte1 = [

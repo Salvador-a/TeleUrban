@@ -17,11 +17,11 @@
         <h1 class="contenedor-formulario__titulo" id="titulo-formulario">Contacto</h1>
         <form class="formulario" id="formulario-contacto" method="POST" enctype="multipart/form-data" action="/citas" aria-labelledby="titulo-formulario">
             <input type="hidden" name="confirmado" value="false">
-
+            
             <div class="formulario__pagina formulario__pagina--activa" id="pagina1" role="tabpanel" aria-labelledby="titulo-datos">
                 <fieldset class="formulario__seccion">
                     <legend class="formulario__leyenda" id="titulo-datos">Tus Datos</legend>
-
+                    
                     <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="nombre">Nombre:</label>
                         <div class="formulario__input-con-icono">
@@ -132,30 +132,30 @@
                     </div>
 
                     <div class="formulario__campo">
-                        <label for="tags_input" class="formulario__etiqueta">Áreas de Experiencia (separadas por coma)
-                            <span class="tooltip-icon">
-                                <i class="material-icons" aria-hidden="true">lightbulb_outline</i>
-                                <span class="tooltip">Cada habilidad que pongas debe estar separada por coma. Si deseas eliminar alguna de las tags, solo debes darle doble clic en la tag que desees eliminar.</span>
-                            </span>
-                        </label>
-                        <div class="formulario__input-con-icono">
-                            <i class="material-icons" aria-hidden="true">star</i>
-                            <input type="text" class="formulario__entrada" id="tags_input" name="tags_input" placeholder="Ej. Comunicación, Trabajo en equipo, Liderazgo" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>" aria-required="true">
-                            <span class="icono-validacion"></span>
-                        </div>
-                        <div id="tags" class="formulario__listado"></div>
-                        <input type="hidden" name="tags" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>">
-                    </div>
+    <label for="tags_input" class="formulario__etiqueta">Áreas de Experiencia (separadas por coma)
+        <span class="tooltip-icon">
+            <i class="material-icons" aria-hidden="true">lightbulb_outline</i>
+            <span class="tooltip">Cada habilidad que pongas debe estar separada por coma. Si deseas eliminar alguna de las tags, solo debes darle doble clic en la tag que desees eliminar.</span>
+        </span>
+    </label>
+    <div class="formulario__input-con-icono">
+        <i class="material-icons" aria-hidden="true">star</i>
+        <input type="text" class="formulario__entrada" id="tags_input" name="tags_input" placeholder="Ej. Comunicación, Trabajo en equipo, Liderazgo" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>" aria-required="true">
+        <span class="icono-validacion"></span>
+    </div>
+    <div id="tags" class="formulario__listado"></div>
+    <input type="hidden" name="tags" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>"> 
+</div>
 
 
-                    <div class="formulario__campo">
-                        <label class="formulario__etiqueta" for="habilidades">Habilidades:</label>
-                        <div class="formulario__input-con-icono formulario__input-con-icono--grande">
-                            <i class="material-icons" aria-hidden="true">build</i>
-                            <textarea class="formulario__entrada formulario__entrada--grande" id="habilidades" name="habilidades" placeholder="Describe tus habilidades" aria-required="true"><?php echo $entrevista->habilidades; ?></textarea>
-                            <span class="icono-validacion"></span>
-                        </div>
-                    </div>
+<div class="formulario__campo">
+    <label class="formulario__etiqueta" for="habilidades">Habilidades:</label>
+    <div class="formulario__input-con-icono formulario__input-con-icono--grande">
+        <i class="material-icons" aria-hidden="true">build</i>
+        <textarea class="formulario__entrada formulario__entrada--grande" id="habilidades" name="habilidades" placeholder="Describe tus habilidades" aria-required="true"><?php echo $entrevista->habilidades; ?></textarea>
+        <span class="icono-validacion"></span>
+    </div>
+</div>
 
 
                     <div class="formulario__campo">
@@ -170,11 +170,11 @@
                     <button type="button" class="formulario__boton formulario__boton--siguiente" onclick="mostrarPagina(2)" aria-controls="pagina2" aria-expanded="false">Siguiente</button>
                 </fieldset>
             </div>
-
+            
             <div class="formulario__pagina" id="pagina2" role="tabpanel" aria-labelledby="titulo-cita">
                 <fieldset class="formulario__seccion">
                     <legend class="formulario__leyenda" id="titulo-cita">Cita</legend>
-
+                    
                     <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="fecha_hora">Fecha y Hora:</label>
                         <div class="formulario__input-con-icono">
@@ -215,7 +215,7 @@
                             <span class="icono-validacion"></span>
                         </div>
                     </div>
-
+                    
                     <button type="button" class="formulario__boton formulario__boton--anterior" onclick="mostrarPagina(1)" aria-controls="pagina1" aria-expanded="false">Anterior</button>
                     <input class="formulario__boton formulario__boton--agendar" id="boton-agendar" type="button" value="Agendar" aria-controls="formulario-contacto">
                 </fieldset>

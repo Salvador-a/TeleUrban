@@ -1,4 +1,3 @@
-// IFEE
 (function() {
     const tagsInput = document.querySelector('#tags_input');
 
@@ -8,13 +7,11 @@
 
         let tags = [];
 
-        // Recuperar del input oculto
         if(tagsInputHidden.value !== '') {
             tags = tagsInputHidden.value.split(',');
             mostrarTags();
         }
 
-        // Escuchar los cambios en el input
         tagsInput.addEventListener('keypress', guardarTag);
 
         function guardarTag(e) {
@@ -72,8 +69,7 @@
             }
         }
 
-        // Validar si hay tags presentes
-        const formulario = document.querySelector('#formulario-contacto');
+        const formulario = document.querySelector('#formulario-contacto, #formulario-editar');
         formulario.addEventListener('submit', (e) => {
             if (tags.length === 0) {
                 e.preventDefault();
@@ -84,5 +80,7 @@
                 tagsInput.setCustomValidity('');
             }
         });
-    }   
+    } else {
+        console.error('Elemento con id "tags_input" no encontrado.');
+    }
 })();

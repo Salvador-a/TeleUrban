@@ -8,9 +8,9 @@ function debuguear($variable) : string {
 }
 
 function s($html) : string {
-    $s = htmlspecialchars($html);
-    return $s;
+    return htmlspecialchars($html ?? '', ENT_QUOTES, 'UTF-8');
 }
+
 
 function pagina_actual($path) : bool {
     return str_contains($_SERVER['PATH_INFO'] ?? '/', $path) ? true : false;

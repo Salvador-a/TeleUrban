@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "sweetalert2": "^11.10.6",
-    "swiper": "^11.0.7"
+    "swiper": "^11.0.7",
+    "tippy.js": "^6.3.7"
   }
 }
