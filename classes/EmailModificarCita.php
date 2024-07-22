@@ -3,19 +3,25 @@
 namespace Classes;
 
 use PHPMailer\PHPMailer\PHPMailer;
+use Model\Departamento;
+use Model\Descripcion;
 
 class EmailModificarCita {
     public $email;
     public $nombre;
-    public $id;
+    public $entrevista;
 
-    public function __construct($email, $nombre, $id) {
+    public function __construct($email, $nombre, $entrevista) {
         $this->email = $email;
         $this->nombre = $nombre;
-        $this->id = $id;
+        $this->entrevista = $entrevista;
     }
 
     public function enviarConfirmacionEdicion() {
+        // Obtener los nombres correspondientes a los IDs
+        $departamento = Departamento::find($this->entrevista->departamento_id);
+        $modalidad = Descripcion::find($this->entrevista->modalidad_id);
+
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = $_ENV['EMAIL_HOST'];
@@ -67,6 +73,16 @@ class EmailModificarCita {
                 .content p {
                     color: #666666;
                 }
+                .details {
+                    list-style-type: none;
+                    padding: 0;
+                }
+                .details li {
+                    margin-bottom: 10px;
+                }
+                .details li strong {
+                    color: #333333;
+                }
                 .footer {
                     background-color: #84c441;
                     color: white;
@@ -86,8 +102,12 @@ class EmailModificarCita {
                     <p>Hola ' . $this->nombre . ',</p>
                     <p>Has editado una cita en TeleUrban.</p>
                     <p><strong>Detalles de la cita editada:</strong></p>
-                    <ul>
-                        <li><strong>ID de la cita:</strong> ' . $this->id . '</li>
+                    <ul class="details">
+                        <li><strong>ID de la cita:</strong> ' . $this->entrevista->id . '</li>
+                        <li><strong>Fecha y Hora:</strong> ' . $this->entrevista->fecha_hora . '</li>
+                        <li><strong>Área:</strong> ' . $departamento->nombre_departamento . '</li>
+                        <li><strong>Modalidad:</strong> ' . $modalidad->nombre . '</li>
+                        <li><strong>Habilidades:</strong> ' . $this->entrevista->habilidades . '</li>
                     </ul>
                     <p>Nos pondremos en contacto contigo para más detalles.</p>
                 </div>

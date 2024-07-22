@@ -42,6 +42,7 @@
     "webpack-stream": "^7.0.0"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "sweetalert2": "^11.10.6",
     "swiper": "^11.0.7",
     "tippy.js": "^6.3.7"

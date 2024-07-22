@@ -11,6 +11,7 @@ use Model\Descripcion;
 use Model\Universidad;
 use Model\Departamento;
 use Model\Discapacidad;
+use Classes\EmailModificarCita;
 
 class EditarCitasController {
 
@@ -92,6 +93,10 @@ class EditarCitasController {
             if (empty($alertas)) {
                 $resultado = $entrevista->guardar();
                 if ($resultado) {
+                    // Enviar el correo de confirmación de edición
+                    $email = new EmailModificarCita($entrevista->email, $entrevista->nombre, $entrevista);
+                    $email->enviarConfirmacionEdicion();
+
                     $_SESSION['token'] = null;
                     header('Location: /login-cita');
                     return;
