@@ -50,6 +50,18 @@
     </div>
 
     <div class="formulario__campo">
+        <label for="email" class="formulario__label">Email</label>
+        <input
+            type="email"
+            class="formulario__input"
+            id="email"
+            name="email"
+            placeholder="Email empleado"
+            value="<?php echo s($empleado->email); ?>"
+        >
+    </div>
+
+    <div class="formulario__campo">
         <label for="imagen" class="formulario__label">Imagen</label>
         <input
             type="file"

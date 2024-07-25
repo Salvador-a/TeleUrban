@@ -23,7 +23,7 @@ class EditarCitasController {
             $token = $_POST['token'] ?? null;
 
             if (!$token) {
-                $alertas['error'][] = 'El token es obligatorio';
+                Entrevista::setAlerta('error', 'El token es obligatorio');
             } else {
                 $entrevista = Entrevista::where('token', $token);
                 $entrevista = is_array($entrevista) ? array_shift($entrevista) : $entrevista;
@@ -33,9 +33,11 @@ class EditarCitasController {
                     header('Location: /modificar-cita?id=' . $entrevista->id);
                     return;
                 } else {
-                    $alertas['error'][] = 'Token inválido';
+                    Entrevista::setAlerta('error', 'Token inválido');
                 }
             }
+
+            $alertas = Entrevista::getAlertas();
         }
 
         $router->render('paginas/citas/login', [
@@ -98,10 +100,12 @@ class EditarCitasController {
                     $email->enviarConfirmacionEdicion();
 
                     $_SESSION['token'] = null;
-                    header('Location: /login-cita');
+                    header('Location: /cita-exito');
                     return;
                 }
             }
+
+            $alertas = Entrevista::getAlertas();
         }
 
         $router->render('paginas/citas/editar', [
@@ -114,6 +118,12 @@ class EditarCitasController {
             'universidades' => $universidades,
             'departamentos' => $departamentos,
             'modalidades' => $modalidades
+        ]);
+    }
+
+    public static function exito(Router $router) {
+        $router->render('paginas/citas/exito', [
+            'titulo' => 'Cita Actualizada'
         ]);
     }
 }

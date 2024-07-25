@@ -81,6 +81,7 @@ $router->get('/entrevistas', [CitasController::class, 'listar']);
 // index.php en la carpeta public
 $router->get('/modificar-cita', [EditarCitasController::class, 'editar']);
 $router->post('/modificar-cita', [EditarCitasController::class, 'editar']);
+$router->get('/cita-exito', [EditarCitasController::class, 'exito']);
 
 // Nueva ruta para el login de citas
 $router->get('/login-cita', [EditarCitasController::class, 'login']);

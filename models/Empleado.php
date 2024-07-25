@@ -4,7 +4,7 @@ namespace Model;
 
 class Empleado extends ActiveRecord {
     protected static $tabla = 'empleados'; // Define la tabla asociada al modelo
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'ciudad', 'pais', 'imagen', 'puesto_trabajo_id', 'tags', 'redes_sociales', 'departamento_id']; // Define las columnas de la tabla
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'ciudad', 'pais', 'imagen', 'puesto_trabajo_id', 'tags', 'redes_sociales', 'departamento_id', 'email']; // Define las columnas de la tabla
 
     public $id;
     public $nombre;
@@ -16,6 +16,7 @@ class Empleado extends ActiveRecord {
     public $tags;
     public $redes_sociales;
     public $departamento_id;
+    public $email;
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null; // Asigna el ID
@@ -28,6 +29,7 @@ class Empleado extends ActiveRecord {
         $this->tags = $args['tags'] ?? ''; // Asigna las tags
         $this->redes_sociales = $args['redes_sociales'] ?? ''; // Asigna las redes sociales
         $this->departamento_id = $args['departamento_id'] ?? null; // Asigna el ID del departamento
+        $this->email = $args['email'] ?? ''; // Asigna el email
     }
 
     public function validar() {
@@ -54,6 +56,9 @@ class Empleado extends ActiveRecord {
         }
         if (!$this->departamento_id) {
             self::setAlerta('error', 'El Campo Departamento es Obligatorio'); // Valida el departamento
+        }
+        if (!$this->email) {
+            self::setAlerta('error', 'El Email es Obligatorio'); // Valida el email
         }
 
         return self::$alertas; // Retorna las alertas

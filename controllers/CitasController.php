@@ -12,9 +12,10 @@ use Model\Descripcion;
 use Model\Universidad;
 use Model\Departamento;
 use Model\Discapacidad;
+use Model\Empleado;
 
 class CitasController {
-    
+
     /**
      * Maneja la creación de nuevas citas de entrevistas.
      * 
@@ -165,6 +166,15 @@ class CitasController {
                     $email = new EmailCita($entrevista->email, $entrevista->nombre); // Crea una nueva instancia de EmailCita
                     $email->enviarConfirmacionEntrevista($entrevista); // Envía el email de confirmación
 
+                    // Obtener datos del jefe de departamento
+                    $departamento = Departamento::find($entrevista->departamento_id);
+                    $jefeDepartamento = Empleado::find($departamento->id_encargado);
+
+                    // Enviar notificación al jefe de departamento
+                    if ($jefeDepartamento) {
+                        $email->enviarNotificacionJefeDepartamento($jefeDepartamento->email, $jefeDepartamento->nombre, $entrevista);
+                    }
+
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => false,
@@ -176,38 +186,40 @@ class CitasController {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'Error al guardar en la base de datos', // Mensaje de error si hay un problema al guardar en la base de datos
+                        'mensaje' => 'Error al guardar en la base de datos' // Mensaje de error si hay un problema al guardar en la base de datos
                     ]);
                     return;
                 }
             }
         }
 
-        Entrevista::eliminarTokensExpirados(); // Elimina tokens expirados
+        // Elimina tokens expirados
+        Entrevista::eliminarTokensExpirados();
 
         // Renderiza la vista de creación de citas
         $router->render('paginas/citas', [
             'titulo' => 'Programar Entrevista', // Título de la página
-            'entrevista' => $entrevista, // Entrevista para el formulario
-            'alertas' => $alertas, // Alertas para mostrar
-            'discapacidades' => $discapacidades, // Discapacidades para el formulario
-            'generos' => $generos, // Géneros para el formulario
-            'semestres' => $semestres, // Semestres para el formulario
-            'universidades' => $universidades, // Universidades para el formulario
-            'departamentos' => $departamentos, // Departamentos para el formulario
-            'modalidades' => $modalidades // Modalidades para el formulario
+            'entrevista' => $entrevista, // Instancia de Entrevista
+            'alertas' => $alertas, // Alertas
+            'discapacidades' => $discapacidades, // Discapacidades
+            'generos' => $generos, // Géneros
+            'semestres' => $semestres, // Semestres
+            'universidades' => $universidades, // Universidades
+            'departamentos' => $departamentos, // Departamentos
+            'modalidades' => $modalidades // Modalidades
         ]);
     }
 
-    // Método para validar la fecha y hora de una cita
+    /**
+     * Valida la disponibilidad de fecha y hora para una cita de entrevista.
+     */
     public static function validarFechaHora() {
-        // Verifica si el método de solicitud es POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true); // Obtiene los datos del cuerpo de la solicitud
+            $data = json_decode(file_get_contents("php://input"), true); // Obtiene los datos de la solicitud
             $fecha_hora = $data['fecha_hora'] ?? null; // Obtiene la fecha y hora
             $departamento_id = $data['departamento_id'] ?? null; // Obtiene el ID del departamento
 
-            // Si se proporcionan fecha_hora y departamento_id
+            // Verifica si la fecha y hora y el ID del departamento están disponibles
             if ($fecha_hora && $departamento_id) {
                 $fecha_hora = DateTime::createFromFormat('Y-m-d h:i A', $fecha_hora); // Formatea la fecha y hora
                 if ($fecha_hora) {
@@ -216,12 +228,12 @@ class CitasController {
                     header('Content-Type: application/json');
                     echo json_encode([
                         'error' => true,
-                        'mensaje' => 'Formato de fecha y hora inválido', // Mensaje de error si el formato de fecha y hora es inválido
+                        'mensaje' => 'Formato de fecha y hora inválido' // Mensaje de error si el formato de fecha y hora es inválido
                     ]);
                     return;
                 }
 
-                // Verifica la disponibilidad de la fecha y hora
+                // Verifica si la fecha y hora ya están ocupadas para el departamento
                 $existe = Entrevista::findWhere([
                     'fecha_hora' => $fecha_hora,
                     'departamento_id' => $departamento_id
@@ -237,8 +249,7 @@ class CitasController {
             }
 
             header('Content-Type: application/json');
-            echo json_encode(['error' => false]); // Respuesta de éxito
+            echo json_encode(['error' => false]); // Mensaje de éxito si la fecha y hora están disponibles
         }
     }
-
 }
