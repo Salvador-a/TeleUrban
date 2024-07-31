@@ -8,7 +8,8 @@ class Entrevista extends ActiveRecord {
         'id', 'nombre', 'a_paterno', 'a_materno', 'email', 'telefono',
         'discapacidad_id', 'genero_id', 'semestre_id', 'universidad_id',
         'curriculum', 'fecha_hora', 'departamento_id', 'modalidad_id', 
-        'tags', 'habilidades', 'token', 'token_expiracion', 'estatus_id'
+        'tags', 'habilidades', 'token', 'token_expiracion', 'estatus_id',
+        'usos_token'  // Nuevo campo agregado
     ]; // Define las columnas de la tabla
 
     public $id;
@@ -30,6 +31,7 @@ class Entrevista extends ActiveRecord {
     public $token;
     public $token_expiracion;
     public $estatus_id;
+    public $usos_token; // Nuevo campo agregado
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null; // Asigna el ID
@@ -51,6 +53,7 @@ class Entrevista extends ActiveRecord {
         $this->token = $args['token'] ?? ''; // Asigna el token
         $this->token_expiracion = $args['token_expiracion'] ?? ''; // Asigna la expiración del token
         $this->estatus_id = $args['estatus_id'] ?? null; // Asigna el estatus
+        $this->usos_token = $args['usos_token'] ?? 0; // Inicializa el contador de usos del token
     }
 
     public function obtenerUniversidad() {

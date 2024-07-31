@@ -141,10 +141,7 @@ class CitasController {
 
                 // Genera un token para la cita
                 $entrevista->token = 'CITA-' . $entrevista->id . '-' . date('YmdHis') . '-' . bin2hex(random_bytes(6));
-                $fechaExpiracion = new DateTime(); // Crea una nueva instancia de DateTime
-                $fechaExpiracion->modify('+1 day'); // Modifica la fecha de expiración para un día después
-                $entrevista->token_expiracion = $fechaExpiracion->format('Y-m-d H:i:s'); // Formatea la fecha de expiración a 'Y-m-d H:i:s'
-                $entrevista->estatus_id = 1; // Establece el estado de la entrevista a 1 (pendiente)
+                $entrevista->usos_token = 0; // Inicializa el contador de usos del token
 
                 // Verifica la disponibilidad de la fecha y hora
                 $existeFechaHora = Entrevista::findWhere([
@@ -192,9 +189,6 @@ class CitasController {
                 }
             }
         }
-
-        // Elimina tokens expirados
-        Entrevista::eliminarTokensExpirados();
 
         // Renderiza la vista de creación de citas
         $router->render('paginas/citas', [

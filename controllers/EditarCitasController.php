@@ -12,6 +12,7 @@ use Model\Universidad;
 use Model\Departamento;
 use Model\Discapacidad;
 use Classes\EmailModificarCita;
+use Model\Empleado;
 
 class EditarCitasController {
 
@@ -98,6 +99,15 @@ class EditarCitasController {
                     // Enviar el correo de confirmación de edición
                     $email = new EmailModificarCita($entrevista->email, $entrevista->nombre, $entrevista);
                     $email->enviarConfirmacionEdicion();
+
+                    // Obtener datos del jefe de departamento
+                    $departamento = Departamento::find($entrevista->departamento_id);
+                    $jefeDepartamento = Empleado::find($departamento->id_encargado);
+
+                    // Enviar notificación al jefe de departamento
+                    if ($jefeDepartamento) {
+                        $email->enviarNotificacionJefeDepartamento($jefeDepartamento->email, $jefeDepartamento->nombre);
+                    }
 
                     $_SESSION['token'] = null;
                     header('Location: /cita-exito');

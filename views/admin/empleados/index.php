@@ -37,7 +37,7 @@
             <tbody class="table__tbody">
                 <?php foreach ($empleados as $empleado) { ?>
                     <tr class="table__tr">
-                        <td class="table__td" data-label="Imagen">
+                        <td class="table__td table__td--imagen" data-label="Imagen">
                             <img src="/img/galeria/<?php echo $empleado->imagen; ?>.png" alt="Imagen de <?php echo $empleado->nombre; ?>" class="imagen-tabla">
                         </td>
                         <td class="table__td" data-label="Nombre">
@@ -60,17 +60,17 @@
                         </td>
                         <?php if ($user_role === 'admin' || $user_role === 'jefe') { ?>
                             <td class="table__td table__td--acciones" data-label="Acciones">
-                                <div class="acciones-grid">
+                                <div class="actions">
                                     <a class="table__accion table__accion--editar" href="/admin/empleados/editar?id=<?php echo $empleado->id; ?>">
                                         <i class="material-icons">edit</i>
-                                        Editar
+                                        <span>Editar</span>
                                     </a>
 
                                     <form method="POST" action="/admin/empleados/eliminar" class="table__formulario">
                                         <input type="hidden" name="id" value="<?php echo $empleado->id; ?>">
                                         <button class="table__accion table__accion--eliminar" type="submit">
                                             <i class="material-icons">delete</i>
-                                            Eliminar
+                                            <span>Eliminar</span>
                                         </button>
                                     </form>
                                 </div>

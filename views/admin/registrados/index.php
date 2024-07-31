@@ -55,35 +55,35 @@
                         <td class="table__td"><?php echo $entrevista->habilidades; ?></td>
                         <td class="table__td"><?php echo $entrevista->estatus_nombre; ?></td>
                         <td class="table__td table__td--acciones">
-                            <div class="acciones-contenedor">
+                            <div class="actions">
                                 <?php if ($mostrarAcciones) { ?>
                                     <form method="POST" action="/admin/registrados/aceptar" class="table__formulario">
                                         <button class="table__accion table__accion--aceptar" type="submit" <?php echo $entrevista->estatus_id != 1 ? 'disabled' : ''; ?>>
-                                            <i class="material-icons">check</i>
-                                            Aceptar
+                                            <i class="material-icons">check_circle</i>
+                                            <span>Aceptar</span>
                                         </button>
                                         <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
                                     </form>
                                     <form method="POST" action="/admin/registrados/rechazar" class="table__formulario">
                                         <button class="table__accion table__accion--rechazar" type="submit" <?php echo $entrevista->estatus_id != 1 ? 'disabled' : ''; ?>>
-                                            <i class="material-icons">close</i>
-                                            Rechazar
+                                            <i class="material-icons">cancel</i>
+                                            <span>Rechazar</span>
                                         </button>
                                         <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
                                     </form>
                                 <?php } ?>
                                 <a class="table__accion table__accion--cv" href="/admin/registrados/cv?id=<?php echo $entrevista->id; ?>" target="_blank">
-                                    <i class="material-icons">insert_drive_file</i>
-                                    CV
+                                    <i class="material-icons">description</i>
+                                    <span>CV</span>
                                 </a>
                                 <a class="table__accion table__accion--ver" href="/admin/registrados/ver?id=<?php echo $entrevista->id; ?>">
                                     <i class="material-icons">visibility</i>
-                                    Leer más
+                                    <span>Ver Más Información</span>
                                 </a>
                                 <form method="POST" action="/admin/registrados/eliminar" class="table__formulario">
                                     <button class="table__accion table__accion--eliminar" type="submit">
                                         <i class="material-icons">delete</i>
-                                        Eliminar
+                                        <span>Eliminar</span>
                                     </button>
                                     <input type="hidden" name="id" value="<?php echo $entrevista->id; ?>">
                                 </form>

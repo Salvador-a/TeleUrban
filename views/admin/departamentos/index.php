@@ -32,7 +32,7 @@
             <tbody class="table__tbody">
                 <?php foreach ($departamentos as $departamento) { ?>
                     <tr class="table__tr">
-                        <td class="table__td" data-label="Imagen">
+                        <td class="table__td table__td--imagen" data-label="Imagen">
                             <?php if (!empty($departamento->imagen)) { ?>
                                 <picture>
                                     <source srcset="/img/galeria/<?php echo $departamento->imagen; ?>.webp" type="image/webp">
@@ -65,17 +65,17 @@
                             </div>
                         </td>
                         <td class="table__td table__td--acciones" data-label="Acciones">
-                            <div class="acciones-grid">
+                            <div class="actions">
                                 <a class="table__accion table__accion--editar" href="/admin/departamentos/editar?id=<?php echo $departamento->id; ?>">
                                     <i class="material-icons">edit</i>
-                                    Editar
+                                    <span>Editar</span>
                                 </a>
 
                                 <form method="POST" action="/admin/departamentos/eliminar" class="table__formulario">
                                     <input type="hidden" name="id" value="<?php echo $departamento->id; ?>">
                                     <button class="table__accion table__accion--eliminar" type="submit">
                                         <i class="material-icons">delete</i>
-                                        Eliminar
+                                        <span>Eliminar</span>
                                     </button>
                                 </form>
 
@@ -83,7 +83,7 @@
                                     <input type="hidden" name="id" value="<?php echo $departamento->id; ?>">
                                     <button class="table__accion table__accion--publicar" type="submit" <?php echo $departamento->publicado ? 'disabled' : ''; ?>>
                                         <i class="material-icons">check_circle</i>
-                                        Publicar
+                                        <span>Publicar</span>
                                     </button>
                                 </form>
 
@@ -91,7 +91,7 @@
                                     <input type="hidden" name="id" value="<?php echo $departamento->id; ?>">
                                     <button class="table__accion table__accion--despublicar" type="submit" <?php echo !$departamento->publicado ? 'disabled' : ''; ?>>
                                         <i class="material-icons">cancel</i>
-                                        Despublicar
+                                        <span>Despublicar</span>
                                     </button>
                                 </form>
 
@@ -99,7 +99,7 @@
                                     <input type="hidden" name="id" value="<?php echo $departamento->id; ?>">
                                     <button class="table__accion table__accion--toggle" type="submit">
                                         <i class="material-icons"><?php echo $departamento->disponible ? 'toggle_on' : 'toggle_off'; ?></i>
-                                        <?php echo $departamento->disponible ? 'Desactivar' : 'Activar'; ?>
+                                        <span><?php echo $departamento->disponible ? 'Desactivar' : 'Activar'; ?></span>
                                     </button>
                                 </form>
                             </div>

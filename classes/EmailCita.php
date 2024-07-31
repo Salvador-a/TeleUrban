@@ -112,6 +112,7 @@ class EmailCita {
                     </ul>
                     <p>Tu token para editar la cita es: <strong>' . $entrevista->token . '</strong></p>
                     <p>Este token es válido por 24 horas.</p>
+                    <p>Puedes editar tu cita usando el siguiente enlace: <a href="https://tusitio.com/login-cita">Editar Cita</a></p>
                     <p>Nos pondremos en contacto contigo para más detalles.</p>
                 </div>
                 <div class="footer">

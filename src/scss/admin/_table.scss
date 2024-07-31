@@ -2,275 +2,382 @@
 @use 'base/variables' as v;
 
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: v.$fuente-principal;
-    margin-bottom: 2rem;
-    overflow-x: auto; // Permite scroll horizontal en pantallas pequeñas
+  width: 100%;
+  border-collapse: collapse;
+  font-family: v.$fuente_principal;
+  margin-bottom: 2rem;
 
-    &__thead {
-        background-color: v.$verde;
-        color: v.$blanco-ahumado;
+  &__thead {
+    background-color: v.$verde;
+    color: v.$blanco-ahumado;
+  }
+
+  &__th, &__td {
+    padding: 1rem;
+    text-align: left;
+    font-size: 1.6rem;
+    vertical-align: middle;
+  }
+
+  &__th {
+    @include m.telefono {
+      font-size: 1.4rem;
     }
 
-    &__th, &__td {
-        padding: 1rem;
+    @include m.tablet {
+      font-size: 1.8rem;
+    }
+
+    @include m.desktop {
+      font-size: 2rem;
+    }
+
+    @include m.xl_desktop {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__tr {
+    &:nth-of-type(even) {
+      background-color: v.$gris-claro;
+    }
+    &:nth-of-type(odd) {
+      background-color: v.$blanco-ahumado;
+    }
+    height: auto;
+  }
+
+  &__td {
+    padding: 1.5rem 1rem;
+    font-size: 1.4rem;
+    vertical-align: middle;
+    text-align: left;
+
+    @include m.telefono {
+      font-size: 1.2rem;
+      padding: 1rem 0.8rem;
+    }
+
+    @include m.tablet {
+      font-size: 1.6rem;
+      padding: 1.2rem 1rem;
+    }
+
+    @include m.desktop {
+      font-size: 1.8rem;
+      padding: 1.5rem 1.2rem;
+    }
+
+    @include m.xl_desktop {
+      font-size: 1.5rem;
+      padding: 2rem 1.5rem;
+    }
+
+    &--acciones {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+
+      @include m.telefono {
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 100%;
+      }
+    }
+
+    &--descripcion {
+      max-width: 23rem;
+      position: relative;
+
+      .table__descripcion {
+        max-height: 18rem;
+        overflow-y: auto;
+        white-space: normal;
+        padding-right: 0.5rem;
+        background-color: transparent;
+        padding: 0;
+        font-family: v.$fuente_principal;
+        font-size: 1rem;
+        color: v.$gris-oscuro-2;
         text-align: left;
-        font-size: 1.6rem;
-        vertical-align: middle;
-    }
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
 
-    &__th {
         @include m.telefono {
-            font-size: 1.4rem;
+          font-size: 1.2rem;
         }
 
         @include m.tablet {
-            font-size: 1.8rem;
+          font-size: 1.6rem;
         }
 
         @include m.desktop {
-            font-size: 2rem;
+          font-size: 1.8rem;
         }
 
         @include m.xl_desktop {
-            font-size: 1.8rem;
+          font-size: 2rem;
         }
+      }
+
+      .table__descripcion::-webkit-scrollbar {
+        width: .5rem; // Tamaño del scrollbar
+      }
+
+      .table__descripcion::-webkit-scrollbar-thumb {
+        background-color: transparent; // Color del scrollbar
+        border-radius: .2rem;
+      }
+
+      .table__descripcion::-webkit-scrollbar-thumb:hover {
+        background-color: lighten(v.$gris, 40%); // Cambiamos el color del scrollbar al pasar el mouse sobre él
+      }
+
+      .table__descripcion::-webkit-scrollbar-track {
+        background-color: transparent; // Fondo del scrollbar transparente
+      }
+    }
+  }
+
+  &__accion {
+    all: unset;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: v.$bold;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+
+    &--aceptar {
+      color: v.$verde;
     }
 
-    &__tr {
-        &:nth-of-type(even) {
-            background-color: v.$gris-claro;
-        }
-        &:nth-of-type(odd) {
-            background-color: v.$blanco-ahumado;
-        }
-        height: 4rem;
+    &--rechazar {
+      color: v.$rojo;
     }
 
-    &__td {
-        padding: 1.5rem 1rem;
-        font-size: 1.4rem;
-        vertical-align: middle;
-        text-align: left;
-
-        @include m.telefono {
-            font-size: 1.2rem;
-            padding: 1rem 0.8rem;
-        }
-
-        @include m.tablet {
-            font-size: 1.6rem;
-            padding: 1.2rem 1rem;
-        }
-
-        @include m.desktop {
-            font-size: 1.8rem;
-            padding: 1.5rem 1.2rem;
-        }
-
-        @include m.xl_desktop {
-            font-size: 1.5rem;
-            padding: 2rem 1.5rem;
-        }
-
-        &--acciones {
-            text-align: right; // Alinea los botones a la derecha
-            display: flex;
-            flex-direction: column; // Distribuye los botones en columna
-            align-items: flex-start; // Alinea los botones al inicio
-            gap: 0.5rem; // Espacio entre los botones
-        }
-
-        &--descripcion {
-            max-width: 23rem;
-            position: relative;
-
-            .table__descripcion {
-                max-height: 18rem;
-                overflow-y: auto;
-                white-space: normal;
-                padding-right: 0.5rem;
-                background-color: transparent;
-                padding: 0;
-                font-family: v.$fuente-principal;
-                font-size: 1rem;
-                color: v.$gris-oscuro-2;
-                text-align: left;
-                line-height: 1.6;
-                margin-bottom: 1rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-
-                @include m.telefono {
-                    font-size: 1.2rem;
-                }
-
-                @include m.tablet {
-                    font-size: 1.6rem;
-                }
-
-                @include m.desktop {
-                    font-size: 1.8rem;
-                }
-
-                @include m.xl_desktop {
-                    font-size: 2rem;
-                }
-            }
-
-            .table__descripcion::-webkit-scrollbar {
-                width: .5rem; // Tamaño del scrollbar
-            }
-
-            .table__descripcion::-webkit-scrollbar-thumb {
-                background-color: transparent; // Color del scrollbar
-                border-radius: .2rem;
-            }
-
-            .table__descripcion::-webkit-scrollbar-thumb:hover {
-                background-color: lighten(v.$gris, 40%); // Cambiamos el color del scrollbar al pasar el mouse sobre él
-            }
-
-            .table__descripcion::-webkit-scrollbar-track {
-                background-color: transparent; // Fondo del scrollbar transparente
-            }
-        }
+    &--cv {
+      color: v.$negro;
     }
 
-    &__accion {
-        all: unset;
-        text-transform: uppercase;
-        font-size: 1.2rem;
-        font-weight: v.$bold;
-        display: inline-flex; // Cambia de flex a inline-flex
-        align-items: center;
-        margin-left: 0.5rem; // Asegura un pequeño espacio entre los botones
-
-        &--aceptar {
-            color: v.$verde;
-        }
-
-        &--rechazar {
-            color: v.$rojo;
-        }
-
-        &--cv {
-            color: v.$negro;
-        }
-
-        &--editar {
-            color: v.$azul;
-        }
-
-        &--eliminar {
-            color: v.$rojo;
-        }
-
-        &:hover {
-            cursor: pointer;
-        }
-
-        @include m.telefono {
-            font-size: 1rem;
-        }
-
-        @include m.tablet {
-            font-size: 1.4rem;
-        }
-
-        @include m.desktop {
-            font-size: 1.6rem;
-        }
-
-        @include m.xl_desktop {
-            font-size: 1.7rem;
-        }
+    &--editar {
+      color: v.$azul;
     }
 
-    .imagen-tabla {
-        width: 10rem; /* Ajusta el ancho según sea necesario */
-        
-        height: auto; /* Mantiene la proporción de la imagen */
-        
+    &--eliminar {
+      color: v.$rojo;
     }
 
-    .encargado {
-        display: flex;
-        flex-direction: column; // Cambia la dirección del flex a columna
-        align-items: center; // Centra los elementos horizontalmente
-
-        &__imagen {
-            width: 10rem; // Ajusta el ancho según sea necesario
-            height: auto; // Mantiene la proporción de la imagen
-            margin-bottom: 1rem; // Espacio entre la imagen y el texto
-        }
-
-        &__info {
-            text-align: center; // Centra el texto
-        }
-
-        &__nombre {
-            font-size: 1.4rem;
-            font-weight: v.$bold;
-        }
-
-        &__puesto {
-            font-size: 1.2rem;
-            color: v.$gris-oscuro;
-        }
+    &:hover {
+      cursor: pointer;
     }
-    
+
+    @include m.telefono {
+      font-size: 1rem;
+    }
+
+    @include m.tablet {
+      font-size: 1.4rem;
+    }
+
+    @include m.desktop {
+      font-size: 1.6rem;
+    }
+
+    @include m.xl_desktop {
+      font-size: 1.7rem;
+    }
+  }
+
+  .imagen-tabla {
+    width: 10rem;
+    height: auto;
+
+    @include m.telefono {
+      width: 8rem;
+    }
+  }
+
+  .encargado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__imagen {
+      width: 10rem;
+      height: auto;
+      margin-bottom: 1rem;
+
+      @include m.telefono {
+        width: 8rem;
+      }
+    }
+
+    &__info {
+      text-align: center;
+    }
+
+    &__nombre {
+      font-size: 1.4rem;
+      font-weight: v.$bold;
+    }
+
+    &__puesto {
+      font-size: 1.2rem;
+      color: v.$gris-oscuro;
+    }
+  }
 }
 
 @media (max-width: v.$telefono) {
-    .table {
-        display: block;
-        width: 100%;
+  .table {
+    display: block;
+    width: 100%;
 
-        &__thead {
-            display: none;
-        }
-
-        &__tr {
-            display: block;
-            margin-bottom: 1rem;
-            border: none;
-        }
-
-        &__td {
-            display: flex;
-            flex-direction: column; // Cambia la dirección del flex a columna
-            align-items: flex-start; // Alinea los elementos al inicio
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid lighten(v.$gris, 40%);
-
-            &:last-child {
-                border-bottom: none;
-            }
-
-            &:before {
-                content: attr(data-label);
-                font-weight: v.$bold;
-                margin-bottom: 0.5rem; // Espacio entre el label y el contenido
-            }
-        }
-
-        &__td--acciones {
-            flex-direction: row; // Asegura que los botones de acción estén en una fila
-            justify-content: flex-end; // Alinea los botones a la derecha
-            width: 100%; // Asegura que los botones ocupen todo el ancho disponible
-        }
+    &__thead {
+      display: none;
     }
 
-    .encargado {
-        &__imagen {
-            width: 8rem; // Ajusta el ancho según sea necesario para pantallas pequeñas
-        }
-
-        &__nombre, &__puesto {
-            font-size: 1.2rem; // Ajusta el tamaño de la fuente para pantallas pequeñas
-        }
+    &__tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: none;
+      background: v.$blanco-ahumado;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 0.5rem;
+      padding: 1rem;
     }
+
+    &__td {
+      display: block;
+      text-align: left;
+      position: relative;
+      padding-left: 0;
+      white-space: normal;
+      border-bottom: none;
+      margin-bottom: 0.5rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:before {
+        content: attr(data-label);
+        font-weight: v.$bold;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+      }
+
+      &--imagen:before {
+        content: '';
+      }
+    }
+
+    &__td--acciones {
+      flex-direction: row;
+      justify-content: flex-end;
+      width: 100%;
+    }
+  }
+
+  .encargado {
+    &__imagen {
+      width: 8rem;
+    }
+
+    &__nombre, &__puesto {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.actions {
+  display: grid;
+  gap: 1rem;
+
+  .table__accion {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1rem);
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    overflow: hidden;
+
+    &.table__accion--aceptar {
+      background: linear-gradient(145deg, rgba(102, 255, 178, 0.2), rgba(102, 255, 178, 0.5));
+      border: 1px solid rgba(76, 175, 80, 0.5);
+      color: #4CAF50;
+    }
+
+    &.table__accion--rechazar {
+      background: linear-gradient(145deg, rgba(255, 102, 102, 0.2), rgba(255, 102, 102, 0.5));
+      border: 1px solid rgba(244, 67, 54, 0.5);
+      color: #F44336;
+    }
+
+    &.table__accion--cv {
+      background: linear-gradient(145deg, rgba(102, 178, 255, 0.2), rgba(102, 178, 255, 0.5));
+      border: 1px solid rgba(33, 150, 243, 0.5);
+      color: #2196F3;
+    }
+
+    &.table__accion--ver {
+      background: linear-gradient(145deg, rgba(255, 204, 102, 0.2), rgba(255, 204, 102, 0.5));
+      border: 1px solid rgba(255, 152, 0, 0.5);
+      color: #FF9800;
+    }
+
+    &.table__accion--eliminar {
+      background: linear-gradient(145deg, rgba(204, 102, 255, 0.2), rgba(204, 102, 255, 0.5));
+      border: 1px solid rgba(156, 39, 176, 0.5);
+      color: #9C27B0;
+    }
+
+    &.table__accion--editar {
+      background: linear-gradient(145deg, rgba(153, 204, 255, 0.2), rgba(153, 204, 255, 0.5));
+      border: 1px solid rgba(51, 102, 204, 0.5);
+      color: #3366CC;
+    }
+
+    &.table__accion--publicar {
+      background: linear-gradient(145deg, rgba(255, 255, 153, 0.2), rgba(255, 255, 153, 0.5));
+      border: 1px solid rgba(204, 204, 0, 0.5);
+      color: #CCCC00;
+    }
+
+    &.table__accion--despublicar {
+      background: linear-gradient(145deg, rgba(255, 153, 204, 0.2), rgba(255, 153, 204, 0.5));
+      border: 1px solid rgba(204, 51, 102, 0.5);
+      color: #CC3366;
+    }
+
+    &.table__accion--toggle {
+      background: linear-gradient(145deg, rgba(102, 255, 255, 0.2), rgba(102, 255, 255, 0.5));
+      border: 1px solid rgba(0, 204, 204, 0.5);
+      color: #00CCCC;
+    }
+
+    &:hover {
+      transform: translateY(-0.2rem);
+      box-shadow: 0 0.6rem 0.8rem rgba(0, 0, 0, 0.2);
+    }
+
+    i.material-icons {
+      font-size: 2rem;
+      margin-right: 1rem;
+    }
+
+    span {
+      font-size: 1.6rem;
+      color: inherit;
+    }
+  }
 }
