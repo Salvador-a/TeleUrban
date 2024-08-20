@@ -29,12 +29,14 @@ class EditarCitasController {
                 $entrevista = Entrevista::where('token', $token);
                 $entrevista = is_array($entrevista) ? array_shift($entrevista) : $entrevista;
 
-                if ($entrevista) {
+                if ($entrevista && $entrevista->tokenValido()) {
+                    // Incrementar el uso del token
+                    $entrevista->incrementarUsoToken();
                     $_SESSION['token'] = $token;
                     header('Location: /modificar-cita?id=' . $entrevista->id);
                     return;
                 } else {
-                    Entrevista::setAlerta('error', 'Token inválido');
+                    Entrevista::setAlerta('error', 'Token inválido o ha sido usado el máximo de veces permitido');
                 }
             }
 

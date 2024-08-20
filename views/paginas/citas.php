@@ -43,7 +43,7 @@
                     <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="a_materno">A. Materno:</label>
                         <div class="formulario__input-con-icono">
-                            <i class="material-icons" aria-hidden="true">person</i>
+                            <i class="material-icons" aria-hidden="true">person</i> 
                             <input class="formulario__entrada" type="text" id="a_materno" name="a_materno" placeholder="Ingresa apellido materno" value="<?php echo $entrevista->a_materno; ?>" aria-required="true">
                             <span class="icono-validacion"></span>
                         </div>

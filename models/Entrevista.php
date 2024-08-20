@@ -31,7 +31,7 @@ class Entrevista extends ActiveRecord {
     public $token;
     public $token_expiracion;
     public $estatus_id;
-    public $usos_token; // Nuevo campo agregado
+    public $usos_token; 
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null; // Asigna el ID
@@ -54,6 +54,17 @@ class Entrevista extends ActiveRecord {
         $this->token_expiracion = $args['token_expiracion'] ?? ''; // Asigna la expiración del token
         $this->estatus_id = $args['estatus_id'] ?? null; // Asigna el estatus
         $this->usos_token = $args['usos_token'] ?? 0; // Inicializa el contador de usos del token
+    }
+
+    // Verifica si el token es válido (menos de 2 usos)
+    public function tokenValido() {
+        return $this->usos_token < 2;
+    }
+
+    // Incrementa el uso del token
+    public function incrementarUsoToken() {
+        $this->usos_token += 1;
+        return $this->guardar();
     }
 
     public function obtenerUniversidad() {
