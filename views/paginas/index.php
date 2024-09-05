@@ -59,7 +59,7 @@
 <div class="separator"></div>
 
 <section>
-    <h2 class="mapa__heading">Ubicación</h2>
+    <h2 class="requisitos__heading">Ubicación</h2>
     <div id="mapa" class="mapa"></div>
     <div class="mapa__info">
         <p class="mapa__info__direccion">Luis Carracci 146, Extremadura Insurgentes, Benito Juárez, 03740 Ciudad de México, CDMX</p>

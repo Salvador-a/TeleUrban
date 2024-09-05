@@ -43,7 +43,7 @@
                     <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="a_materno">A. Materno:</label>
                         <div class="formulario__input-con-icono">
-                            <i class="material-icons" aria-hidden="true">person</i> 
+                            <i class="material-icons" aria-hidden="true">person</i>
                             <input class="formulario__entrada" type="text" id="a_materno" name="a_materno" placeholder="Ingresa apellido materno" value="<?php echo $entrevista->a_materno; ?>" aria-required="true">
                             <span class="icono-validacion"></span>
                         </div>
@@ -147,7 +147,6 @@
                         <input type="hidden" name="tags" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>">
                     </div>
 
-
                     <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="habilidades">Habilidades:</label>
                         <div class="formulario__input-con-icono formulario__input-con-icono--grande">
@@ -157,9 +156,13 @@
                         </div>
                     </div>
 
-
                     <div class="formulario__campo">
-                        <label class="formulario__etiqueta" for="curriculum">Curriculum (PDF):</label>
+                        <label class="formulario__etiqueta" for="curriculum">Curriculum (PDF):
+                            <span class="tooltip-icon">
+                                <i class="material-icons" aria-hidden="true">lightbulb_outline</i>
+                                <span class="tooltip">Solo se puede subir archivos PDF con un peso máximo de 1.5 MB.</span>
+                            </span>
+                        </label>
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">description</i>
                             <input class="formulario__entrada" type="file" id="curriculum" name="curriculum" accept="application/pdf" aria-required="true">
@@ -176,13 +179,24 @@
                     <legend class="formulario__leyenda" id="titulo-cita">Cita</legend>
 
                     <div class="formulario__campo">
-                        <label class="formulario__etiqueta" for="fecha_hora">Fecha y Hora:</label>
+                        <label class="formulario__etiqueta" for="fecha_hora">Fecha y Hora:
+                            <span class="tooltip-icon">
+                                <i class="material-icons" aria-hidden="true">lightbulb_outline</i>
+                                <span class="tooltip">
+                                    Las citas solo se pueden agendar en intervalos de una hora, es decir, solo en horas exactas como 12:00 o 13:00.
+                                    No podrás agendar citas en intervalos con minutos, como 12:33. Además, las citas solo se pueden agendar en días hábiles (de lunes a viernes)
+                                    y en el horario de 10:00 a 16:00. Si seleccionas un día y hora que ya están ocupados, al enviar el formulario, se te solicitará escoger una
+                                    hora o un día diferente.
+                                </span>
+                            </span>
+                        </label>
                         <div class="formulario__input-con-icono">
                             <i class="material-icons" aria-hidden="true">event</i>
                             <input class="formulario__entrada" type="text" id="fecha_hora" name="fecha_hora" placeholder="Selecciona fecha y hora" value="<?php echo $entrevista->fecha_hora; ?>" aria-required="true">
                             <span class="icono-validacion"></span>
                         </div>
                     </div>
+
 
                     <div class="formulario__campo">
                         <label class="formulario__etiqueta" for="departamento_id">Área:</label>
