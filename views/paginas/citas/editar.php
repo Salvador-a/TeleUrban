@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <div class="formulario__campo">
+                <!-- <div class="formulario__campo">
                     <label for="tags_input" class="formulario__etiqueta">Áreas de Experiencia (separadas por coma)
                         <span class="tooltip-icon">
                             <i class="material-icons" aria-hidden="true">lightbulb_outline</i>
@@ -52,7 +52,7 @@
                     </div>
                     <div id="tags" class="formulario__listado"></div>
                     <input type="hidden" name="tags" value="<?php echo htmlspecialchars($entrevista->tags ?? ''); ?>">
-                </div>
+                </div> -->
 
                 <div class="formulario__campo">
                     <label class="formulario__etiqueta" for="habilidades">Habilidades:</label>
@@ -66,5 +66,8 @@
                 <input class="formulario__boton formulario__boton--actualizar" id="boton-actualizar" type="submit" value="Actualizar" aria-controls="formulario-editar">
             </fieldset>
         </form>
+        <form method="POST" action="/cancelar-cita?id=<?php echo $entrevista->id; ?>">
+    <input type="submit" class="formulario__boton formulario__boton--cancelar" value="Confirmar Cancelación">
+</form>
     </div>
 </div>

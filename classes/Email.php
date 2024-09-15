@@ -97,6 +97,7 @@ class Email {
                     <h2>Confirma tu cuenta</h2>
                     <p>Hola ' . $this->nombre . ',</p>
                     <p>Has creado tu cuenta en TeleUrban, solo debes confirmarla presionando el siguiente enlace:</p>
+                    
                     <p><a href="' . $_ENV['HOST'] . '/confirmar-cuenta?token=' . $this->token . '" class="button">Confirmar Cuenta</a></p>
                     <p>Si tu no solicitaste esta cuenta, puedes ignorar el mensaje.</p>
                 </div>

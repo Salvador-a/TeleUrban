@@ -153,4 +153,6 @@ class Entrevista extends ActiveRecord {
         $resultado = self::$db->query($sql); // Ejecuta la consulta SQL
         return $resultado; // Retorna el resultado de la consulta
     }
+
+    
 }

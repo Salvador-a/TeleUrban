@@ -83,6 +83,7 @@ $router->get('/modificar-cita', [EditarCitasController::class, 'editar']);
 $router->post('/modificar-cita', [EditarCitasController::class, 'editar']);
 $router->get('/cita-exito', [EditarCitasController::class, 'exito']);
 
+
 // Nueva ruta para el login de citas
 $router->get('/login-cita', [EditarCitasController::class, 'login']);
 $router->post('/login-cita', [EditarCitasController::class, 'login']);
